@@ -12,7 +12,7 @@ class CategoryController extends Controller
     }
     public function store(Request $request){
         $category = new Category();
-        $category->category = $request->category;
+        $category->name = $request->name;
         $category->description = $request->description;
         $category->status = 1;
         $category->save();
@@ -20,7 +20,7 @@ class CategoryController extends Controller
     }
     public function update(Request $request,$id){
         $category = Category::findOrFail($request->$id);
-        $category->category = $request->category;
+        $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
         return back()->with('updateCategory','¡La categoria ha sido modificado con éxito!');
@@ -39,5 +39,11 @@ class CategoryController extends Controller
         $category->status = '1';
         $category->save();
         return back()->with('enableCategory','Categoria habilitado');
+    }
+    public function selectCategory($id){
+        $category= Category::
+        where('id',$id)
+        ->first();
+        return response()->json($category);
     }
 }

@@ -5,12 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
-{
-    protected $fillable=['rooms','garage','square_meters','bathrooms','price','district','image','id_category','id_status_property','description','status'];
+{   
+    protected $table="products";
+    protected $fillable=['category_id','status_property_id','rooms','garage','square_meters','bathrooms','price','district','image','description','status'];
     public function categories(){
         return $this->belongsTo(Category::class,'category_id');
     }
     public function statusProperty(){
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(StatusProperty::class,'status_property_id');
     }
 }
