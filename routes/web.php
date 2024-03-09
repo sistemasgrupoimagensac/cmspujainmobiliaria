@@ -13,14 +13,12 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UserController;
-use App\StatusProperty;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 
 Auth::routes();
 
@@ -39,14 +37,14 @@ Route::post('/category/create', [CategoryController::class,'store'])->name('crea
 Route::put('/category/update', [CategoryController::class,'update'])->name('actualizar.categoria');
 Route::put('/category/disable', [CategoryController::class,'disable'])->name('inhabilitar.categoria');
 Route::put('/category/enable', [CategoryController::class,'enable'])->name('habilitar.categoria');
-Route::get('category/{id}',[CategoryController::class,'selectProduct'])->name('seleccionar.categoria');
+Route::get('category/{id}',[CategoryController::class,'selectCategory'])->name('seleccionar.categoria');
 
-Route::get('/status-property', [StatusProperty::class,'index'])->name('mis-estados-propiedad');
-Route::post('/status-property/create', [StatusProperty::class,'store'])->name('crear.estado-propiedad');
-Route::put('/status-property/update', [StatusProperty::class,'update'])->name('actualizar.estado-propiedad');
-Route::put('/status-property/disable', [StatusProperty::class,'disable'])->name('inhabilitar.estado-propiedad');
-Route::put('/status-property/enable', [StatusProperty::class,'enable'])->name('habilitar.estado-propiedad');
-Route::get('status-property/{id}',[StatusProperty::class,'selectProduct'])->name('seleccionar.estado-propiedad');
+Route::get('/status-property', [StatusPropertyController::class,'index'])->name('mis-estados-propiedad');
+Route::post('/status-property/create', [StatusPropertyController::class,'store'])->name('crear.estado-propiedad');
+Route::put('/status-property/update', [StatusPropertyController::class,'update'])->name('actualizar.estado-propiedad');
+Route::put('/status-property/disable', [StatusPropertyController::class,'disable'])->name('inhabilitar.estado-propiedad');
+Route::put('/status-property/enable', [StatusPropertyController::class,'enable'])->name('habilitar.estado-propiedad');
+Route::get('status-property/{id}',[StatusPropertyController::class,'selectStatusProperty'])->name('seleccionar.estado-propiedad');
 
 Route::get('/product', [ProductController::class,'index'])->name('mis-productos');
 Route::post('/product/create', [ProductController::class,'store'])->name('crear.producto');

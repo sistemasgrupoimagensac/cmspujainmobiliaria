@@ -66,6 +66,8 @@
                     <div class="dropdown-menu 
                     @if(str_contains(Route::currentRouteName(), 'mis-administradores')) show 
                     @elseif(str_contains(Route::currentRouteName(), 'mis-productos')) show 
+                    @elseif(str_contains(Route::currentRouteName(), 'mis-categorias')) show 
+                    @elseif(str_contains(Route::currentRouteName(), 'mis-estados-propiedad')) show 
                     @endif">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
@@ -79,12 +81,12 @@
                                 </a>
                             </div>
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item">
+                                <a class="dropdown-item  @if(str_contains(Route::currentRouteName(), 'mis-categorias')) active @endif" href="{{ route('mis-categorias') }}">
                                    Categorias
                                 </a>
                             </div>
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item">
+                                <a class="dropdown-item @if(str_contains(Route::currentRouteName(), 'mis-estados-propiedad')) active @endif" href="{{ route('mis-estados-propiedad') }}">
                                     Estado de propiedad
                                 </a>
                             </div>

@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class StatusPropertyController extends Controller
 {
     public function index(){
-
+        $statusProperty = StatusProperty::orderBy('id','desc')->get();
+        return view ('admin.statusProperties.view',compact('statusProperty'));
     }
     public function store(Request $request){
         $statusProperty = new StatusProperty();
@@ -16,21 +17,21 @@ class StatusPropertyController extends Controller
         $statusProperty->description = $request->description;
         $statusProperty->status = 1;
         $statusProperty->save();
-        return back()->with('createstatusProperty','¡La categoria ha sido creado con éxito!');
+        return back()->with('createstatusproperty','¡La categoria ha sido creado con éxito!');
     }
-    public function update(Request $request,$id){
-        $statusProperty = StatusProperty::findOrFail($request->$id);
+    public function update(Request $request){
+        $statusProperty = StatusProperty::findOrFail($request->id);
         $statusProperty->name = $request->name;
         $statusProperty->description = $request->description;
         $statusProperty->save();
-        return back()->with('updatestatusProperty','¡La categoria ha sido modificado con éxito!');
+        return back()->with('updatestatusproperty','¡La categoria ha sido modificado con éxito!');
     }
     public function disable(Request $request)
     {
         $statusProperty = StatusProperty::findOrFail($request->id);
         $statusProperty->status = '0';
         $statusProperty->save();
-        return back()->with('disablestatusProperty','Categoria inhabilitado');
+        return back()->with('disablestatusproperty','Categoria inhabilitado');
     }
 
     public function enable(Request $request)
@@ -38,7 +39,7 @@ class StatusPropertyController extends Controller
         $statusProperty = StatusProperty::findOrFail($request->id);
         $statusProperty->status = '1';
         $statusProperty->save();
-        return back()->with('enablestatusProperty','Categoria habilitado');
+        return back()->with('enablestatusproperty','Categoria habilitado');
     }
     public function selectStatusProperty($id){
         $statusProperty= StatusProperty::

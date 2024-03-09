@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('status_property_id');
             $table->unsignedBigInteger('district_id')->nullable(); 
+            $table->string('name',191);
             $table->integer('rooms');
             $table->integer('garage');
             $table->integer('square_meters');

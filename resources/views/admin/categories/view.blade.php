@@ -5,31 +5,31 @@
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevacategoria">
-                Nuevo producto
+                Nueva categoría
             </button>
         </div>
-        @if (session('productcreated'))
+        @if (session('createcategory'))
         <div class="alert alert-success fade-out" role="alert">
             <h4 class="alert-title">Realizado con éxito</h4>
-            <div class="text-secondary">{{ session('productcreated') }}</div>
+            <div class="text-secondary">{{ session('createcategory') }}</div>
         </div>
         @endif
-        @if (session('productupdate'))
+        @if (session('updatecategory'))
         <div class="alert alert-success fade-out" role="alert">
             <h4 class="alert-title">Realizado con éxito</h4>
-            <div class="text-secondary">{{ session('productupdate') }}</div>
+            <div class="text-secondary">{{ session('updatecategory') }}</div>
         </div>
         @endif
-        @if (session('productdisable'))
+        @if (session('disablecategory'))
             <div class="alert alert-warning fade-out" role="alert">
                 <h4 class="alert-title">Realizado con éxito</h4>
-                <div class="text-secondary">{{ session('categorydisable') }}</div>
+                <div class="text-secondary">{{ session('disablecategory') }}</div>
             </div>
         @endif
-        @if (session('productenable'))
+        @if (session('enablecategory'))
             <div class="alert alert-success fade-out" role="alert">
                 <h4 class="alert-title">Realizado con éxito</h4>
-                <div class="text-secondary">{{ session('productenable') }}</div>
+                <div class="text-secondary">{{ session('enablecategory') }}</div>
             </div>
         @endif
 
@@ -41,9 +41,7 @@
                      <div class="input-group">
                         <select class="form-control col-md-3" name="criterio">
                             <option value="name">Nombre</option>
-                            <option value="lastname">Apellidos</option>
-                            <option value="document">Documento</option>
-                            <option value="user">Usuario</option>
+                            <option value="description">Descripción</option>
                         </select>
                         <input type="text" name="search" class="form-control" placeholder="Texto a buscar">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -55,7 +53,8 @@
                 <thead>
                     <tr>
                         <th>Opciones</th>
-                        <th>Cateogria</th>                       
+                        <th>Cateogria</th>      
+                        <th>Descripción</th>                   
                         <th>Estado</th>
                     </tr>
                 </thead>
@@ -85,7 +84,8 @@
                                 </form>
                             @endif
                         </td>
-                        <td>{{ $category->category }}</td>           
+                        <td>{{ $category->name }}</td>   
+                        <td>{{ $category->description }}</td>            
                         <td>
                             @if($category->status)
                                 <span class="badge badge-success">Activo</span>
@@ -120,6 +120,10 @@
                         <label for="category">Nombre Categoría:</label>
                         <input type="text" class="form-control" id="category" name="category">
                     </div>
+                    <div class="form-group">
+                        <label for="description">Descripción Categoría:</label>
+                        <input type="text" class="form-control" id="description" name="description">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -129,24 +133,6 @@
       </div>
     </div>
   </div>
-<div class="modal fade" id="nuevacategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva categoría</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulario para crear un nuevo usuario -->
-             
-                
-            </div>
-            
-        </div>
-    </div>
-</div>
 <!--Fin del modal-->
 <!-- modal actualizar usuario-->
 <div class="modal fade" id="actualizarCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="actualizarCategoryModalLabel" aria-hidden="true">
@@ -162,9 +148,13 @@
                 <div class="modal-body">
                     <input type="hidden" id="idcategoria" name="id">
                     <div class="form-group">
-                        <label for="name">Nombre categoría:</label>
+                        <label for="categoryupdate">Nombre categoría:</label>
                         <input type="text" class="form-control" id="categoryupdate" name="category">
-                    </div>                   
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionupdate">Descripción categoría:</label>
+                        <input type="text" class="form-control" id="descriptionupdate" name="description">
+                    </div>                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -186,11 +176,11 @@
             url: URLDATADMIN,
             method: 'GET',
             success: function(response) {
-                    var categoria = response;
-                    $('#idcategoria').val(categoria.id);
-                    $('#categoryupdate').val(categoria.category);
-                    $('#actualizarCategoryModal').modal('show');
-                
+                var categoria = response;
+                $('#idcategoria').val(categoria.id);
+                $('#categoryupdate').val(categoria.name);
+                $('#descriptionupdate').val(categoria.description);
+                $('#actualizarCategoryModal').modal('show');
             },
             error: function() {
                 // Manejo de errores en caso de que la petición AJAX falle
