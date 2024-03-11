@@ -14,14 +14,12 @@
             <div class="text-secondary">{{ session('userupdate') }}</div>
         </div>
     @endif
-
     @if (session('userdisable'))
         <div class="alert alert-warning fade-out mt-3" role="alert">
             <h4 class="alert-title">Realizado con éxito</h4>
             <div class="text-secondary">{{ session('userdisable') }}</div>
         </div>
     @endif
-
     @if (session('userenable'))
         <div class="alert alert-success fade-out mt-3" role="alert">
             <h4 class="alert-title">Realizado con éxito</h4>
@@ -57,7 +55,7 @@
                         <div class="input-group">
                             <select class="form-select col-md-3" name="criterio">
                                 <option value="name" @if(request()->get('criterio') == 'name') selected @endif>Nombre</option>
-                                <option value="user" @if(request()->get('criterio') == 'email') selected @endif>Email</option>
+                                <option value="email" @if(request()->get('criterio') == 'email') selected @endif>Email</option>
                             </select>
                             <input type="text" name="search" class="form-control" placeholder="Texto a buscar" value="{{ request()->get('search') }}">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -121,7 +119,6 @@
                   
                 </tbody>
             </table>
-
         </div>
     </div>
     <!-- Fin ejemplo de tabla Listado -->

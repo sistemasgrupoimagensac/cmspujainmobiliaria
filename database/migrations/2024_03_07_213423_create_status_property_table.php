@@ -16,8 +16,8 @@ class CreateStatusPropertyTable extends Migration
         Schema::create('status_property', function (Blueprint $table) {
             
             $table->bigIncrements('id');
-            $table->string('name', 191);
-            $table->string('description', 191)->unique();
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
 

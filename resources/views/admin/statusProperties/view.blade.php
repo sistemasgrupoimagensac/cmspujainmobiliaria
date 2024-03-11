@@ -32,6 +32,24 @@
                 <div class="text-secondary">{{ session('enablestatusproperty') }}</div>
             </div>
         @endif
+        @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+            <div class="d-flex">
+                <div class="fs-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exclamation-circle me-3" style="width: 30px; height: 30px;" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 9v4" /><path d="M12 16v.01" /></svg>
+                </div>
+                <div>
+                    <h4 class="alert-title"><strong>Error:</strong> Por favor, corrige los siguientes errores.</h4>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-secondary">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+        </div>
+        @endif
 
         <div class="card-body">
             <div class="form-group row">
@@ -62,7 +80,8 @@
                     @foreach($statusProperty as $item)
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" onclick="traerDataStatysProperty({{$item->id}})" data-id="{{ $item->id }}">
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-ghost-warning btn-sm edit-button" onclick="traerDataStatysProperty({{$item->id}})" data-id="{{ $item->id }}">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                             &nbsp;
@@ -70,7 +89,7 @@
                                 <form action="{{ route('inhabilitar.categoria', ['id' => $item->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-ghost-danger btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -78,11 +97,12 @@
                                 <form action="{{ route('habilitar.categoria', ['id' => $item->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                    <button type="submit" class="btn btn-ghost-info btn-sm">
                                         <i class="fas fa-check"></i> 
                                     </button>
                                 </form>
                             @endif
+                            </div>
                         </td>
                         <td>{{ $item->name }}</td>   
                         <td>{{ $item->description }}</td>            

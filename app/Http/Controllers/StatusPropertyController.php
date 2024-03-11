@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\StatusProperty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StatusPropertyController extends Controller
 {
@@ -12,6 +13,16 @@ class StatusPropertyController extends Controller
         return view ('admin.statusProperties.view',compact('statusProperty'));
     }
     public function store(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+        ], [
+            'name.required'    => 'El nombre es requerido',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $statusProperty = new StatusProperty();
         $statusProperty->name = $request->name;
         $statusProperty->description = $request->description;

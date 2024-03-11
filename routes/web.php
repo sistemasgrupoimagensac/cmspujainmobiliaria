@@ -52,3 +52,7 @@ Route::put('/product/update', [ProductController::class,'update'])->name('actual
 Route::put('/product/disable', [ProductController::class,'disable'])->name('inhabilitar.producto');
 Route::put('/product/enable', [ProductController::class,'enable'])->name('habilitar.producto');
 Route::get('product/{id}',[ProductController::class,'selectProduct'])->name('seleccionar.producto');
+
+Route::prefix('/pujaapp')->name('puja.')->group(function(){
+    // Route::get('/', App\Http\Controllers\PujaInmobiliaria\AppController::class)->name('app');
+});

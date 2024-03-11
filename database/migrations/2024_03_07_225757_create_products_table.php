@@ -26,9 +26,8 @@ class CreateProductsTable extends Migration
             $table->integer('square_meters');
             $table->integer('bathrooms');
             $table->decimal('price', 10, 2);
-            $table->string('district', 191);
             $table->string('image', 191);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
 
