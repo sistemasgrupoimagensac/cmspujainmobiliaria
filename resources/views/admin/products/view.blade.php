@@ -112,6 +112,7 @@
                         <th>Opciones</th>
                         <th>Producto</th>  
                         <th>Categoría</th>  
+                        <th>Distrito</th>  
                         <th>Estado de propiedad</th>  
                         <th>Habitaciones</th>     
                         <th>Garage</th>   
@@ -151,8 +152,9 @@
                             @endif
                             </div>
                         </td>
-                        <td class="text-center">{{ $item->name }}</td>   
-                        <td class="text-center">{{ $item->district->name }}</td>   
+                        <td class="text-center">{{ $item->name }}</td> 
+                        <td class="text-center">{{ $item->categories->name }}</td>     
+                        <td class="text-center">{{ $item->district->district }}</td>   
                         <td class="text-center">{{ $item->statusProperty->name }}</td>  
                         <td class="text-center">{{ $item->rooms }}</td>       
                         <td class="text-center">{{ $item->garage }}</td>  

@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PujaInmobiliaria\AppController;
@@ -22,8 +23,8 @@ use App\Http\Controllers\UserController;
 // });
 
 Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('admin',[LoginController::class,'showLoginForm'])->name('showLoginForm');
+Route::get('/maintenance', 'HomeController@index')->name('home');
 Route::get('/maintenance', function () { return view('admin/app'); })->name('maintenance');
 Route::get('/user', [UserController::class,'index'])->name('mis-administradores');
 Route::post('/user/create', [UserController::class,'store'])->name('crear.administrador');

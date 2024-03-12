@@ -53,7 +53,7 @@
 
         <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                 <form action="{{ route('mis-estados-propiedad') }}" method="get">
                     @csrf
                      <div class="input-group">
