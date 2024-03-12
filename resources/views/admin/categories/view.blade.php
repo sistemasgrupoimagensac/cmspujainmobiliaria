@@ -51,7 +51,7 @@
         </div>
          @endif
         <div class="card-body">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-md-6">
                 <form action="{{ route('mis-categorias') }}" method="get">
                     @csrf

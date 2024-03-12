@@ -15,6 +15,9 @@ class Product extends Model
         return $this->belongsTo(StatusProperty::class,'status_property_id');
     }
     public function district(){
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(District::class,'district_id');
+    }
+    public function meInteresa(){
+        return $this->hasMany(MeInteresa::class);
     }
 }

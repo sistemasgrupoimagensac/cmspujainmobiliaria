@@ -10,4 +10,7 @@ class UserPuja extends Model
     protected $fillable = [
         'name', 'email', 'password','birthdate','document','type_document'
     ];
+    public function meInteresa(){
+        return $this->hasMany(MeInteresa::class);
+    }
 }

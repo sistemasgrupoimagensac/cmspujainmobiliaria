@@ -13,12 +13,13 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PujaInmobiliaria\AppController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -53,6 +54,4 @@ Route::put('/product/disable', [ProductController::class,'disable'])->name('inha
 Route::put('/product/enable', [ProductController::class,'enable'])->name('habilitar.producto');
 Route::get('product/{id}',[ProductController::class,'selectProduct'])->name('seleccionar.producto');
 
-Route::prefix('/pujaapp')->name('puja.')->group(function(){
-    // Route::get('/', App\Http\Controllers\PujaInmobiliaria\AppController::class)->name('app');
-});
+Route::get('/', [AppController::class,'index'])->name('app');
