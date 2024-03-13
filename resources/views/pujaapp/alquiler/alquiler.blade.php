@@ -122,7 +122,7 @@
 <section>
     <div class="container-fluid">
         <h2>Buscar por</h2>
-        <div class="row jutify-content-evenly align-items-center">
+        <div class="row">
             <div class="owl-carousel owl-theme text-center">
                 <div class="item">
                     <img src="./img/vector/casa.svg" class="img-fluid" alt="">
@@ -280,7 +280,7 @@
                 items:3
             },
             600:{
-                items:5
+                items:3
             },
             1000:{
                 items:5

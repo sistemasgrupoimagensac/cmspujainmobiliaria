@@ -12,6 +12,16 @@ nav{
     .carousel-caption h2{
        display: none;
     }
+    .item img{
+        height: 60px;
+    }
+    .item {
+        background-color: #FB7125 ;
+        border-radius: 40px;
+        margin: auto;
+        max-width: 150px;
+        padding: 1rem;
+    }
 }
 @media screen and (min-width: 576px)  {
     
@@ -20,13 +30,21 @@ nav{
     .imagengozu{
         margin-top: -10rem;
     }
-    .item img{
-        height: 50px;
-    }
+
     .item {
         background-color: #FB7125 ;
         border-radius: 40px;
         max-width: 125px;
+        padding: 2rem;
+    }
+    .item img{
+        height: 100px;
+    }
+    .item {
+        background-color: #FB7125 ;
+        border-radius: 40px;
+        margin: auto;
+        max-width: 250px;
         padding: 2rem;
     }
     
@@ -53,6 +71,7 @@ nav{
     .item {
         background-color: #FB7125 ;
         border-radius: 40px;
+        margin: auto;
         max-width: 250px;
         padding: 2rem;
     }
@@ -101,4 +120,13 @@ li{
 ul{
     padding: 0px;
     margin: 0px;
+}
+.owl-carousel {
+    display: flex !important;
+    justify-content: center !important; /* Centrar horizontalmente */
+    align-items: center !important; /* Centrar verticalmente */
+}
+
+.item {
+    text-align: center !important; /* Alinear el texto al centro */
 }
