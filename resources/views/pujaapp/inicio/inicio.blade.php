@@ -12,7 +12,27 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white" id="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
+        <div class="dropdown position-absolute top-4 end-0 pe-5">
+            @if(Auth::guard('puja')->check())
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hola {{ Auth::guard('puja')->user()->name}}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li> 
+                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Cerrar sesión
+                        </a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout-user') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </ul>
+            @else
+                Hola
+            @endif
+            
+        </div>
         <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,10 +50,8 @@
                     <a class="nav-link" href="servicios.html">Remate</a>
                 </li>
                 <li class="nav-item p-4">
-                    <a class="nav-link" href="inversiones.html">Inversiones</a>
+                    <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
                 </li>
-                <li class="nav-item p-4">
-                    <a class="nav-link boton" href="contactanos.html">Contáctanos</a>
             </ul>
           </div>
     </nav>
@@ -98,13 +116,12 @@
 </section>
 <section>
     <div class="container-fluid">
-      
         <div class="row m-0 p-0 ">
             <h2>Los mas destacado</h2>
             @foreach($products as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
-                    <img src="{{ asset('storage/products/' . $item->image) }}" alt="" class="img-fluid w-100">
+                    <img src="{{ asset('storage/products/' . $item->image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
                     <div class="position-absolute top-0 end-0">
                         <img src="img/vector/corazonvacio.svg" class="p-3" alt="">
                     </div>
@@ -135,8 +152,8 @@
                             <h2 class="mb-0">{{ $item->square_meters }}</h2>
                         </div>
                     </div>
-                    <p>Desde</p>
-                    <h2>USD 1090.659.007</h2>
+                        <p>Desde</p>
+                        <h2>USD 1090.659.007</h2>
                 </div>
             </div>
             @endforeach            
@@ -204,15 +221,12 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <h2>Contáctanos</h2>
-                <p>Av. Canaval y Moreyra 290</p>
-                <p>Oficina No 41 y 42</p>
-                <p>Cuarto Piso, San Isidro</p>
-                <br>
-                <p>consulta@pujainmobiliaria.com.pe</p>
-                <br>
-                <p>(01) 4036709</p>
-                <br>
-                <p>+51 934 339 375</p>
+                <p class="p-0 m-0">Av. Canaval y Moreyra 290</p>
+                <p class="p-0 m-0">Oficina No 41 y 42</p>
+                <p class="p-0 m-0">Cuarto Piso, San Isidro</p>
+                <p class="p-0 m-0">consulta@pujainmobiliaria.com.pe</p>
+                <p class="p-0 m-0">(01) 4036709</p>
+                <p class="p-0 m-0">+51 934 339 375</p>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <h2>Síguenos</h2>
@@ -221,21 +235,7 @@
                         <img src="img/vector/instagramblanco.svg" class="img-fluid text-center icon m-auto p-2" alt="">
                                   
                 </div>
-            </div>
-        </div>
-        <div class="row align-items-evenly justify-content-center m-0 text-center ">
-           
-            <div class="col-lg-3 col-md-6 col-sm-12">
-               <img src="img/vector/libroreclamaciones.svg" class="text-start" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-   
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-       
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                
+                <img src="img/vector/libroreclamaciones.svg" class="text-start" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
             </div>
         </div>
     </div>

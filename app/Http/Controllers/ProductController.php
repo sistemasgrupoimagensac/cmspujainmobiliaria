@@ -105,8 +105,8 @@ class ProductController extends Controller
         $product->save();
         return back()->with('createProduct','¡El producto ha sido creado con éxito!');
     }
-    public function update(Request $request,$id){
-        $product = Product::findOrFail($request->$id);
+    public function update(Request $request){
+        $product = Product::findOrFail($request->id);
         $product->name = $request->name;
         $product->category_id = $request->category_id;
         $product->status_property_id = $request->status_property_id;
@@ -117,7 +117,13 @@ class ProductController extends Controller
         $product->bathrooms = $request->bathrooms;
         $product->price = $request->price;
         $product->status = 1;
-        $product->image = $request->image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            // Specify the 'public' disk for storing the image
+            $image->storeAs('products', $imageName, 'public');
+            $product->image = $imageName;
+        }
         $product->description = $request->description;
         $product->save();
         return back()->with('updateProduct','¡El producto  ha sido modificado con éxito!');

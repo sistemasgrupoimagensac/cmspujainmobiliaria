@@ -15,15 +15,19 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PujaInmobiliaria\AppController;
+use App\Http\Controllers\PujaInmobiliaria\LoginController as PujaInmobiliariaLoginController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UserController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+//modo vista administrador
 Auth::routes();
-Route::get('admin',[LoginController::class,'showLoginForm'])->name('showLoginForm');
+Route::get('admin',[LoginController::class,'showLoginFormAdmin'])->name('showLoginFormAdmin');
+Route::post('/sign-in-admin',[LoginController::class,'signInAdmin'])->name('sign-in-admin');
+Route::post('/logout-admin', [LoginController::class,'logout'])->name('logout-admin');
+
 Route::get('/maintenance', 'HomeController@index')->name('home');
 Route::get('/maintenance', function () { return view('admin/app'); })->name('maintenance');
 Route::get('/user', [UserController::class,'index'])->name('mis-administradores');
@@ -54,5 +58,11 @@ Route::put('/product/update', [ProductController::class,'update'])->name('actual
 Route::put('/product/disable', [ProductController::class,'disable'])->name('inhabilitar.producto');
 Route::put('/product/enable', [ProductController::class,'enable'])->name('habilitar.producto');
 Route::get('product/{id}',[ProductController::class,'selectProduct'])->name('seleccionar.producto');
+// modo vista usuario
+Route::get('/login-user',[PujaInmobiliariaLoginController::class,'showLoginFormUser'])->name('showLoginFormUser');
+Route::post('/sign-in-user',[PujaInmobiliariaLoginController::class,'signInUser'])->name('sign-in-user');
+Route::post('/logout-user', [LoginController::class,'logout'])->name('logout-user');
 
 Route::get('/', [AppController::class,'index'])->name('app');
+Route::get('/alquiler',[AppController::class,'alquiler'])->name('alquiler');
+

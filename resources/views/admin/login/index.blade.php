@@ -4,15 +4,15 @@
     <div class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center bg-white">
             <div class="container container-tight my-5 px-lg-5">
                 <div class="text-center mb-4">
-                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="./img/logo.png" height="90" alt=""></a>
                 </div>
                 <h2 class="h3 text-center mb-3">
-                    Login to your account
+                    Login Puja Inmobiliaria Admin
                 </h2>
-                <form action="{{ route('login') }}" method="POST" autocomplete="off" novalidate="">
+                <form action="{{ route('sign-in-admin') }}" method="POST" autocomplete="off" novalidate="">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Email address</label>
+                        <label class="form-label">Correo Electrónico</label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label">
-                            Password
+                            Contraseña
                         </label>
                         <div class="input-group input-group-flat">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -38,24 +38,15 @@
                             </span>
                         </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input">
-                            <span class="form-check-label">Remember me on this device</span>
-                        </label>
-                    </div>
                     <div class="form-footer">
-                        <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
                     </div>
                 </form>
-            <div class="text-center text-secondary mt-3">
-                Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a>
-            </div>
         </div>
     </div>
     <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
     <!-- Photo -->
-        <div class="bg-cover h-100 min-vh-100" style="background-image: url(./img/slide1.png)"></div>
+        <div class="bg-cover h-100 min-vh-100" style="background-image: url(./img/slide1.png);opacity: 0.6;"></div>
     </div>
 </div>
 @include('admin.layouts.footer')

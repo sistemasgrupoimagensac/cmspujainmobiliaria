@@ -11,6 +11,7 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                    {{Auth::user()->name}}
                     <span class="avatar avatar-sm">
                         {{-- @if(Auth::user()->image !=null)
                             <img src="{{ asset('/storage/uploads/profiles/'. Auth::user()->image) }}" alt="Avatar del usuario">
@@ -29,12 +30,12 @@
                 </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                 <a href="#" class="dropdown-item"
-                    {{-- onclick="event.preventDefault(); document.getElementById('logout-form').submit();" --}}
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                     >
                     Cerrar sesión
                 </a>
                 <form id="logout-form" 
-                {{-- action="{{ route('logout') }}"  --}}
+                action="{{ route('logout-admin') }}" 
                 method="POST" style="display: none;">
                     @csrf
                 </form>

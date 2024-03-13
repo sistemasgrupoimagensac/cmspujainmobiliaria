@@ -44,10 +44,7 @@
             <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
         </div>
     @endif
-    <style>
-        .select-category, .select-status-property, .select-district {
-  z-index: 1040 !important ;/* Adjust as needed */
-}</style>
+
     <div class="card">
         <div class="card-header">
             <div class="d-flex align-items-center w-100">
@@ -198,9 +195,8 @@
                             <input type="text" class="form-control" id="product" name="name">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="select-category">Categoria:</label>
-                            <select class="select-category w-100 h-100" id="select-category" name="category_id">
-                                
+                            <label for="category_id">Categoria:</label>
+                            <select class="form-select" id="category_id" name="category_id">
                                     @foreach ( $categories as $item)
                                         <option value="{{ $item->id }}">{{$item->name }}</option>
                                     @endforeach    
@@ -208,7 +204,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="status_property_id">Estado de la propiedad:</label>
-                            <select class="select-status-property w-100 h-100" name="status_property_id" id="status_property_id">
+                            <select class="form-select" name="status_property_id" id="status_property_id">
                                 
                                     @foreach ( $status_property as $item)
                                         <option value="{{ $item->id }}">{{$item->name }}</option>
@@ -217,7 +213,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="district_id">Distrito:</label>
-                            <select class="select-district w-100 h-100" name="district_id" id="district_id">
+                            <select class="form-select" name="district_id" id="district_id">
                                 
                                     @foreach ( $districts as $item)
                                         <option value="{{ $item->id }}">{{$item->district }}</option>
@@ -265,23 +261,78 @@
 
 <!--Fin del modal-->
 <!-- modal actualizar usuario-->
-<div class="modal fade" id="actualizarCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false"aria-labelledby="actualizarCategoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="actualizarProductModal" data-bs-backdrop="static" data-bs-keyboard="false"aria-labelledby="actualizarProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="actualizarCategoryModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="actualizarProductModalLabel">Actualizar Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('actualizar.producto') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
-                    <input type="hidden" id="idcategoria" name="id">
-                    <div class="form-group">
-                        <label for="name">Nombre categoría:</label>
-                        <input type="text" class="form-control" id="categoryupdate" name="category">
-                    </div>                   
-                </div>
+                    <input type="hidden" id="idproduct" name="id">
+                    <div class="form-group mb-3">
+                        <label for="product">Nombre Producto:</label>
+                        <input type="text" class="form-control" id="updatename" name="name">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updatecategoryid">Categoria:</label>
+                        <select class="form-select" id="updatecategoryid" name="category_id">
+                                @foreach ( $categories as $item)
+                                    <option value="{{ $item->id }}">{{$item->name }}</option>
+                                @endforeach    
+                        </select>   
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updatestatuspropertyid">Estado de la propiedad:</label>
+                        <select class="form-select" name="status_property_id" id="updatestatuspropertyid">
+                            
+                                @foreach ( $status_property as $item)
+                                    <option value="{{ $item->id }}">{{$item->name }}</option>
+                                @endforeach    
+                        </select>  
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updatedistrictid">Distrito:</label>
+                        <select class="form-select" name="district_id" id="updatedistrictid">
+                            
+                                @foreach ( $districts as $item)
+                                    <option value="{{ $item->id }}">{{$item->district }}</option>
+                                @endforeach    
+                        </select>   
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="rooms" >Habitaciones:</label>
+                        <input type="number" class="form-control" name="rooms" id="updaterooms">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="garage" >Garage:</label>
+                        <input type="number" class="form-control" name="garage" id="updategarage"> 
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="square_meters" >Metros Cuadrados:</label>
+                        <input type="number" class="form-control" name="square_meters" id="updatesquaremeters">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="bathrooms" >Baños:</label>
+                        <input type="number" class="form-control" name="bathrooms" id="updatebathrooms">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" >Precio:</label>
+                        <input type="number" class="form-control" name="price" id="updateprice">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" >Descripción:</label>
+                        <input type="text" class="form-control" name="description" id="updatedescription">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" >Imagen:</label>
+                        <input type="file" class="form-control" name="image" accept="iamge/*">
+                    </div>
+                </div>                 
+               
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -297,15 +348,25 @@
 
 <script>
     var traerDataCategoria = function(id){
-        const URLDATADMIN=`category/${id}`;
+        const data=`product/${id}`;
         $.ajax({
-            url: URLDATADMIN,
+            url: data,
             method: 'GET',
             success: function(response) {
-                    var categoria = response;
-                    $('#idcategoria').val(categoria.id);
-                    $('#categoryupdate').val(categoria.category);
-                    $('#actualizarCategoryModal').modal('show');
+                    var product = response;
+                    $('#idproduct').val(product.id);
+                    $('#updatename').val(product.name);
+                    $('#updatecategoryid').val(product.category_id);
+                    $('#updatestatuspropertyid').val(product.status_property_id);
+                    $('#updatedistrictid').val(product.district_id);
+                    $('#updaterooms').val(product.rooms);
+                    $('#updategarage').val(product.garage);
+                    $('#updatesquaremeters').val(product.square_meters);
+                    $('#updatebathrooms').val(product.bathrooms);
+                    $('#updateprice').val(product.price);
+                    $('#updatedescription').val(product.description);
+
+                    $('#actualizarProductModal').modal('show');
                 
             },
             error: function() {
@@ -320,9 +381,6 @@
 <script>
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
-        $('.select-district').select2();
-        $('.select-status-property').select2();
-        $('.select-category').select2();
     });
 </script>
 @endsection
