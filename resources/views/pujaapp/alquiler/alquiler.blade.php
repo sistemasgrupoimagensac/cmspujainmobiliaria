@@ -125,23 +125,23 @@
         <div class="row jutify-content-evenly align-items-center">
             <div class="owl-carousel owl-theme text-center">
                 <div class="item">
-                    <img src="./img/vector/casa.svg" alt="">
+                    <img src="./img/vector/casa.svg" class="img-fluid" alt="">
                     <p>Casa</p>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/departamento.svg" alt="">
+                    <img src="./img/vector/departamento.svg" class="img-fluid" alt="">
                     <p>Departamento</p>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/oficina.svg" alt="">
+                    <img src="./img/vector/oficina.svg" class="img-fluid" alt="">
                     <p>Oficina</p>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/terreno.svg" alt="">
+                    <img src="./img/vector/terreno.svg" class="img-fluid" alt="">
                     <p>Terreno</p>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/local.svg" alt="">
+                    <img src="./img/vector/local.svg" class="img-fluid" alt="">
                     <p>Local</p>
                 </div>
             </div>
@@ -277,10 +277,10 @@
         nav:false,
         responsive:{
             0:{
-                items:1
+                items:3
             },
             600:{
-                items:3
+                items:5
             },
             1000:{
                 items:5
