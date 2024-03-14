@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('status_property_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable(); 
             $table->string('name',191);
             $table->integer('rooms');
@@ -26,12 +27,13 @@ class CreateProductsTable extends Migration
             $table->integer('square_meters');
             $table->integer('bathrooms');
             $table->decimal('price', 10, 2);
-            $table->string('image', 191);
+        
             $table->text('description')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
 
             // Foreign keys
+            $table->foreign('image_id')->references('id')->on('images_product');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('status_property_id')->references('id')->on('status_property');
             $table->foreign('district_id')->references('id')->on('districts');

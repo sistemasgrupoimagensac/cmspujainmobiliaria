@@ -24,7 +24,19 @@ nav{
     }
 }
 @media screen and (min-width: 576px)  {
-    
+    .carousel-caption h2{
+        display: none;
+     }
+     .item img{
+         height: 60px;
+     }
+     .item {
+         background-color: #FB7125 ;
+         border-radius: 40px;
+         margin: auto;
+         max-width: 150px;
+         padding: 1rem;
+     }
 }
 @media screen and (min-width: 768px) {
     .imagengozu{
@@ -75,10 +87,12 @@ nav{
         max-width: 250px;
         padding: 2rem;
     }
+    .background-section{
+        margin-top: 20rem !important;
+    }
 }
 .mi-div {
-    border-style: dashed;
-    border-color: #FB7125;
+    border-left: #FB7125 3px dashed;
 }
 .boton{
     border: 3px solid #FB7125;
@@ -106,7 +120,7 @@ nav{
     font-weight: bold;
 }
 .navbar-nav .nav-item.active .nav-link {
-    text-decoration: underline #FB7125 5px;
+    text-decoration: underline  3px #FB7125;
 }
 
 .icon{
@@ -129,4 +143,7 @@ ul{
 
 .item {
     text-align: center !important; /* Alinear el texto al centro */
+}
+.item a{
+    text-decoration: none;
 }

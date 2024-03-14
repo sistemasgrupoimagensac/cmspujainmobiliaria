@@ -158,8 +158,10 @@
                         <td class="text-center">{{ $item->square_meters }}</td>  
                         <td class="text-center">{{ $item->bathrooms }}</td>  
                         <td class="text-center">{{ $item->price }}</td>  
-                        <td class="text-center"> 
-                            <span class="avatar" style="background-image: url({{ asset('storage/products/' . $item->image) }})"></span>
+                        <td class="text-center">
+                            <button type="submit" class="btn btn-ghost-primary btn-sm" data-bs-toggle="modal" data-bs-target="#subirimagen">
+                                <i class="fa-solid fa-images"></i>
+                            </button> 
                         </td>   
                         <td class="text-center">
                             @if($item->status)
@@ -178,7 +180,54 @@
     </div>
     <!-- Fin ejemplo de tabla Listado -->
 </div>
-
+<div class="modal fade" id="subirimagen" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="subirimagenLabel">Agregar nuevo Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form action="{{ route('subir_imagen') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="">Subir imagen</label>
+                            <input type="file" name="archivo_inmueble" id="archivo_inmueble" class="form-control-file form-control" accept="image/*">
+                        </div>
+                        <div id="contenido-requisitos-inmueble"><div class="table-responsive table-sm">
+                            <table class="table table-sm table-hover">
+                                <thead class="bg-orange2 text-white">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Imagen</th>
+                                        <th class="text-center">Estado</th>
+                                        <th class="text-center">Fecha y Hora</th>
+                                        <th class="text-center">Ver</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">Falta</td> 
+                                        <td class="text-center">aqui va la imagen</td>     
+                                        <td class="text-center">estado</td>   
+                                        <td class="text-center">fecha</td>  
+                                        <td class="text-center">ver</td>                     
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
 <!-- Modal para crear un nuevo usuario -->
 <div class="modal fade" id="nuevoproducto" >
     <div class="modal-dialog">
@@ -243,10 +292,6 @@
                         <div class="form-group mb-3">
                             <label for="" >Descripción:</label>
                             <input type="text" class="form-control" name="description">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="" >Imagen:</label>
-                            <input type="file" class="form-control" name="image" accept="iamge/*">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -326,10 +371,6 @@
                     <div class="form-group mb-3">
                         <label for="" >Descripción:</label>
                         <input type="text" class="form-control" name="description" id="updatedescription">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="" >Imagen:</label>
-                        <input type="file" class="form-control" name="image" accept="iamge/*">
                     </div>
                 </div>                 
                

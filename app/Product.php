@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {   
     protected $table="products";
-    protected $fillable=['category_id','status_property_id','district_id','name','rooms','garage','square_meters','bathrooms','price','image','description','status'];
+    protected $fillable=['category_id','status_property_id','district_id','image_id','name','rooms','garage','square_meters','bathrooms','price','description','status'];
     public function categories(){
         return $this->belongsTo(Category::class,'category_id');
     }
@@ -19,5 +19,9 @@ class Product extends Model
     }
     public function meInteresa(){
         return $this->hasMany(MeInteresa::class);
+    }
+
+    public function imageProduct(){
+        return $this->belongsTo(ImageProduct::class,'image_id');
     }
 }

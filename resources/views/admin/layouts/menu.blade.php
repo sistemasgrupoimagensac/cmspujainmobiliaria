@@ -11,7 +11,7 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                    {{Auth::user()->name}}
+                    {{-- {{Auth::user()->name}} --}}
                     <span class="avatar avatar-sm">
                         {{-- @if(Auth::user()->image !=null)
                             <img src="{{ asset('/storage/uploads/profiles/'. Auth::user()->image) }}" alt="Avatar del usuario">

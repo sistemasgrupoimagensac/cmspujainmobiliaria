@@ -41,10 +41,10 @@
             <img src="img/logo.png" class="ms-4" alt="">
             <ul class="navbar-nav">
                 <li class="nav-item active p-4">
-                    <a class="nav-link" href="index.html">Compra</a>
+                    <a class="nav-link" href="{{ route('app') }}">Compra</a>
                 </li>
                 <li class="nav-item p-4">
-                    <a class="nav-link" href="quienesomos.html">Alquiler</a>
+                    <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
                 </li>
                 <li class="nav-item p-4">
                     <a class="nav-link" href="servicios.html">Remate</a>
@@ -127,6 +127,8 @@
                     </div>
                 </div>
                 <div class="col-12 justify-content-center ps-3 pe-3">
+                    <a href="{{ route('detalle', ['id' => $item->id]) }}"
+                        style="text-decoration: none;list-style:none; color:#01276A">
                     <span><img src="img/vector/maps.svg" alt=""> {{ $item->district->district }}</span>
                     <h2>{{ $item->categories->name }} {{ $item->district->district }}</h2>
                     <p>{{ $item->statusProperty->name }}</p>
@@ -154,6 +156,7 @@
                     </div>
                         <p>Desde</p>
                         <h2>USD 1090.659.007</h2>
+                    </a>
                 </div>
             </div>
             @endforeach            

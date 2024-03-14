@@ -45,11 +45,11 @@
           <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <img src="img/logo.png" class="ms-4" alt="">
                 <ul class="navbar-nav">
-                    <li class="nav-item active p-4">
-                        <a class="nav-link" href="index.html">Compra</a>
-                    </li>
                     <li class="nav-item p-4">
-                        <a class="nav-link" href="quienesomos.html">Alquiler</a>
+                        <a class="nav-link" href="{{ route('app') }}">Compra</a>
+                    </li>
+                    <li class="nav-item active p-4">
+                        <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
                     </li>
                     <li class="nav-item p-4">
                         <a class="nav-link" href="servicios.html">Remate</a>
@@ -63,7 +63,7 @@
 </header>
 <section>
     <div class="container-fluid banner">
-    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -73,8 +73,8 @@
             <div class="carousel-item active" data-bs-interval="10000">
                 <img src="img/banner2.1.png" class="d-block w-100 img-banner" alt="...">
                 <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
+                        <h2>Tu Hogar Ideal, Encuentra las mejores<br>
+                            propiedades al Mejor Precio</h2>
                         <div class="input-group bg-white rounded-pill align-items-center p-2">
                             <input type="text" class="form-control rounded-pill border-0" placeholder="Buscar propiedades">
                             <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
@@ -121,28 +121,53 @@
 </section>
 <section>
     <div class="container-fluid">
-        <h2>Buscar por</h2>
+        <h2 class="ms-5">Buscar por</h2>
         <div class="row">
             <div class="owl-carousel owl-theme text-center">
                 <div class="item">
-                    <img src="./img/vector/casa.svg" class="img-fluid" alt="">
-                    <p>Casa</p>
+                    <a href="{{ route('alquiler')}}?category_id=1" style="color: {{ (request('category_id') == 1) ? 'white' : '#000000' }} !important;">
+                        @if(request('category_id') == 1)
+                            <img src="./img/vector/casablanco.svg" class="img-fluid" alt="">Casa
+                        @else
+                            <img src="./img/vector/casa.svg" class="img-fluid" alt="">Casa
+                        @endif
+                    </a>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/departamento.svg" class="img-fluid" alt="">
-                    <p>Departamento</p>
+                    <a href="{{ route('alquiler')}}?category_id=2" style="color: {{ (request('category_id') == 2) ? 'white' : '#000000' }} !important;">
+                        @if(request('category_id') == 2)
+                            <img src="./img/vector/departamentoblanco.svg" class="img-fluid" alt="">Departamento
+                        @else
+                            <img src="./img/vector/departamento.svg" class="img-fluid" alt="">Departamento
+                        @endif
+                    </a>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/oficina.svg" class="img-fluid" alt="">
-                    <p>Oficina</p>
+                    <a href="{{ route('alquiler')}}?category_id=3" style="color: {{ (request('category_id') == 3) ? 'white' : '#000000' }} !important;">
+                        @if(request('category_id') == 3)
+                            <img src="./img/vector/oficinablanco.svg" class="img-fluid" alt="">Oficina
+                        @else
+                            <img src="./img/vector/oficina.svg" class="img-fluid" alt="">Oficina
+                        @endif
+                    </a>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/terreno.svg" class="img-fluid" alt="">
-                    <p>Terreno</p>
+                    <a href="{{ route('alquiler')}}?category_id=4" style="color: {{ (request('category_id') == 4) ? 'white' : '#000000' }} !important;">
+                        @if(request('category_id') == 4)
+                            <img src="./img/vector/terrenoblanco.svg" class="img-fluid" alt="">Terreno
+                        @else
+                            <img src="./img/vector/terreno.svg" class="img-fluid" alt="">Terreno
+                        @endif
+                    </a>
                 </div>
                 <div class="item">
-                    <img src="./img/vector/local.svg" class="img-fluid" alt="">
-                    <p>Local</p>
+                    <a href="{{ route('alquiler')}}?category_id=5" style="color: {{ (request('category_id') == 5) ? 'white' : '#000000' }} !important;">
+                        @if(request('category_id') == 5)
+                            <img src="./img/vector/localblanco.svg" class="img-fluid" alt="">Local
+                        @else
+                            <img src="./img/vector/local.svg" class="img-fluid" alt="">Local
+                        @endif
+                    </a>
                 </div>
             </div>
         </div>
@@ -150,7 +175,6 @@
 <section>
     <div class="container-fluid">
         <div class="row m-0 p-0 ">
-            <h2>Los mas destacado</h2>
             @foreach($products as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
@@ -163,10 +187,10 @@
                     <span><h3><img src="img/vector/maps.svg" alt=""> {{ $item->district->district }} </h3></span>
                     <h2 style="color: #FF5B00; ">{{ $item->categories->name }} {{ $item->district->district }}</h2>
                     <p>Propiedad en {{ $item->statusProperty->name }}</p>
-                    <div class="row ps-3 pe-3">
-                        <div class="col-9 mi-div text-center">
+                    <div class="row ">
+                        <div class="col-9">
                             {{ $item->description }}
-                            <h2 class="mb-0">{{ $item->rooms }}</h2>
+                            <h2 class="mb-0">{{ $item->statusProperty->name }}</h2>
                         </div>
                 
                         <div class="col-3 mi-div text-center">
@@ -177,7 +201,7 @@
                     </div>
                         <p>Desde</p>
                         <h2>USD 1090.659.007</h2>
-                </div>
+                    </div>
             </div>
             @endforeach            
         </div>
@@ -189,7 +213,7 @@
         <button class="btn btn-primary boton"> Explorar más propiedades</button>
     </div>
 </section>
-<section style="margin-top: 20rem;">
+<section class="background-section" style="">
     <div class="container-fluid" style="background-color: #FF5B00;">
         <div class="row align-items-center justify-content-center m-0">
             <div class="col-lg-5 col-md-6 col-sm-12 order-md-1 order-sm-2">
@@ -206,7 +230,7 @@
 </section>
 <footer>
     <div class="container-fluid footer-div " style="background-color: #1F1F1F;">
-        <div class="row align-items-evenly justify-content-center m-0 text-center ">
+        <div class="row align-items-evenly justify-content-center m-0 text-start ">
            
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <img src="img/vector/logoblanco.svg" class="text-start ps-5 pb-5" height="130px" alt="">  
@@ -221,7 +245,7 @@
                 
             </div>
         </div>
-        <div class="row align-items-evenly justify-content-center m-0 text-center ">
+        <div class="row align-items-evenly justify-content-center m-0 text-start ">
            
             <div class="col-lg-3 col-md-6 col-sm-12">
                 
@@ -233,7 +257,7 @@
                     <li>Mapa de Sitio</li>
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 text-start">
                 <ul>
                     <li>Anunciantes</li>
                     <li>Agencias</li>
@@ -242,7 +266,7 @@
                     <li>Constructores</li>
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 text-start">
                 <h2>Contáctanos</h2>
                 <p class="p-0 m-0">Av. Canaval y Moreyra 290</p>
                 <p class="p-0 m-0">Oficina No 41 y 42</p>
@@ -252,13 +276,13 @@
                 <p class="p-0 m-0">+51 934 339 375</p>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <h2>Síguenos</h2>
-                <div class="text-center align-items-center ">
+                <h2 class="ps-2">Síguenos</h2>
+                <div class="text-start align-items-center ">
                         <img src="img/vector/facebookblanco.svg" class="img-fluid text-center icon m-auto p-2" alt="">
                         <img src="img/vector/instagramblanco.svg" class="img-fluid text-center icon m-auto p-2" alt="">
                                   
                 </div>
-                <img src="img/vector/libroreclamaciones.svg" class="text-start" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
+                <img src="img/vector/libroreclamaciones.svg" class="text-start ps-2" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
             </div>
         </div>
     </div>

@@ -64,7 +64,7 @@ nav{
     font-weight: bold;
 }
 .navbar-nav .nav-item.active .nav-link {
-    text-decoration: underline #FB7125 5px;
+    text-decoration: underline  3px #FB7125;
 }
 
 .icon{

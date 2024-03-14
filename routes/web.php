@@ -65,4 +65,6 @@ Route::post('/logout-user', [LoginController::class,'logout'])->name('logout-use
 
 Route::get('/', [AppController::class,'index'])->name('app');
 Route::get('/alquiler',[AppController::class,'alquiler'])->name('alquiler');
-
+Route::get('/remate',[AppController::class,'remate'])->name('remate');
+Route::get('/detalle/{id}',[AppController::class,'detalle'])->name('detalle');
+Route::post('/subir_imagen', [LoginController::class,'uploadImageProduct'])->name('subir_imagen');
