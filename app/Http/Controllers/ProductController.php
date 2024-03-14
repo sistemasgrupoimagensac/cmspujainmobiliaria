@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\District;
+use App\ImageProduct;
 use App\Product;
 use App\StatusProperty;
 use Exception;
@@ -146,7 +147,32 @@ class ProductController extends Controller
         ->first();
         return response()->json($product);
     }
+    public function seletImageProduct($product_id){
+        $images = ImageProduct::where('product_id',$product_id)->get();
+        return response()->json($images);
+    }
     public function uploadImageProduct(Request $request){
-
+        $image_product = new ImageProduct();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('products', $imageName, 'public');
+            $image_product->url_image = $imageName;
+            $image_product->product_id = $request->product_id;
+            $image_product->status = 1;
+          
+            $image_product->save();
+            
+            return response()->json([
+                'success' => true,
+                'url' => asset('storage/products/' . $imageName),
+                'fecha' => $image_product->created_at->format('Y-m-d H:i:s'),
+                'mensaje' => 'La imagen se ha subido correctamente.'
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'mensaje' => 'No se ha enviado ninguna imagen.'
+        ]);
     }
 }

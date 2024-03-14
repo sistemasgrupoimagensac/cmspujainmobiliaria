@@ -159,7 +159,7 @@
                         <td class="text-center">{{ $item->bathrooms }}</td>  
                         <td class="text-center">{{ $item->price }}</td>  
                         <td class="text-center">
-                            <button type="submit" class="btn btn-ghost-primary btn-sm" data-bs-toggle="modal" data-bs-target="#subirimagen">
+                            <button type="submit" class="btn btn-ghost-primary btn-sm" data-bs-toggle="modal" data-bs-target="#subirimagen" onclick="traerDataImageProduct({{ $item->id }})">
                                 <i class="fa-solid fa-images"></i>
                             </button> 
                         </td>   
@@ -180,53 +180,46 @@
     </div>
     <!-- Fin ejemplo de tabla Listado -->
 </div>
-<div class="modal fade" id="subirimagen" >
+<div class="modal fade" id="subirimagen">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="subirimagenLabel">Agregar nuevo Producto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="subirimagenLabel">Agregar nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <form action="{{ route('subir_imagen') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group mb-3">
-                            <label for="">Subir imagen</label>
-                            <input type="file" name="archivo_inmueble" id="archivo_inmueble" class="form-control-file form-control" accept="image/*">
-                        </div>
-                        <div id="contenido-requisitos-inmueble"><div class="table-responsive table-sm">
-                            <table class="table table-sm table-hover">
+            <form action="{{ route('subir_imagen') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="product_id" id="inputId" value="">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="">Subir imagen</label>
+                        <input type="file" name="image" id="image" class="form-control-file form-control" accept="image/*">
+                    </div>
+                    <div id="contenido-requisitos-inmueble">
+                        <div class="table-responsive table-sm">
+                            <table class="table table-sm table-hover" id="tabla-imagenes">
                                 <thead class="bg-orange2 text-white">
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Imagen</th>
-                                        <th class="text-center">Estado</th>
                                         <th class="text-center">Fecha y Hora</th>
                                         <th class="text-center">Ver</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">Falta</td> 
-                                        <td class="text-center">aqui va la imagen</td>     
-                                        <td class="text-center">estado</td>   
-                                        <td class="text-center">fecha</td>  
-                                        <td class="text-center">ver</td>                     
-                                    </tr>
+                                    <!-- Los datos de las imágenes se cargarán aquí dinámicamente -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
         </div>
-    </div>    
+    </div>
 </div>
 <!-- Modal para crear un nuevo usuario -->
 <div class="modal fade" id="nuevoproducto" >
@@ -406,9 +399,7 @@
                     $('#updatebathrooms').val(product.bathrooms);
                     $('#updateprice').val(product.price);
                     $('#updatedescription').val(product.description);
-
                     $('#actualizarProductModal').modal('show');
-                
             },
             error: function() {
                 // Manejo de errores en caso de que la petición AJAX falle
@@ -417,7 +408,35 @@
 
         });
     };
-    
+</script>
+<script>
+    var traerDataImageProduct = function(id) {
+        const url = "/image/" + id;
+        $.ajax({
+            url: url,
+            method: "GET",
+            success: function(response) {
+                // Limpiamos la tabla antes de agregar nuevas filas
+                $('#tabla-imagenes tbody').empty();
+                // Recorremos los datos de las imágenes y los agregamos a la tabla
+                $.each(response, function(index, image) {
+                    var newRow = '<tr>' +
+                                '<td class="text-center">' + (index + 1) + '</td>' +
+                                '<td class="text-center">' + image.url_image + '</td>' +
+                                '<td class="text-center"> </td>' +
+                                '<td class="text-center"><a href="" target="_blank">Ver</a></td>' +
+                                '</tr>';
+                    $('#tabla-imagenes tbody').append(newRow);
+                });
+                // Mostramos el modal después de cargar los datos
+                $('#subirimagen').modal('show');
+            },
+            error: function() {
+                // Manejo de errores en caso de que la petición AJAX falle
+                alert('Error en la solicitud AJAX.');
+            }
+        });
+    };
 </script>
 <script>
     $(document).ready(function() {

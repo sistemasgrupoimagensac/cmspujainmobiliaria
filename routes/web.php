@@ -67,4 +67,6 @@ Route::get('/', [AppController::class,'index'])->name('app');
 Route::get('/alquiler',[AppController::class,'alquiler'])->name('alquiler');
 Route::get('/remate',[AppController::class,'remate'])->name('remate');
 Route::get('/detalle/{id}',[AppController::class,'detalle'])->name('detalle');
-Route::post('/subir_imagen', [LoginController::class,'uploadImageProduct'])->name('subir_imagen');
+Route::post('/subir_imagen', [ProductController::class,'uploadImageProduct'])->name('subir_imagen');
+Route::get('image/{id}',[ProductController::class,'selectProduct'])->name('seleccionar.producto');
+// Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');
