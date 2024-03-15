@@ -37,5 +37,7 @@ class LoginController extends Controller
         // Redirige al usuario a la página de inicio de sesión
         return redirect('/login-user');
     }
-
+    public function showRegisterFormUser(){
+        return view('admin.login.sign-up');
+    }
 }

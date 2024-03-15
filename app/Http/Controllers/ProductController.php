@@ -61,7 +61,6 @@ class ProductController extends Controller
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
-            // 'image' => 'nullable|max:1000|mimetypes:image/*',
             'name' => 'required',
             'price'   => 'required|numeric',
             'rooms'   => 'required|integer',
@@ -70,8 +69,6 @@ class ProductController extends Controller
             'price'   => 'required',
             'price'   => 'required|integer',
         ], [
-            // 'image.max' => 'La imágen no debe pesar más de 1MB',
-            // 'image.mimetypes' => 'La imágen no es un formato aceptable',
             'product.required'   => 'El nombre del producto es requerido',
             'price.required'    => 'El precio es requerido',
             'price.numeric'     => 'El precio debe ser un número',
@@ -93,13 +90,6 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
         $product->status = 1;
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-        //     // Specify the 'public' disk for storing the image
-        //     $image->storeAs('products', $imageName, 'public');
-        //     $product->image = $imageName;
-        // }
         $product->save();
         return back()->with('createProduct','¡El producto ha sido creado con éxito!');
     }
@@ -115,13 +105,6 @@ class ProductController extends Controller
         $product->bathrooms = $request->bathrooms;
         $product->price = $request->price;
         $product->status = 1;
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-        //     // Specify the 'public' disk for storing the image
-        //     $image->storeAs('products', $imageName, 'public');
-        //     $product->image = $imageName;
-        // }
         $product->description = $request->description;
         $product->save();
         return back()->with('updateProduct','¡El producto  ha sido modificado con éxito!');
@@ -147,8 +130,8 @@ class ProductController extends Controller
         ->first();
         return response()->json($product);
     }
-    public function seletImageProduct($product_id){
-        $images = ImageProduct::where('product_id',$product_id)->get();
+    public function selectImageProduct($id){
+        $images = ImageProduct::where('product_id',$id)->get();
         return response()->json($images);
     }
     public function uploadImageProduct(Request $request){
@@ -160,19 +143,28 @@ class ProductController extends Controller
             $image_product->url_image = $imageName;
             $image_product->product_id = $request->product_id;
             $image_product->status = 1;
-          
             $image_product->save();
-            
+            $data = [
+                'image_url' => asset('storage/products/' . $imageName),
+                'fecha' => $image_product->created_at->format('Y-m-d H:i:s'),
+                'product_id'=>$request->product_id,
+            ];
+    
             return response()->json([
                 'success' => true,
-                'url' => asset('storage/products/' . $imageName),
-                'fecha' => $image_product->created_at->format('Y-m-d H:i:s'),
-                'mensaje' => 'La imagen se ha subido correctamente.'
+                'data' => $data,
+                'message' => 'La imagen se ha subido correctamente.'
             ]);
         }
+    
         return response()->json([
             'success' => false,
-            'mensaje' => 'No se ha enviado ninguna imagen.'
+            'message' => 'No se ha enviado ninguna imagen.'
         ]);
+    }
+    public function disableImage(Request $request){
+        $product = ImageProduct::findOrFail($request->id);
+        $product->status = '0';
+        $product->save();
     }
 }

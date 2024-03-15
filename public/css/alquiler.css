@@ -59,6 +59,9 @@ nav{
         max-width: 250px;
         padding: 2rem;
     }
+    .background-section{
+        margin-top: 13rem !important;
+    }
     
 }
 @media screen and (min-width: 992px) {

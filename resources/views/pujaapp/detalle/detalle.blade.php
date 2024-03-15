@@ -70,10 +70,10 @@
                 <div class="row justify-content-center align-items-center rounded-pill border border-1 p-2 m-0">
                     <div class="row justify-content-center d-flex col-6 dropdown m-0 text-center">
                         <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="/img/vector/menuboton.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
+                            <img src="/img/vector/menuburguer.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="burgerMenu">
-                            <li><a class="dropdown-item" href="{{ route('app') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">app</a>
+                            <li><a class="dropdown-item" href="{{ route('app') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Inicio</a>
                                 <form id="perfil-form" action="{{ route('app') }}" method="GET" style="display: none;">
                                     @csrf
                                 </form>
@@ -196,21 +196,21 @@
  </div>
   
     <div class="container pb-5 contenido">
-        <div class="cajamegusta likeButton" data-co-prestamo="{{ $detalle->co_prestamo }}">
-            @if(optional($detalle->interesado)->estado == 1)
-                <img src="../img/vector/corazonlleno.png" alt="No me gusta" class="heartImage">
+        <div class="cajamegusta likeButton" data-co-producto="{{ $detalle->id }}">
+            @if(optional($detalle->interesado)->status == 1)
+                <img src="../img/vector/corazonlleno.svg" alt="Me gusta" class="heartImage">
             @else
-                <img src="../img/vector/corazon.png" alt="Me gusta" class="heartImage">
+                <img src="../img/vector/corazonvacio.svg" alt="No me gusta" class="heartImage">
             @endif
           
         </div>
         <p>{{ $detalle->no_tipo_garantia }}</p>
         <h1><img src="../img/vector/Ubicacion.png" alt=""> {{ $detalle->no_distrito }}</h1>
         <div class="row justify-content-center col-12 imagen-sitio">
-            <div class="owl-carousel justify-content-center d-flex" id="img-inmuebles">
-                <div class=""><a href="../img/barranco1.png" data-lightbox="roadtrip"><img src="../img/barranco1.png"class="img-fluid"></a></div>
-                <div class=""><a href="../img/barranco2.png" data-lightbox="roadtrip"><img src="../img/barranco2.png"class="img-fluid"></a></div>
-                <div class=""><a href="../img/barranco3.png" data-lightbox="roadtrip"><img src="../img/barranco3.png"class="img-fluid"></a></div>
+            <div class="owl-carousel justify-content-center d-flex" id="img-propiedad">
+                @foreach ($images_product as $item)
+                    <div class=""><a href="{{ asset('storage/products/' . $item->url_image) }}" data-lightbox="roadtrip"><img src="{{ asset('storage/products/' . $item->url_image) }}"class="img-fluid"></a></div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -244,29 +244,29 @@
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-4 col-md-6 col-6">
-                    <img src="../img/vector/tasa.svg" alt="">
+                    <img src="../img/vector/tasainteres.svg" alt="">
                     <p>tasa de interés Mensual:</p>
                     <h3>{{ number_format($detalle->nu_tasa_interes_mensual,2 ) }}%</h3>
                 </div>
                 <div class="col-lg-4 col-md-6 col-6">
-                    <img src="../img/vector/plazo.svg" alt="">
+                    <img src="../img/vector/plazofinanciamiento.svg" alt="">
                     <p>Plazo de Financiamiento:</p>
                     <h3>{{$detalle->no_tiempo_pago}}</h3>
                 </div>
                 <div class="col-lg-4 col-md-6 col-6">
-                    <img src="../img/vector/financiamiento.svg" alt="">
+                    <img src="../img/vector/tipofinanciamiento.svg" alt="">
                     <p>Tipo de Financiamiento</p>
                     <h3>{{ $detalle->no_forma_pago}}</h3>
                 </div>
                 <div class="col-lg-4 col-md-6 col-6">
-                    <img src="../img/vector/Comercial.svg" alt="">
+                    <img src="../img/vector/valorcomercial.svg" alt="">
                     <p>Valor Comercial del inmueble:</p>
-                    <h3>{{$detalle->nc_tipo_moneda}} {{ number_format($detalle->nu_total_solicitado,2) }}</h3>
+                    <h3>{{$detalle->nc_tipo_moneda}} {{ number_format($detalle->price,2) }}</h3>
                 </div>
                 <div class="col-lg-4 col-md-6 col-6">
-                    <img src="../img/vector/interesados.png" alt="">
+                    <img src="../img/vector/interesados.svg" alt="">
                     <p>Interesados:</p>
-                    <h3>{{ $totalLikesPorPrestamo[$detalle->co_prestamo] ?? 0 }}</h3>
+                    <h3>{{ $totalLikesPorPrestamo[$detalle->id] ?? 0 }}</h3>
                 </div>
                 <div class="col">
                 </div>
@@ -418,20 +418,20 @@
 <script>
     document.querySelectorAll('.likeButton').forEach(function(likeButton) {
         likeButton.addEventListener('click', function () {
-            var co_prestamo = this.getAttribute('data-co-prestamo');
-            likeAction(co_prestamo, this);
+            var id = this.getAttribute('data-co-producto');
+            likeAction(id, this);
         });
     });
-    function likeAction(co_prestamo, buttonElement) {
+    function likeAction(id, buttonElement) {
         axios.post('/me_interesa', {
-            co_prestamo: co_prestamo,
+            product_id: id,
         })
         .then(function (response) {
-            if (response.data.like_actual.estado === 1) {
-                buttonElement.querySelector('.heartImage').src = '/img/vector/corazonlleno.png';
+            if (response.data.like_actual.status === 1) {
+                buttonElement.querySelector('.heartImage').src = '/img/vector/corazonlleno.svg';
             } 
             else{
-                buttonElement.querySelector('.heartImage').src = '/img/vector/corazon.png';
+                buttonElement.querySelector('.heartImage').src = '/img/vector/corazonvacio.svg';
             }
             var likesCountElement = buttonElement.querySelector('p');
             if (likesCountElement) {
@@ -462,6 +462,30 @@
 <script>
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#img-propiedad').owlCarousel({
+            loop: false,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 2,
+                },
+                1000: {
+                    items: 3,
+                }
+            }
+        });
     });
 </script>
 </body>

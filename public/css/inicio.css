@@ -12,13 +12,21 @@ nav{
     .carousel-caption h2{
        display: none;
     }
+    .section-banner{
+        margin-top: 2rem;
+    }
 }
 @media screen and (min-width: 576px)  {
-    
+    .section-banner{
+        margin-top: 2rem;
+    }
 }
 @media screen and (min-width: 768px) {
     .imagengozu{
         margin-top: -10rem;
+    }
+    .section-banner{
+        margin-top: 14rem;
     }
     
 }
@@ -32,6 +40,9 @@ nav{
     }
     .imagengozu{
         margin-top: -15rem;
+    }
+    .section-banner{
+        margin-top: 20rem;
     }
 }
 .mi-div {
@@ -78,4 +89,10 @@ li{
 ul{
     padding: 0px;
     margin: 0px;
+}
+.likeButton {
+    cursor: pointer;
+}
+.buscar-propiedades::placeholder {
+    color: #FB7125;
 }

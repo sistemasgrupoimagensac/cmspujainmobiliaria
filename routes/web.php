@@ -18,6 +18,7 @@ use App\Http\Controllers\PujaInmobiliaria\AppController;
 use App\Http\Controllers\PujaInmobiliaria\LoginController as PujaInmobiliariaLoginController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPujaController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -61,12 +62,18 @@ Route::get('product/{id}',[ProductController::class,'selectProduct'])->name('sel
 // modo vista usuario
 Route::get('/login-user',[PujaInmobiliariaLoginController::class,'showLoginFormUser'])->name('showLoginFormUser');
 Route::post('/sign-in-user',[PujaInmobiliariaLoginController::class,'signInUser'])->name('sign-in-user');
-Route::post('/logout-user', [LoginController::class,'logout'])->name('logout-user');
+Route::post('/logout-user', [PujaInmobiliariaLoginController::class,'logout'])->name('logout-user');
+Route::get('/show-register-user',[PujaInmobiliariaLoginController::class,'showRegisterFormUser'])->name('showRegisterFormUser');
+
+Route::get('/register-user',[UserPujaController::class,'store'])->name('registerUser');
 
 Route::get('/', [AppController::class,'index'])->name('app');
 Route::get('/alquiler',[AppController::class,'alquiler'])->name('alquiler');
 Route::get('/remate',[AppController::class,'remate'])->name('remate');
 Route::get('/detalle/{id}',[AppController::class,'detalle'])->name('detalle');
 Route::post('/subir_imagen', [ProductController::class,'uploadImageProduct'])->name('subir_imagen');
-Route::get('image/{id}',[ProductController::class,'selectProduct'])->name('seleccionar.producto');
+Route::get('image/{id}',[ProductController::class,'selectImageProduct'])->name('seleccionar.imagen');
+
+Route::post('/me_interesa',[AppController::class,'meInteresa'])->name('meInteresa');
+
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');

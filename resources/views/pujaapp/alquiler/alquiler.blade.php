@@ -18,7 +18,8 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
-        <div class="dropdown position-absolute top-4 end-0 pe-5">
+        <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>
+        {{-- <div class="dropdown position-absolute top-4 end-0 pe-5">
             @if(Auth::guard('puja')->check())
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Hola {{ Auth::guard('puja')->user()->name}}
@@ -34,31 +35,30 @@
                     </form>
                 </ul>
             @else
-                Hola
+                <a class="btn btn-primary" href="{{ route('showLoginFormUser') }}">Iniciar Sesion</a>
             @endif
-            
-        </div>
+        </div> --}}
         <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
        
-          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <img src="img/logo.png" class="ms-4" alt="">
-                <ul class="navbar-nav">
-                    <li class="nav-item p-4">
-                        <a class="nav-link" href="{{ route('app') }}">Compra</a>
-                    </li>
-                    <li class="nav-item active p-4">
-                        <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
-                    </li>
-                    <li class="nav-item p-4">
-                        <a class="nav-link" href="servicios.html">Remate</a>
-                    </li>
-                    <li class="nav-item p-4">
-                        <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
-                    </li>
-                </ul>
-            </div>
+          <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
+            <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
+            <ul class="navbar-nav">
+                <li class="nav-item p-4">
+                    <a class="nav-link" href="{{ route('app') }}">Compra</a>
+                </li>
+                <li class="nav-item active p-4">
+                    <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
+                </li>
+                <li class="nav-item p-4">
+                    <a class="nav-link" href="{{ route('remate') }}">Remate</a>
+                </li>
+                <li class="nav-item p-4">
+                    <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
+                </li>
+            </ul>
+          </div>
     </nav>
 </header>
 <section>
@@ -178,6 +178,65 @@
             @foreach($products as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
+                    <div class="owl-carousel justify-content-center d-flex" id="img-propiedad">
+                        @foreach ($item->imageproduct as $item_image)
+                        <div>
+                            <img src="{{ asset('storage/products/' . $item_image->url_image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
+                        @if($item->interesado)
+                            @if($item->interesado->status == 0)
+                                <img src="img/vector/corazonvacio.svg" class="heartImage pt-2 pe-2" alt="Corazón vacio">
+                            @else
+                                <img src="img/vector/corazonlleno.svg" class="heartImage pt-2 pe-2" alt="Corazón lleno">
+                            @endif
+                        @else
+                            <img src="img/vector/corazonvacio.svg" alt="" class="heartImage pt-2 pe-2">
+                        @endif
+
+                        <input type="hidden" value="{{ $item->id }}" name="product_id">
+                        {{-- <p class="pt-2">Interesados: {{ $totalLikesPorPrestamo[$item->id] ?? 0 }}</p> --}}
+                    </div>
+                </div>
+                <div class="col-12 justify-content-center ps-3 pe-3">
+                    <a href="{{ route('detalle', ['id' => $item->id]) }}"
+                        style="text-decoration: none;list-style:none; color:#FB7125">
+                    <span style="color: #1F1F1F"><img src="img/vector/maps.svg" alt=""> {{ $item->district->district }}</span>
+                    <h2>{{ $item->categories->name }} {{ $item->district->district }}</h2>
+                    <p>{{ $item->statusProperty->name }}</p>
+                    <div class="row ps-3 pe-3">
+                        <div class="col-3 mi-div text-center">
+                            <img src="img/vector/habitacion.svg" alt="" class="img-fluid">
+                            <p class="mb-0">Habitaciones</p>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->rooms }}</h2>
+                        </div>
+                        <div class="col-3 mi-div text-center">
+                            <img src="img/vector/baño.svg" alt="" class="img-fluid">
+                            <p class="mb-0">Baños</p>
+                            <h2 class="mb-0" style="color: #1F1F1F">{{ $item->bathrooms }}</h2>
+                        </div>
+                        <div class="col-3 mi-div text-center">
+                            <img src="img/vector/cochera.svg" alt="" class="img-fluid">
+                            <p class="mb-0">Cochera</p>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->garage }}</h2>
+                        </div>
+                        <div class="col-3 mi-div text-center">
+                            <img src="img/vector/metros.svg" alt="" class="img-fluid">
+                            <p class="mb-0">m2</p>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->square_meters }}</h2>
+                        </div>
+                    </div>
+                        <p style="color: #1F1F1F">Desde</p>
+                        <h2 style="color: #1F1F1F;font-weight:bold">$ {{ $item->price }}</h2>
+                    </a>
+                </div>
+            </div>
+            @endforeach  
+            {{-- @foreach($products as $item)
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-12 position-relative">
                     <img src="{{ asset('storage/products/' . $item->image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
                     <div class="position-absolute top-0 end-0">
                         <img src="img/vector/corazonvacio.svg" class="p-3" alt="">
@@ -203,7 +262,7 @@
                         <h2>USD 1090.659.007</h2>
                     </div>
             </div>
-            @endforeach            
+            @endforeach             --}}
         </div>
         
     </div>
@@ -213,13 +272,13 @@
         <button class="btn btn-primary boton"> Explorar más propiedades</button>
     </div>
 </section>
-<section class="background-section" style="">
+<section style="margin-top: 20rem;">
     <div class="container-fluid" style="background-color: #FF5B00;">
         <div class="row align-items-center justify-content-center m-0">
-            <div class="col-lg-5 col-md-6 col-sm-12 order-md-1 order-sm-2">
+            <div class="col-lg-5 col-md-6 col-sm-12 order-lg-1  order-md-1 order-sm-2 order-2">
                 <img src="img/Component 2.png" alt="" class="img-fluid imagengozu">
             </div>
-            <div class="col-lg-5 col-md-6 col-sm-12  order-md-1 order-sm-1">
+            <div class="col-lg-5 col-md-6 col-sm-12  order-lg-2 order-md-2 order-sm-1 order-1">
                 <h2>Entra a la mejor subastas <br>
                 de propiedades</h2>
                 <h2>Encuentra tu hogar al mejor precio</h2>
@@ -230,22 +289,12 @@
 </section>
 <footer>
     <div class="container-fluid footer-div " style="background-color: #1F1F1F;">
-        <div class="row align-items-evenly justify-content-center m-0 text-start ">
-           
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <img src="img/vector/logoblanco.svg" class="text-start ps-5 pb-5" height="130px" alt="">  
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-   
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-       
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                
+        <div class="row align-items-evenly justify-content-center m-0 text-center ">
+            <div class="col-12 m-0 text-lg-start">
+                <img src="img/vector/logoblanco.svg" class="text-lg-start pb-lg-5 ps-lg-5  p-md-2 p-md-2  p-sm-3 p-sm-3" height="130px" alt="">  
             </div>
         </div>
-        <div class="row align-items-evenly justify-content-center m-0 text-start ">
+        <div class="row align-items-evenly justify-content-center m-0 text-center ">
            
             <div class="col-lg-3 col-md-6 col-sm-12">
                 
@@ -257,7 +306,7 @@
                     <li>Mapa de Sitio</li>
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 text-start">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <ul>
                     <li>Anunciantes</li>
                     <li>Agencias</li>
@@ -266,7 +315,7 @@
                     <li>Constructores</li>
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 text-start">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <h2>Contáctanos</h2>
                 <p class="p-0 m-0">Av. Canaval y Moreyra 290</p>
                 <p class="p-0 m-0">Oficina No 41 y 42</p>
@@ -276,13 +325,13 @@
                 <p class="p-0 m-0">+51 934 339 375</p>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <h2 class="ps-2">Síguenos</h2>
-                <div class="text-start align-items-center ">
+                <h2>Síguenos</h2>
+                <div class="text-center align-items-center ">
                         <img src="img/vector/facebookblanco.svg" class="img-fluid text-center icon m-auto p-2" alt="">
                         <img src="img/vector/instagramblanco.svg" class="img-fluid text-center icon m-auto p-2" alt="">
                                   
                 </div>
-                <img src="img/vector/libroreclamaciones.svg" class="text-start ps-2" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
+                <img src="img/vector/libroreclamaciones.svg" class="text-start" height="25px" alt=""> <span></span>Libro de reclamaciones</span>
             </div>
         </div>
     </div>
@@ -311,6 +360,29 @@
             }
         }
     })
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#img-propiedad').owlCarousel({
+            loop: false,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 1,
+                },
+                1000: {
+                    items: 1,
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>

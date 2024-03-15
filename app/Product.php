@@ -17,10 +17,10 @@ class Product extends Model
     public function district(){
         return $this->belongsTo(District::class,'district_id');
     }
-    public function meInteresa(){
+    public function meinteresa(){
         return $this->hasMany(MeInteresa::class);
     }
-    public function imageProduct(){
+    public function imageproduct(){
         return $this->hasMany(ImageProduct::class);
     }
 

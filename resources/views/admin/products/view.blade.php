@@ -159,9 +159,12 @@
                         <td class="text-center">{{ $item->bathrooms }}</td>  
                         <td class="text-center">{{ $item->price }}</td>  
                         <td class="text-center">
-                            <button type="submit" class="btn btn-ghost-primary btn-sm" data-bs-toggle="modal" data-bs-target="#subirimagen" onclick="traerDataImageProduct({{ $item->id }})">
+                            <button type="button" class="btn btn-ghost-primary btn-sm" 
+                            {{-- data-bs-toggle="modal" data-bs-target="#subirimagen"  --}}
+                            data-id="{{ $item->id }}"
+                                onclick="abrirModalSubirImagen({{ $item->id }})">
                                 <i class="fa-solid fa-images"></i>
-                            </button> 
+                            </button>
                         </td>   
                         <td class="text-center">
                             @if($item->status)
@@ -187,35 +190,35 @@
                 <h5 class="modal-title" id="subirimagenLabel">Agregar nuevo Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('subir_imagen') }}" method="POST" enctype="multipart/form-data">
+            <form  method="POST" enctype="multipart/form-data" id="form-subir-imagen" name="form-subir-imagen">
                 @csrf
-                <input type="hidden" name="product_id" id="inputId" value="">
+                <input type="hidden" name="product_id" id="codigo_producto" value="">
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="">Subir imagen</label>
                         <input type="file" name="image" id="image" class="form-control-file form-control" accept="image/*">
                     </div>
-                    <div id="contenido-requisitos-inmueble">
-                        <div class="table-responsive table-sm">
-                            <table class="table table-sm table-hover" id="tabla-imagenes">
-                                <thead class="bg-orange2 text-white">
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Imagen</th>
-                                        <th class="text-center">Fecha y Hora</th>
-                                        <th class="text-center">Ver</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Los datos de las imágenes se cargarán aquí dinámicamente -->
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive table-sm" style="overflow-y: auto; max-height: 300px;">
+                        <table class="table table-sm table-hover" id="tabla-imagenes">
+                            <thead class="bg-orange2 text-white">
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Imagen</th>
+                                    <th class="text-center">Fecha y Hora</th>
+                                    <th class="text-center">Ver</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los datos de las imágenes se cargarán aquí dinámicamente -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+          
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary" onclick="guardarImagen(event)" >Guardar</button>
                 </div>
             </form>
         </div>
@@ -296,7 +299,6 @@
         </div>
     </div>    
 </div>
-
 <!--Fin del modal-->
 <!-- modal actualizar usuario-->
 <div class="modal fade" id="actualizarProductModal" data-bs-backdrop="static" data-bs-keyboard="false"aria-labelledby="actualizarProductModalLabel" aria-hidden="true">
@@ -409,39 +411,71 @@
         });
     };
 </script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    var traerDataImageProduct = function(id) {
-        const url = "/image/" + id;
+    function abrirModalSubirImagen(codigo){
+        const data=`image/${codigo}`;image
         $.ajax({
-            url: url,
-            method: "GET",
+            url: data,
+            method: 'GET',
             success: function(response) {
-                // Limpiamos la tabla antes de agregar nuevas filas
+                $('#codigo_producto').val(codigo);
+                var image = response;
                 $('#tabla-imagenes tbody').empty();
-                // Recorremos los datos de las imágenes y los agregamos a la tabla
-                $.each(response, function(index, image) {
-                    var newRow = '<tr>' +
-                                '<td class="text-center">' + (index + 1) + '</td>' +
-                                '<td class="text-center">' + image.url_image + '</td>' +
-                                '<td class="text-center"> </td>' +
-                                '<td class="text-center"><a href="" target="_blank">Ver</a></td>' +
-                                '</tr>';
-                    $('#tabla-imagenes tbody').append(newRow);
-                });
-                // Mostramos el modal después de cargar los datos
+
+                    // Iteramos sobre los datos de las imágenes y los agregamos a la tabla
+                    $.each(image, function(index, image) {
+                        var newRow = '<tr>' +
+                                        '<td class="text-center">' + (index + 1) + '</td>' +
+                                        '<td class="text-center">' + image.url_image + '</td>' +
+                                        '<td class="text-center">' + image.updated_at + '</td>' +
+                                        '<td class="text-center"><a href="' + '{{ asset("/storage/products/") }}' + '/'  + image.url_image + '" data-lightbox="roadtrip">Ver</a></td>' +
+                                        '<td class="text-center"><button type="submit" class="btn btn-ghost-danger btn-sm"><i class="fas fa-trash"></i></button></td>' +'</tr>';
+                        $('#tabla-imagenes tbody').append(newRow);
+                    });
+
                 $('#subirimagen').modal('show');
             },
             error: function() {
                 // Manejo de errores en caso de que la petición AJAX falle
                 alert('Error en la solicitud AJAX.');
             }
+        });  
+    }
+</script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+<script>
+    function guardarImagen(event) {
+    event.preventDefault(); // Evitar el envío del formulario normal
+    
+    var formData = new FormData(document.getElementById('form-subir-imagen'));
+
+    axios.post('/subir_imagen', formData)
+        .then(function (response) {
+            if (response.data.success) {
+                abrirModalSubirImagen(response.data.data.product_id);
+                console.log(response.data.message);
+            } else {
+                alert(response.data.message);
+            }
+        })
+        .catch(function (error) {
+            console.error('Error al subir la imagen:', error);
         });
-    };
+    }
 </script>
 <script>
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
     });
 </script>
+<script>
+    lightbox.option({
+        'resizeDuration': 50,
+        'wrapAround': true,
+        'showImageNumberLabel':true
+    })
+</script>
+
 @endsection
 @endsection

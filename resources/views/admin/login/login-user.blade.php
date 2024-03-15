@@ -43,6 +43,9 @@
                     </div>
                 </form>
         </div>
+        <div class="text-center text-secondary mt-3">
+            ¿Aún no te has resgistrado? <a href="{{ route('showRegisterFormUser') }}" tabindex="-1">Registrate</a>
+          </div>
     </div>
     <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
     <!-- Photo -->
