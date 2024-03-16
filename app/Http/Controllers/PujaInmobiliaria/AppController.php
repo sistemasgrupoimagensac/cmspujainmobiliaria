@@ -14,7 +14,9 @@ class AppController extends Controller
 {
     public function index()
     {
-        $products = Product::orderBy('id','desc')->get();
+        $products = Product::orderBy('id','desc')
+        ->where('status',1)
+        ->get();
 
         $solicitantesprocesados = $products->map(function($product){
             $product->interesado = null;

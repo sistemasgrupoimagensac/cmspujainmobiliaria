@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="icon" href="/img/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
-    <title>G Inversiones</title>
+    <title>Puja Inmubiliaria</title>
     <!-- <link rel="stylesheet" href="css/app.css"> -->
     <link rel="stylesheet" href="{{ asset('./css/detalle.css')}}">
     <link rel="stylesheet" href="{{ asset('./css/form.css')}}">
@@ -105,7 +105,7 @@
     <div class="container-fluid border-1 border-top border-bottom p-3">
         <div class="row justify-content-evenly align-items-center">
             <div class="col-12 border-end-2 justify-content-start">
-                <p style="color: #0000;">Buscar ´por:</p>
+                <p style="color: #0000;">Buscar por:</p>
                 <div class="owl-carousel owl-theme" id="menu-tipo-garantia">
                     <div class="item justify-content-center"><a href="{{ route('app')}}?category_id=1">
                         <img src="../img/vector/casaanaranjado.svg" class="img-fluid">Casas</a>
@@ -127,14 +127,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-2 ">
-                <p style="color: #0000;">Ordenar por:</p>
-                <div class="col 12 justify-content-evenly d-flex ">
-                    <div id="btn-lista" style="cursor:pointer"><img src="../img/vector/lista.svg" alt=""> Lista</div>
-                    <div id="btn-grid" style="cursor:pointer"><img src="../img/vector/grilla.svg" alt=""> Grilla</div>
-                </div>
-            </div> --}}
-
         </div>
     </div>
 </div>
@@ -224,7 +216,7 @@
                     <p>Actualmente el fiador solidario es propietario de 4 autos, los cuales alquila como taxi y les genera un ingreso mensual promedio de S/6,000.00, la propietaria tiene una bodega en el primer piso y mantiene un ingreso fijo de S/2,500.00, adicionalmente también fabrican ropa y la venden en Gamarra, por lo que dicha actividad les da una rentabilidad mensual de S/3,000.00 a S/5,000.00.</p>
                     <p>Con el restante del capital desean cubrir la campaña navideña, para la bodega y comprar telas para fabricar ropa.</p>
                     <p>Monto de Financiamiento</p>
-                    <h2>{{$detalle->nc_tipo_moneda}} {{ number_format($detalle->nu_total_solicitado,2) }}</h2>
+                    <h3>${{ number_format($detalle->price,2) }}</h3>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 ">
                     <form class="form m-auto border-1 border " action="">
@@ -240,7 +232,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid pt-5 detalle-2">
+    {{-- <div class="container-fluid pt-5 detalle-2">
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-4 col-md-6 col-6">
@@ -272,7 +264,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="container-fluid m-auto text-center justify-content-center">
         <div class="container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.82598105527808!2d-77.02340514504772!3d-12.097380974593932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c86feca64203%3A0xbd06b9c408851116!2sAv.%20Canaval%20y%20Moreyra%20290%2C%20Lima%2015047!5e0!3m2!1ses-419!2spe!4v1708385630882!5m2!1ses-419!2spe" style="border:0; height:75vh;width:100%" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -315,18 +307,6 @@
                         <p class="mt-2 text-center"style="color:#01276A !important" >Buscar</p>
                     </a>
                 </div>
-                {{-- <div class="col-4">
-                    <a href="{{ route('favoritos')}}" style="color:#F59C1A !important; text-decoration:none;" class="d-block">
-                        <img src="/img/vector/corazon.png" class="img-fluid mx-auto" alt="Departamento">
-                        <p class="mt-2 text-center"style="color:#F59C1A !important" >Favoritos</p>
-                    </a>
-                </div>
-                <div class="col-4">
-                    <a href="{{ route('perfil')}}?co_tipo_garantia=3" style="color:#01276A !important; text-decoration:none;" class="d-block">
-                        <img src="/img/vector/user-mobile.png" class="img-fluid mx-auto" alt="Local Comercial">
-                        <p class="mt-2 text-center"style="color:#01276A" >Perfil</p>
-                    </a>
-                </div> --}}
             </div>
         </div>
     </div>

@@ -190,7 +190,7 @@
                 <h5 class="modal-title" id="subirimagenLabel">Agregar nuevo Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  method="POST" enctype="multipart/form-data" id="form-subir-imagen" name="form-subir-imagen">
+            <form  method="post" enctype="multipart/form-data" id="form-subir-imagen" name="form-subir-imagen">
                 @csrf
                 <input type="hidden" name="product_id" id="codigo_producto" value="">
                 <div class="modal-body">
@@ -289,6 +289,11 @@
                             <label for="" >Descripción:</label>
                             <input type="text" class="form-control" name="description">
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="archivo_inmueble" >Agregar Imagen:</label>
+                            <input type="file" name="image" id="archivo_inmueble" class="form-control-file form-control" accept="image/*">
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -414,42 +419,52 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function abrirModalSubirImagen(codigo){
-        const data=`image/${codigo}`;image
-        $.ajax({
-            url: data,
-            method: 'GET',
-            success: function(response) {
+        const data=`image/${codigo}`;
+        axios.get(data)
+            .then(function(response) {
                 $('#codigo_producto').val(codigo);
-                var image = response;
+                var image = response.data;
                 $('#tabla-imagenes tbody').empty();
 
-                    // Iteramos sobre los datos de las imágenes y los agregamos a la tabla
-                    $.each(image, function(index, image) {
-                        var newRow = '<tr>' +
-                                        '<td class="text-center">' + (index + 1) + '</td>' +
-                                        '<td class="text-center">' + image.url_image + '</td>' +
-                                        '<td class="text-center">' + image.updated_at + '</td>' +
-                                        '<td class="text-center"><a href="' + '{{ asset("/storage/products/") }}' + '/'  + image.url_image + '" data-lightbox="roadtrip">Ver</a></td>' +
-                                        '<td class="text-center"><button type="submit" class="btn btn-ghost-danger btn-sm"><i class="fas fa-trash"></i></button></td>' +'</tr>';
-                        $('#tabla-imagenes tbody').append(newRow);
-                    });
+                // Iteramos sobre los datos de las imágenes y los agregamos a la tabla
+                image.forEach(function(image, index) {
+                    var newRow = '<tr>' +
+                        '<td class="text-center">' + (index + 1) + '</td>' +
+                        '<td class="text-center">' + image.url_image + '</td>' +
+                        '<td class="text-center">' + image.updated_at + '</td>' +
+                        '<td class="text-center"><a href="' + '{{ asset("/storage/products/") }}' + '/' + image.url_image + '" data-lightbox="roadtrip">Ver</a></td>' +
+                        '<td class="text-center"><button type="button" value="' + image.id + '" class="btn btn-ghost-danger btn-sm delete-btn" onclick="disableImage(' + image.id + ',' + image.product_id + ')"><i class="fas fa-trash"></i></button></td>' +
+                        '</tr>';
+                    $('#tabla-imagenes tbody').append(newRow);
+                });
 
                 $('#subirimagen').modal('show');
-            },
-            error: function() {
-                // Manejo de errores en caso de que la petición AJAX falle
+            })
+            .catch(function(error) {
                 alert('Error en la solicitud AJAX.');
-            }
-        });  
+            });
+    }
+    function disableImage(imageId,product_id) {
+        axios.post('/image/disable', {
+                id: imageId
+            })
+            .then(function(response) {
+                if (response.data.success) {
+                    abrirModalSubirImagen(product_id);
+                } else {
+                    alert('Error al deshabilitar la imagen.');
+                }
+            })
+            .catch(function(error) {
+                alert('Error en la solicitud AJAX.');
+            });
     }
 </script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+
 <script>
     function guardarImagen(event) {
-    event.preventDefault(); // Evitar el envío del formulario normal
-    
+    event.preventDefault();
     var formData = new FormData(document.getElementById('form-subir-imagen'));
-
     axios.post('/subir_imagen', formData)
         .then(function (response) {
             if (response.data.success) {

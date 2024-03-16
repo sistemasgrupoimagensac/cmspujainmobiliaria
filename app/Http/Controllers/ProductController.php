@@ -26,7 +26,6 @@ class ProductController extends Controller
                     case 'name':
                         $query->where('name', 'LIKE', $request->search . '%');
                         break;
-
                     case 'rooms':
                         $query->where('rooms', '=', $request->search);
                         break;
@@ -91,6 +90,18 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->status = 1;
         $product->save();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('products', $imageName, 'public');
+        
+            $image_product = new ImageProduct();
+            $image_product->url_image = $imageName;
+            $image_product->product_id = $product->id;
+            $image_product->status = 1;
+            $image_product->save();
+        }
         return back()->with('createProduct','¡El producto ha sido creado con éxito!');
     }
     public function update(Request $request){
@@ -131,7 +142,9 @@ class ProductController extends Controller
         return response()->json($product);
     }
     public function selectImageProduct($id){
-        $images = ImageProduct::where('product_id',$id)->get();
+        $images = ImageProduct::where('product_id',$id)
+        ->where('status',1)
+        ->get();
         return response()->json($images);
     }
     public function uploadImageProduct(Request $request){
@@ -166,5 +179,6 @@ class ProductController extends Controller
         $product = ImageProduct::findOrFail($request->id);
         $product->status = '0';
         $product->save();
+        return response()->json(['success' => true]);
     }
 }

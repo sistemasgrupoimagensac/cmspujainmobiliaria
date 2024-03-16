@@ -16,32 +16,79 @@
     <title>Puja inmobiliaria</title>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
-        <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>
-        <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-       
-          <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
-            <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
-            <ul class="navbar-nav">
-                <li class="nav-item p-4">
-                    <a class="nav-link" href="{{ route('app') }}">Compra</a>
-                </li>
-                <li class="nav-item p-4">
-                    <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
-                </li>
-                <li class="nav-item p-4 active">
-                    <a class="nav-link" href="{{ route('remate') }}">Remate</a>
-                </li>
-                <li class="nav-item p-4">
-                    <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
-                </li>
-            </ul>
-          </div>
-    </nav>
-</header>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
+            <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>
+            {{-- <div class="dropdown position-absolute top-4 end-0 pe-5">
+                @if(Auth::guard('puja')->check())
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Hola {{ Auth::guard('puja')->user()->name}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li> 
+                            <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar sesión
+                            </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout-user') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </ul>
+                @else
+                    <a class="btn btn-primary" href="{{ route('showLoginFormUser') }}">Iniciar Sesion</a>
+                @endif
+            </div> --}}
+            
+            <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+           
+              <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
+                <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
+                <ul class="navbar-nav">
+                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link" href="{{ route('app') }}">Compra</a>
+                    </li>
+                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
+                    </li>
+                    <li class="nav-item active p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link" href="{{ route('remate') }}">Remate</a>
+                    </li>
+                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
+                    </li>
+                </ul>
+              </div>
+              <div class="row justify-content-center align-items-center rounded-pill border border-1 p-2 m-0 position-absolute end-0 d-none d-lg-flex">
+                <div class="row justify-content-center d-flex col-6 dropdown m-0 text-center">
+                    <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/img/vector/menuburguer.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="burgerMenu">
+                        @if (Auth::guard('puja')->check())
+                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                       
+                        @else
+                         <li><a class="dropdown-item" href="{{ route('showLoginFormUser') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Iniciar Sesión</a>
+                            <form id="perfil-form" action="{{ route('showLoginFormUser') }}" method="GET" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        @endif
+                
+                    </ul>
+                </div>
+                <div class="d-flex col-6 m-0 justify-content-center">
+                    <img class="rounded-circle img-fluid" src="/img/vector/perfil.png" style="height:3.5rem;" alt="profile">
+                </div>
+            </div>
+        </nav>
+    </header>
 <section>
     <div class="container-fluid banner">
         <div id="carouselExampleDark" class="carousel carousel-dark slide">
@@ -101,10 +148,10 @@
     </div>
 </section>
 <section>
-    <div class="container-fluid">
+    <div class="container-fluid pt-3 pb-4">
         <h2 class="ms-5">Buscar por</h2>
         <div class="row">
-            <div class="owl-carousel owl-theme text-center">
+            <div class="owl-carousel tipo-busqueda-filtro owl-theme text-center">
                 <div class="item">
                     <a href="{{ route('alquiler')}}?category_id=1" style="color: {{ (request('category_id') == 1) ? 'white' : '#000000' }} !important;">
                         @if(request('category_id') == 1)
@@ -159,11 +206,13 @@
             @foreach($products as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
-                    <div class="owl-carousel justify-content-center d-flex" id="img-propiedad">
+                    <div class="owl-carousel img-propiedad justify-content-center d-flex" id="img-propiedad">
                         @foreach ($item->imageproduct as $item_image)
-                        <div>
-                            <img src="{{ asset('storage/products/' . $item_image->url_image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
-                        </div>
+                            @if($item_image->status == 1)
+                                <div>
+                                    <img src="{{ asset('storage/products/' . $item_image->url_image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                     <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
@@ -296,7 +345,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha384-EkEiLB/XwiqW7GOq6CQGxZ9Fqf6GoUjA8jGx3+HHgjnGQQlnarwwy8zoD4lF1zP" crossorigin="anonymous"></script>
 <script>
-    $('.owl-carousel').owlCarousel({
+    $('.tipo-busqueda-filtro').owlCarousel({
         loop:true,
         margin:10,
         nav:false,
@@ -318,41 +367,11 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#img-propiedad').owlCarousel({
+        $('.img-propiedad').owlCarousel({
             loop: false,
             margin: 10,
             responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 1,
-                },
-                1000: {
-                    items: 1,
-                }
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#img-propiedad').owlCarousel({
-            loop: false,
-            margin: 10,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 1,
-                },
-                1000: {
-                    items: 1,
-                }
-            }
+            items:1
         });
     });
 </script>
