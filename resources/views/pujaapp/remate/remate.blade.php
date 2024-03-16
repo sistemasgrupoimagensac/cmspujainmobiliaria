@@ -215,6 +215,7 @@
                             @endif
                         @endforeach
                     </div>
+                    @if(Auth::guard('puja')->check())
                     <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
                         @if($item->interesado)
                             @if($item->interesado->status == 0)
@@ -229,6 +230,11 @@
                         <input type="hidden" value="{{ $item->id }}" name="product_id">
                         {{-- <p class="pt-2">Interesados: {{ $totalLikesPorPrestamo[$item->id] ?? 0 }}</p> --}}
                     </div>
+                    @else
+                        <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
+                            <a href="{{route('showLoginFormUser')}}"><img src="img/vector/corazonvacio.svg" alt="" class="heartImage pt-2 pe-2"></a>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-12 justify-content-center ps-3 pe-3">
                     <a href="{{ route('detalle', ['id' => $item->id]) }}"

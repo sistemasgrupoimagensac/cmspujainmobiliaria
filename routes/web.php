@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PujaInmobiliaria\AppController;
+use App\Http\Controllers\PujaInmobiliaria\FavoritosController;
 use App\Http\Controllers\PujaInmobiliaria\LoginController as PujaInmobiliariaLoginController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UserController;
@@ -76,4 +77,7 @@ Route::post('/subir_imagen', [ProductController::class,'uploadImageProduct'])->n
 Route::get('image/{id}',[ProductController::class,'selectImageProduct'])->name('seleccionar.imagen');
 Route::post('/image/disable',[ProductController::class,'disableImage'])->name('inhabilitar.image');
 Route::post('/me_interesa',[AppController::class,'meInteresa'])->name('meInteresa');
+
+Route::get('/favoritos',[FavoritosController::class,'index'])->name('favoritos');
+
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');

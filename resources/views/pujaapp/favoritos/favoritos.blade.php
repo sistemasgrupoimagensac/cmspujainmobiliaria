@@ -89,65 +89,7 @@
             </div>
         </nav>
     </header>
-<section>
-    <div class="container-fluid banner">
-        <div id="carouselExampleDark" class="carousel carousel-dark slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-                <img src="img/banner2.1.png" class="d-block w-100 img-banner" alt="...">
-                <div class="carousel-caption text-start">
-                      
-                        <div class="input-group bg-white rounded-pill align-items-center p-2">
-                            <h2 style="z-index: 99;color:#1F1F1F">Tu Hogar Ideal, Encuentra las mejores<br>
-                                propiedades al Mejor Precio</h2>
-                            <input type="text" class="form-control rounded-pill border-0" placeholder="Buscar propiedades">
-                            <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
-                        </div>
-                </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="10000">
-                <img src="img/slide2.png" class="d-block w-100 img-banner" alt="...">
-                <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
-                        <div class="input-group bg-white rounded-pill align-items-center p-2">
-                            <input type="text" class="form-control rounded-pill border-0" placeholder="Buscar propiedades">
-                            <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
-                        </div>
-                </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="10000">
-                <img src="img/slide3.png" class="d-block w-100 img-banner" alt="...">
-                <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
-                        <div class="input-group bg-white rounded-pill align-items-center p-2">
-                            <input type="text" class="form-control rounded-pill border-0" placeholder="Buscar propiedades">
-                            <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-        </div>
 
-    </div>
-</section>
 <section>
     <div class="container-fluid pt-3 pb-4">
         <h2 class="ms-5">Buscar por</h2>
@@ -204,7 +146,7 @@
 <section>
     <div class="container-fluid">
         <div class="row m-0 p-0 ">
-            @foreach($products as $item)
+            @foreach($favoritos as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
                     <div class="owl-carousel img-propiedad justify-content-center d-flex" id="img-propiedad">
