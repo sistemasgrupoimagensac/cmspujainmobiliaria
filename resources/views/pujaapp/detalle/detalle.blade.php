@@ -78,16 +78,6 @@
                                     @csrf
                                 </form>
                             </li>
-                            {{-- <li><a class="dropdown-item" href="{{ route('perfil') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Perfil</a>
-                                <form id="perfil-form" action="{{ route('perfil') }}" method="GET" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                            <li><a class="dropdown-item" href="{{ route('favoritos') }}" onclick="event.preventDefault(); document.getElementById('favoritos-form').submit();">Mis Favoritos</a>
-                                <form id="favoritos-form" action="{{ route('favoritos') }}" method="GET" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li> --}}
                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
@@ -97,33 +87,6 @@
                     </div>
                     <div class="d-flex col-6 m-0 justify-content-center">
                         <img class="rounded-circle img-fluid" src="/img/vector/perfil.png" style="height:3.5rem;" alt="profile">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid border-1 border-top border-bottom p-3">
-        <div class="row justify-content-evenly align-items-center">
-            <div class="col-12 border-end-2 justify-content-start">
-                <p style="color: #0000;">Buscar por:</p>
-                <div class="owl-carousel owl-theme" id="menu-tipo-garantia">
-                    <div class="item justify-content-center"><a href="{{ route('app')}}?category_id=1">
-                        <img src="../img/vector/casaanaranjado.svg" class="img-fluid">Casas</a>
-                    </div>
-                    <div class="item"><a href="{{ route('app')}}?category_id=2">
-                        <img src="../img/vector/departamentoanaranjado.svg" class="img-fluid">Departamento</a>
-                    </div>
-                    <div class="item"><a href="{{ route('app')}}?category_id=3">
-                        <img src="../img/vector/oficinaanaranjado.svg" class="img-fluid">oficina</a>
-                    </div>
-                    <div class="item"><a href="{{ route('app')}}?category_id=3">
-                        <img src="../img/vector/localanaranjado.svg" class="img-fluid">Local Comercial</a>
-                    </div>
-                    <div class="item"><a href="{{ route('app')}}?category_id=4">
-                        <img src="../img/vector/terrenoanaranjado.svg" class="img-fluid">Terreno</a>
-                    </div>
-                    <div class="item"><a href="{{ route('app')}}?co_tipo_garantia=4">
-                        <img src="../img/vector/localanaranjado.svg" class="img-fluid">Terreno</a>
                     </div>
                 </div>
             </div>
@@ -227,7 +190,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 ">
                     <form class="form m-auto border-1 border " action="">
                         <div class="d-flex m-auto justify-content-center align-items-center p-3">
-                            <img src="/img/vector/formicon.svg" alt=""><p class="p-4">Contáctanos</p>
+                            <img src="/img/vector/formicon.svg" alt=""><p class="p-4">Contacta su Aesor</p>
                         </div>
                         <textarea class="form-control mb-3" id="exampleFormControlTextarea1" rows="3"></textarea>
                         <button type="button" class="btn btn-block btn-primary mb-3">Enviar</button>
@@ -238,9 +201,33 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="d-flex justify-content-start ">
+            <div class="col-2 mi-div text-center">
+                <img src="/img/vector/habitacion.svg" alt="" class="img-fluid p-1">
+                <p class="mb-0">Habitaciones</p>
+                <h2 class="mb-0"style="color: #1F1F1F">{{ $detalle->rooms }}</h2>
+            </div>
+            <div class="col-2 mi-div text-center">
+                <img src="/img/vector/baño.svg" alt="" class="img-fluid p-1">
+                <p class="mb-0">Baños</p>
+                <h2 class="mb-0" style="color: #1F1F1F">{{ $detalle->bathrooms }}</h2>
+            </div>
+            <div class="col-2 mi-div text-center">
+                <img src="/img/vector/cochera.svg" alt="" class="img-fluid p-1">
+                <p class="mb-0">Cochera</p>
+                <h2 class="mb-0"style="color: #1F1F1F">{{ $detalle->garage }}</h2>
+            </div>
+            <div class="col-2 mi-div text-center">
+                <img src="/img/vector/metros.svg" alt="" class="img-fluid p-1">
+                <p class="mb-0">m2</p>
+                <h2 class="mb-0"style="color: #1F1F1F">{{ $detalle->square_meters }}</h2>
+            </div>
+        </div>
+    </div>
     {{-- <div class="container-fluid pt-5 detalle-2">
         <div class="container">
-            <div class="row align-items-center justify-content-center">
+            <div class="row align-detalles-center justify-content-center">
                 <div class="col-lg-4 col-md-6 col-6">
                     <img src="../img/vector/tasainteres.svg" alt="">
                     <p>tasa de interés Mensual:</p>

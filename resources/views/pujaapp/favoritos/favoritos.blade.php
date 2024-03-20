@@ -72,7 +72,6 @@
                                 @csrf
                             </form>
                         </li>
-                       
                         @else
                          <li><a class="dropdown-item" href="{{ route('showLoginFormUser') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Iniciar Sesión</a>
                             <form id="perfil-form" action="{{ route('showLoginFormUser') }}" method="GET" style="display: none;">
@@ -150,7 +149,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="col-12 position-relative">
                     <div class="owl-carousel img-propiedad justify-content-center d-flex" id="img-propiedad">
-                        @foreach ($item->imageproduct as $item_image)
+                        @foreach ($item->product->imageproduct as $item_image)
                             @if($item_image->status == 1)
                                 <div>
                                     <img src="{{ asset('storage/products/' . $item_image->url_image) }}" alt="" class="img-fluid w-100 text-center" style="max-height: 300px">
@@ -159,19 +158,12 @@
                         @endforeach
                     </div>
                     @if(Auth::guard('puja')->check())
-                    <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
-                        @if($item->interesado)
-                            @if($item->interesado->status == 0)
-                                <img src="img/vector/corazonvacio.svg" class="heartImage pt-2 pe-2" alt="Corazón vacio">
-                            @else
-                                <img src="img/vector/corazonlleno.svg" class="heartImage pt-2 pe-2" alt="Corazón lleno">
-                            @endif
-                        @else
-                            <img src="img/vector/corazonvacio.svg" alt="" class="heartImage pt-2 pe-2">
-                        @endif
-
-                        <input type="hidden" value="{{ $item->id }}" name="product_id">
-                        {{-- <p class="pt-2">Interesados: {{ $totalLikesPorPrestamo[$item->id] ?? 0 }}</p> --}}
+                    <div class="position-absolute top-0 end-0 likeButton"style="z-index: 20">
+                        <div class="heart text-center likeButton" data-co-prestamo="{{ $item->co_prestamo }}">
+                            <img src="img/vector/corazonlleno.svg" class="heartImage" alt="Corazón lleno">
+                            <input type="hidden" value="{{ $item->id}}" name="id_like">
+                            <input type="hidden" value="{{ $item->product_id }}" name="co_prestamo">
+                        </div>
                     </div>
                     @else
                         <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
@@ -182,29 +174,29 @@
                 <div class="col-12 justify-content-center ps-3 pe-3">
                     <a href="{{ route('detalle', ['id' => $item->id]) }}"
                         style="text-decoration: none;list-style:none; color:#FB7125">
-                    <span style="color: #1F1F1F"><img src="img/vector/maps.svg" alt=""> {{ $item->district->district }}</span>
-                    <h2>{{ $item->categories->name }} {{ $item->district->district }}</h2>
-                    <p>{{ $item->statusProperty->name }}</p>
+                    <span style="color: #1F1F1F"><img src="img/vector/maps.svg" alt=""> {{ $item->product->district->district }}</span>
+                    <h2>{{ $item->product->categories->name }} {{ $item->product->district->district }}</h2>
+                    <p>{{ $item->product->statusProperty->name }}</p>
                     <div class="row ps-3 pe-3">
                         <div class="col-3 mi-div text-center">
                             <img src="img/vector/habitacion.svg" alt="" class="img-fluid">
                             <p class="mb-0">Habitaciones</p>
-                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->rooms }}</h2>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->product->rooms }}</h2>
                         </div>
                         <div class="col-3 mi-div text-center">
                             <img src="img/vector/baño.svg" alt="" class="img-fluid">
                             <p class="mb-0">Baños</p>
-                            <h2 class="mb-0" style="color: #1F1F1F">{{ $item->bathrooms }}</h2>
+                            <h2 class="mb-0" style="color: #1F1F1F">{{ $item->product->bathrooms }}</h2>
                         </div>
                         <div class="col-3 mi-div text-center">
                             <img src="img/vector/cochera.svg" alt="" class="img-fluid">
                             <p class="mb-0">Cochera</p>
-                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->garage }}</h2>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->product->garage }}</h2>
                         </div>
                         <div class="col-3 mi-div text-center">
                             <img src="img/vector/metros.svg" alt="" class="img-fluid">
                             <p class="mb-0">m2</p>
-                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->square_meters }}</h2>
+                            <h2 class="mb-0"style="color: #1F1F1F">{{ $item->product->square_meters }}</h2>
                         </div>
                     </div>
                         <p style="color: #1F1F1F">Desde</p>
@@ -241,7 +233,7 @@
                         <h2>USD 1090.659.007</h2>
                     </div>
             </div>
-            @endforeach             --}}
+            @endforeach--}}
         </div>
         
     </div>
@@ -355,6 +347,47 @@
             items:1
         });
     });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var heartButtons = document.querySelectorAll('.likeButton');
+        heartButtons.forEach(function(heartButton) {
+        heartButton.addEventListener('click', function() {
+            var idLike = heartButton.querySelector('input[name="id_like"]').value;
+            Swal.fire({
+                title: '¿Estás seguro que quieres quitar de tus favoritos?',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No',
+                icon: 'warning',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar una solicitud AJAX para cambiar el estado en la base de datos
+                    fetch('/quitar_favoritos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ id_like: idLike })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Estado cambiado a 0', data.like_actual);
+
+                        // Redireccionar después de cambiar el estado
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error al cambiar el estado:', error);
+                    });
+                }
+            });
+        });
+    });
+});
 </script>
 </body>
 </html>

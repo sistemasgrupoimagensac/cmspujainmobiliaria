@@ -36,63 +36,7 @@ class AppController extends Controller
         ->pluck('cantidad_likes', 'product_id');
         // dd($products);
         return view('pujaapp.inicio.inicio',compact('products'));
-    }
-    public function alquiler(Request $request){
-        $products = Product::orderBy('id','desc')
-        ->where(function ($query) use ($request){
-            if($request->category_id){
-                $query->where('category_id',$request->category_id);  
-            }
-        })
-        ->where('status_property_id',1)
-        ->where('status',1)
-        ->get();
-        $solicitantesprocesados = $products->map(function($product){
-            $product->interesado = null;
-            if(Auth::guard('puja')->check()){
-                $like= MeInteresa::where(['product_id'=> $product->id,
-                'user_puja_id'=>Auth::guard('puja')->user()->id])->first();
-                if ($like) {
-                    $product->interesado = $like;
-                }
-                return $product;
-            }
-        });
-        $totalLikesPorProyecto = MeInteresa::where('status', 1)
-        ->groupBy('product_id')
-        ->selectRaw('product_id, count(*) as cantidad_likes')
-        ->get()
-        ->pluck('cantidad_likes', 'product_id');
-        return view('pujaapp.alquiler.alquiler',compact('products','solicitantesprocesados'));
-    }
-    public function remate(Request $request){
-        $products = Product::orderBy('id','desc')
-        ->where(function ($query) use ($request){
-            if($request->category_id){
-                $query->where('category_id',$request->category_id);  
-            }
-        })
-        ->where('status_property_id',2)
-        ->where('status',1)
-        ->get();
-        $solicitantesprocesados = $products->map(function($product){
-            $product->interesado = null;
-            if(Auth::guard('puja')->check()){
-                $like= MeInteresa::where(['product_id'=> $product->id,
-                'user_puja_id'=>Auth::guard('puja')->user()->id])->first();
-                if ($like) {
-                    $product->interesado = $like;
-                }
-                return $product;
-            }
-        });
-        $totalLikesPorProyecto = MeInteresa::where('status', 1)
-        ->groupBy('product_id')
-        ->selectRaw('product_id, count(*) as cantidad_likes')
-        ->get()
-        ->pluck('cantidad_likes', 'product_id');
-        return view('pujaapp.remate.remate',compact('products','solicitantesprocesados'));
-    }
+    }  
     public function meInteresa(Request $request)
     {   
         $like= MeInteresa::where(['product_id'=> $request->product_id,

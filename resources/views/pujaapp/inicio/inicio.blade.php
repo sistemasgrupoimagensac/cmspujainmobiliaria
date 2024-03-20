@@ -65,11 +65,18 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="burgerMenu">
                     @if (Auth::guard('puja')->check())
-                    <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('favoritos') }}" onclick="event.preventDefault(); document.getElementById('favoritos-form').submit();">Favoritos</a>
+                            <form id="favoritos-form" action="{{ route('favoritos') }}" method="get" style="display: none;">
+                           
+                            </form>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
                    
                     @else
                      <li><a class="dropdown-item" href="{{ route('showLoginFormUser') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Iniciar Sesión</a>
@@ -107,32 +114,31 @@
                                 <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                                 </button>
-                                <div class="dropdown-menu " aria-labelledby="burgerMenu">
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                    </ul>
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                    </ul>
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a> </li>
-                                    </ul>
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                    </ul>
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                    </ul>
-                                    <ul class="" aria-labelledby="burgerMenu">
-                                        <li><a class="dropdown-item">Inicio</a></li>
-                                        <li><a class="dropdown-item">Inicio</a> </li>
-                                    </ul>
+                                <div class="dropdown-menu dropdownmenu" aria-labelledby="burgerMenu" style="transform: translate(307px, 56px) !important;">
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <h2 style="  text-decoration: underline 3px #FB7125">Tipo de propiedad</h2>
+                                        <li><a class="dropdown-item">Casa</a></li>
+                                        <li><a class="dropdown-item">Departamento</a></li>
+                                        <li><a class="dropdown-item">Oficina</a></li>
+                                        <li><a class="dropdown-item">Terreno</a></li>
+                                        <li><a class="dropdown-item">Local Comercial</a></li>
 
+                                    </ul>
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <h2 style="  text-decoration: underline 3px #FB7125">Dormitorio</h2>
+                                        <li><a class="dropdown-item">1 Dormitorio</a></li>
+                                        <li><a class="dropdown-item">2 Dormitorio</a></li>
+                                        <li><a class="dropdown-item">3 Dormitorio</a></li>
+                                        <li><a class="dropdown-item">4 Dormitorio</a></li>
+                                        <li><a class="dropdown-item">Más de 4 dormitorio</a></li>
+                                    </ul>
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <h2 style="  text-decoration: underline 3px #FB7125">Características</h2>
+                                        <li><a class="dropdown-item">Baños</a></li>
+                                        <li><a class="dropdown-item">Cochera</a></li>
+                                        <li><a class="dropdown-item">Jardín</a></li>
+                                        <li><a class="dropdown-item">A estrenar</a></li>
+                                    </ul>
                                 </div>
                                 
                             </span>

@@ -13,6 +13,6 @@ class MeInteresa extends Model
         return $this->belongsTo(UserPuja::class,'user_puja_id');
     }
     public function product(){
-        return $this->belongsTo(UserPuja::class,'product_id');
+        return $this->belongsTo(Product::class,'product_id');
     }
 }

@@ -105,3 +105,15 @@ body {
         align-items: center !important;
     }
 }
+.mi-div {
+    border-style: dashed;
+    border-color: #FB7125;
+    padding: 2rem !important;
+}
+.mi-div p{
+    color:#FB7125 !important;
+}
+.mi-div h2{
+    font-weight: bold !important;
+}
+

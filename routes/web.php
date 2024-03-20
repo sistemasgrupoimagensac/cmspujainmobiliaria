@@ -13,11 +13,15 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PujaInmobiliaria\AlquilerController;
 use App\Http\Controllers\PujaInmobiliaria\AppController;
 use App\Http\Controllers\PujaInmobiliaria\FavoritosController;
 use App\Http\Controllers\PujaInmobiliaria\LoginController as PujaInmobiliariaLoginController;
+use App\Http\Controllers\PujaInmobiliaria\RemateController;
 use App\Http\Controllers\StatusPropertyController;
+use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPujaController;
 
@@ -70,8 +74,8 @@ Route::post('/logout-user', [PujaInmobiliariaLoginController::class,'logout'])->
 Route::get('/show-register-user',[PujaInmobiliariaLoginController::class,'showRegisterFormUser'])->name('showRegisterFormUser');
 Route::get('/register-user',[UserPujaController::class,'store'])->name('registerUser');
 Route::get('/', [AppController::class,'index'])->name('app');
-Route::get('/alquiler',[AppController::class,'alquiler'])->name('alquiler');
-Route::get('/remate',[AppController::class,'remate'])->name('remate');
+Route::get('/alquiler',[AlquilerController::class,'index'])->name('alquiler');
+Route::get('/remate',[RemateController::class,'index'])->name('remate');
 Route::get('/detalle/{id}',[AppController::class,'detalle'])->name('detalle');
 Route::post('/subir_imagen', [ProductController::class,'uploadImageProduct'])->name('subir_imagen');
 Route::get('image/{id}',[ProductController::class,'selectImageProduct'])->name('seleccionar.imagen');
@@ -79,5 +83,13 @@ Route::post('/image/disable',[ProductController::class,'disableImage'])->name('i
 Route::post('/me_interesa',[AppController::class,'meInteresa'])->name('meInteresa');
 
 Route::get('/favoritos',[FavoritosController::class,'index'])->name('favoritos');
+
+Route::get('/operaciones',[OperacionesController::class,'index'])->name('operaciones');
+
+Route::get('/get-department',[UbicacionesController::class,'getDepartments'])->name('obtener-departamento');
+Route::get('/api/departments/{department}/provinces', [UbicacionesController::class, 'getProvincesByDepartment']);
+
+// Ruta para obtener los distritos por provincia
+Route::get('/api/provinces/{province}/districts', [UbicacionesController::class, 'getDistrictsByProvince']);
 
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');

@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\MeInteresa;
 use App\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FavoritosController extends Controller
 {
     public function index(Request $request){
         $distritos = District::orderBy('id','desc')->get();
-        $favoritos = Product::
-        orderBy('id','desc')
-        ->where('status',1)
+
+        $favoritos = MeInteresa::where('status',1)
+        ->where('user_puja_id',Auth::guard('puja')->user()->id)
         ->paginate(20);
         return view('pujaapp.favoritos.favoritos',compact('favoritos','distritos'));
     }

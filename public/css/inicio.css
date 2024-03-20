@@ -47,7 +47,8 @@ nav{
 }
 .mi-div {
     border-style: dashed;
-    border-color: #FB7125;
+
+    padding: 2rem;
 }
 .boton{
     border: 3px solid #FB7125;
@@ -100,6 +101,7 @@ ul{
     list-style: none;
     padding: 0;
 }
-.dropdown-menu.show{
+.dropdownmenu.show{
     display: flex;
+    transform: translate(307px, 56px) !important;
 }
