@@ -99,23 +99,23 @@
             },
             disminuirCantidadRooms() {
                 if (this.cantidad_rooms > 0) {
-                    this.$emit('updateCantidadRooms', this.cantidad_rooms --); // Disminuir en 1 si el valor es mayor que 0
+                    this.$emit('updateCantidadRooms', this.cantidad_rooms --);
                 }
             },
             aumentarCantidadGarage(){
-                this.cantidad_garage++;
+                this.$emit('updateCantidadGarage',this.cantidad_garage++);            
             },
             disminuirCantidadGarage(){
-                if (this.cantidad_garage > 0) {
-                    this.cantidad_garage--; // Disminuir en 1 si el valor es mayor que 0
+                if (this.cantidad_rooms > 0) {
+                    this.$emit('updateCantidadGarage', this.cantidad_rooms --);
                 }
             },
             aumentarCantidadBathrooms(){
-                this.cantidad_bathrooms++;
+                this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms++); 
             },
             disminuirCantidadBathrooms(){
                 if (this.cantidad_bathrooms > 0) {
-                    this.cantidad_bathrooms--; // Disminuir en 1 si el valor es mayor que 0
+                    this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms--); 
                 }
             }
             

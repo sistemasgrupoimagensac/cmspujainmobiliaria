@@ -49,14 +49,13 @@
         data(){
             return {
                 menu:1,
+                cantidad_rooms: 0,
+                cantidad_bathrooms: 0,
+                cantidad_garage: 0,
                 formulario:{
                     // operacion:[],
                     // ubicacion:[],
                     // caracteristica:[],
-
-                    cantidad_rooms: 0,
-                    cantidad_bathrooms: 0,
-                    cantidad_garage: 0
                 }
             }
         },

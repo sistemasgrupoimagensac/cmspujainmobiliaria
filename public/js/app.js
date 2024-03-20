@@ -1923,23 +1923,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     disminuirCantidadRooms: function disminuirCantidadRooms() {
       if (this.cantidad_rooms > 0) {
-        this.$emit('updateCantidadRooms', this.cantidad_rooms--); // Disminuir en 1 si el valor es mayor que 0
+        this.$emit('updateCantidadRooms', this.cantidad_rooms--);
       }
     },
     aumentarCantidadGarage: function aumentarCantidadGarage() {
-      this.cantidad_garage++;
+      this.$emit('updateCantidadGarage', this.cantidad_garage++);
     },
     disminuirCantidadGarage: function disminuirCantidadGarage() {
-      if (this.cantidad_garage > 0) {
-        this.cantidad_garage--; // Disminuir en 1 si el valor es mayor que 0
+      if (this.cantidad_rooms > 0) {
+        this.$emit('updateCantidadGarage', this.cantidad_rooms--);
       }
     },
     aumentarCantidadBathrooms: function aumentarCantidadBathrooms() {
-      this.cantidad_bathrooms++;
+      this.$emit('updateCantidadBathrooms', this.cantidad_bathrooms++);
     },
     disminuirCantidadBathrooms: function disminuirCantidadBathrooms() {
       if (this.cantidad_bathrooms > 0) {
-        this.cantidad_bathrooms--; // Disminuir en 1 si el valor es mayor que 0
+        this.$emit('updateCantidadBathrooms', this.cantidad_bathrooms--);
       }
     }
   }
@@ -2047,14 +2047,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       menu: 1,
+      cantidad_rooms: 0,
+      cantidad_bathrooms: 0,
+      cantidad_garage: 0,
       formulario: {
         // operacion:[],
         // ubicacion:[],
         // caracteristica:[],
-
-        cantidad_rooms: 0,
-        cantidad_bathrooms: 0,
-        cantidad_garage: 0
       }
     };
   },
