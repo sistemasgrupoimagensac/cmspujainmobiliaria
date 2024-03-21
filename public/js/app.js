@@ -1913,10 +1913,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       cantidad_rooms: 0,
       cantidad_bathrooms: 0,
-      cantidad_garage: 0
+      cantidad_garage: 0,
+      titulo: '',
+      descripcion: '',
+      monto: 0,
+      M2: 0
     };
   },
-  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage'],
+  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage', 'titulo', 'descripcion', 'monto', 'm2'],
   methods: {
     aumentarCantidadRooms: function aumentarCantidadRooms() {
       this.$emit('updateCantidadRooms', this.cantidad_rooms++);
@@ -1941,6 +1945,18 @@ __webpack_require__.r(__webpack_exports__);
       if (this.cantidad_bathrooms > 0) {
         this.$emit('updateCantidadBathrooms', this.cantidad_bathrooms--);
       }
+    },
+    updateTitulo: function updateTitulo() {
+      this.$emit('updateTitulo', this.titulo);
+    },
+    updateDescripcion: function updateDescripcion() {
+      this.$emit('updateDescripcion', this.descripcion);
+    },
+    updateMonto: function updateMonto() {
+      this.$emit('updateMonto', this.monto);
+    },
+    updateM2: function updateM2() {
+      this.$emit('updateM2', this.M2);
     }
   }
 });
@@ -1956,11 +1972,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Caracteristicas_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Caracteristicas.vue */ "./resources/js/components/Caracteristicas.vue");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['caracteristicas'],
   data: function data() {
-    return {};
-  },
-  methods: {}
+    return {
+      caracteristicas: '',
+      estado_propiedad: ''
+    };
+  }
 });
 
 /***/ }),
@@ -1980,14 +2001,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      direccion: '',
       selectedDepartment: '',
       selectedProvince: '',
       selectedDistrict: '',
       departments: [],
       provinces: [],
-      districts: []
+      districts: [],
+      // Agrega una bandera para indicar si los datos ya se han cargado
+      datosCargados: false
     };
   },
+  props: ['ubicacionesData'],
   methods: {
     getDepartments: function getDepartments() {
       var _this = this;
@@ -2010,14 +2035,37 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/provinces/".concat(this.selectedProvince, "/districts")).then(function (response) {
         _this3.districts = response.data;
-        // $('.selectores').select2();
       })["catch"](function (error) {
         console.error('Error al obtener los distritos:', error);
       });
-    }
+    },
+    updateDireccion: function updateDireccion() {
+      this.$emit('updateDireccion', this.direccion);
+    },
+    // Método para obtener los datos iniciales
+    obtenerDatosIniciales: function obtenerDatosIniciales() {
+      // Lógica para obtener los datos iniciales de ubicación
+      this.getDepartments();
+      // Marca la bandera como verdadera para indicar que los datos ya se han cargado
+      this.datosCargados = true;
+    },
+    updateUbicacionesData: function updateUbicacionesData() {
+      this.$emit('updateUbicacionesData', {
+        direccion: this.direccion,
+        selectedDepartment: this.selectedDepartment,
+        selectedProvince: this.selectedProvince,
+        selectedDistrict: this.selectedDistrict,
+        departments: this.departments,
+        provinces: this.provinces,
+        districts: this.districts
+      });
+    } // Resto de los métodos...
   },
   mounted: function mounted() {
-    this.getDepartments();
+    // Solo obtén los datos iniciales si aún no se han cargado
+    if (!this.datosCargados) {
+      this.obtenerDatosIniciales();
+    }
   }
 });
 
@@ -2047,28 +2095,62 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       menu: 1,
-      cantidad_rooms: 0,
-      cantidad_bathrooms: 0,
-      cantidad_garage: 0,
       formulario: {
-        // operacion:[],
-        // ubicacion:[],
-        // caracteristica:[],
+        cantidad_rooms: 0,
+        cantidad_bathrooms: 0,
+        cantidad_garage: 0,
+        titulo: '',
+        descripcion: '',
+        monto: 0,
+        M2: 0
+      },
+      ubicacionesData: {
+        direccion: '',
+        selectedDepartment: '',
+        selectedProvince: '',
+        selectedDistrict: '',
+        departments: [],
+        provinces: [],
+        districts: []
       }
     };
   },
   methods: {
+    //operacion
     continuar: function continuar(menu) {
       this.menu = menu;
     },
+    //ubicacion
+    actualizarDatosUbicaciones: function actualizarDatosUbicaciones(data) {
+      this.ubicacionesData = data;
+    },
+    //caracteristicas
     updateCantidadRooms: function updateCantidadRooms(cantidadRooms) {
-      this.cantidad_rooms = cantidadRooms;
+      this.formulario.cantidad_rooms = cantidadRooms;
     },
     updateCantidadBathrooms: function updateCantidadBathrooms(cantidadBathrooms) {
-      this.cantidad_bathrooms = cantidadBathrooms;
+      this.formulario.cantidad_bathrooms = cantidadBathrooms;
     },
     updateCantidadGarage: function updateCantidadGarage(cantidadGarage) {
-      this.cantidad_garage = cantidadGarage;
+      this.formulario.cantidad_garage = cantidadGarage;
+    },
+    updateTitulo: function updateTitulo(titulo) {
+      this.formulario.titulo = titulo;
+    },
+    updateDescripcion: function updateDescripcion(descripcion) {
+      this.formulario.descripcion = descripcion;
+    },
+    updateMonto: function updateMonto(monto) {
+      this.formulario.monto = monto;
+    },
+    updateM2: function updateM2(M2) {
+      this.formulario.M2 = M2;
+    },
+    updateEstadoPropiedad: function updateEstadoPropiedad(estado_propiedad) {
+      this.estado_propiedad = estado_propiedad;
+    },
+    updateCaracteristica: function updateCaracteristica(caracteristicas) {
+      this.caracteristicas = caracteristicas;
     }
   }
 });
@@ -2239,12 +2321,7 @@ var render = function render() {
     }
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
-  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("h3", [_vm._v("Descripción")]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-start"
   }, [_c("div", {
     staticClass: "col-3"
@@ -2253,15 +2330,26 @@ var staticRenderFns = [function () {
   }, [_c("span", {
     staticClass: "input-group-text"
   }, [_vm._v("m2")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.M2,
+      expression: "M2"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text"
+    },
+    domProps: {
+      value: _vm.M2
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.M2 = $event.target.value;
+      }, _vm.updateM2]
     }
-  })])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })])])]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-start"
   }, [_c("div", {
     staticClass: "col-3"
@@ -2270,55 +2358,78 @@ var staticRenderFns = [function () {
   }, [_c("span", {
     staticClass: "input-group-text"
   }, [_vm._v("S/")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.monto,
+      expression: "monto"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text"
+    },
+    domProps: {
+      value: _vm.monto
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.monto = $event.target.value;
+      }, _vm.updateMonto]
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-3"
-  }, [_c("div", {
-    staticClass: "input-group mb-3"
-  }, [_c("span", {
-    staticClass: "input-group-text"
-  }, [_vm._v("USD")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text"
-    }
-  })])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })])])])]), _vm._v(" "), _c("h3", [_vm._v("Descripción")]), _vm._v(" "), _c("div", {
     staticClass: "mb-3 col-8"
   }, [_c("span", {
     staticClass: "text"
   }, [_vm._v("Título")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.titulo,
+      expression: "titulo"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
       placeholder: ""
+    },
+    domProps: {
+      value: _vm.titulo
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.titulo = $event.target.value;
+      }, _vm.updateTitulo]
     }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "col-8 form-floating"
   }, [_c("span", {
     staticClass: "text"
   }, [_vm._v("Descripción")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.descripcion,
+      expression: "descripcion"
+    }],
     staticClass: "form-control",
     attrs: {
       placeholder: "Leave a comment here",
       id: "floatingTextarea"
+    },
+    domProps: {
+      value: _vm.descripcion
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.descripcion = $event.target.value;
+      }, _vm.updateDescripcion]
     }
-  }), _vm._v(" "), _c("label", {
-    attrs: {
-      "for": "floatingTextarea"
-    }
-  })]);
-}, function () {
+  })]), _vm._v(" "), _vm._m(0)]);
+};
+var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -2356,36 +2467,19 @@ var render = function render() {
     staticClass: "contenido-form p-5"
   }, [_c("h2", {
     staticClass: "pb-3"
-  }, [_vm._v("Estás Iniciando una Publicación")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
-    staticClass: "row mt-5"
-  }, [_c("div", {
-    staticClass: "col-6"
-  }), _vm._v(" "), _c("div", {
-    staticClass: "col-6"
-  }, [_c("button", {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("Guardar y Salir")]), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      href: "#"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.$emit("continuar", 2);
-      }
-    }
-  }, [_vm._v("Continuar")])])])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  }, [_vm._v("Estás Iniciando una Publicación")]), _vm._v(" "), _c("div", {
     staticClass: "btn-group mb-5 mt-5",
     attrs: {
       role: "group",
       "aria-label": "Basic radio toggle button group"
     }
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.estado_propiedad,
+      expression: "estado_propiedad"
+    }],
     staticClass: "btn-check",
     attrs: {
       type: "radio",
@@ -2393,43 +2487,48 @@ var staticRenderFns = [function () {
       id: "btnradio1",
       autocomplete: "off",
       checked: ""
+    },
+    domProps: {
+      checked: _vm._q(_vm.estado_propiedad, null)
+    },
+    on: {
+      change: function change($event) {
+        _vm.estado_propiedad = null;
+      }
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "btn btn-outline-warning",
     attrs: {
       "for": "btnradio1"
     }
-  }, [_vm._v("Venta")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Alquiler")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.estado_propiedad,
+      expression: "estado_propiedad"
+    }],
     staticClass: "btn-check",
     attrs: {
       type: "radio",
       name: "btnradio",
       id: "btnradio2",
       autocomplete: "off"
+    },
+    domProps: {
+      checked: _vm._q(_vm.estado_propiedad, null)
+    },
+    on: {
+      change: function change($event) {
+        _vm.estado_propiedad = null;
+      }
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "btn btn-outline-warning",
     attrs: {
       "for": "btnradio2"
     }
-  }, [_vm._v("Alquiler")]), _vm._v(" "), _c("input", {
-    staticClass: "btn-check",
-    attrs: {
-      type: "radio",
-      name: "btnradio",
-      id: "btnradio3",
-      autocomplete: "off"
-    }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "btn btn-outline-warning",
-    attrs: {
-      "for": "btnradio3"
-    }
-  }, [_vm._v("Temporada")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  }, [_vm._v("Remate")])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-5 mt-5"
   }, [_c("div", {
     staticClass: "col-6"
@@ -2438,10 +2537,27 @@ var staticRenderFns = [function () {
       "for": "tipo_inmueble"
     }
   }, [_vm._v("Tipo de inmueble")]), _vm._v(" "), _c("select", {
-    staticClass: "form-select selectores",
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.caracteristicas,
+      expression: "caracteristicas "
+    }],
+    staticClass: "form-select",
     attrs: {
       type: "",
       id: "tipo_inmueble"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.caracteristicas = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
     }
   }, [_c("option", {
     attrs: {
@@ -2465,38 +2581,27 @@ var staticRenderFns = [function () {
     }
   }, [_vm._v("Local")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
-  }, [_c("label", {
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-5"
+  }, [_c("div", {
+    staticClass: "col-6"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-6"
+  }, [_c("button", {
+    staticClass: "btn btn-primary"
+  }, [_vm._v("Guardar y Salir")]), _vm._v(" "), _c("a", {
+    staticClass: "btn btn-primary",
     attrs: {
-      "for": "subtipo"
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.$emit("continuar", 2);
+      }
     }
-  }, [_vm._v("Subtipo de inmueble")]), _vm._v(" "), _c("select", {
-    staticClass: "form-select selectores",
-    attrs: {
-      type: "",
-      id: "subtipo"
-    }
-  }, [_c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("Casa Playa")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "2"
-    }
-  }, [_vm._v("Departamento")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "3"
-    }
-  }, [_vm._v("Oficina")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "4"
-    }
-  }, [_vm._v(" Terreno ")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "5"
-    }
-  }, [_vm._v("Local")])])])]);
-}];
+  }, [_vm._v("Continuar")])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2520,7 +2625,35 @@ var render = function render() {
     staticClass: "contenido-form p-5"
   }, [_c("h2", {
     staticClass: "pb-3"
-  }, [_vm._v("¿Dónde está ubicado tu inmueble?")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._v("¿Dónde está ubicado tu inmueble?")]), _vm._v(" "), _c("div", {
+    staticClass: "row pb-3"
+  }, [_c("label", {
+    attrs: {
+      "for": "calle"
+    }
+  }, [_vm._v("Calle y Número de Casa")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.direccion,
+      expression: "direccion"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "direction",
+      id: "direction"
+    },
+    domProps: {
+      value: _vm.direccion
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.direccion = $event.target.value;
+      }, _vm.updateDireccion]
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "row mb-5"
   }, [_c("div", {
     staticClass: "col-6"
@@ -2667,28 +2800,12 @@ var render = function render() {
     on: {
       click: function click($event) {
         return _vm.$emit("continuar", 3);
-      }
+      },
+      change: _vm.updateUbicacionesData
     }
   }, [_vm._v("Continuar")])])])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "row pb-3"
-  }, [_c("label", {
-    attrs: {
-      "for": "calle"
-    }
-  }, [_vm._v("Calle y Número de Casa")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "direction",
-      id: "direction"
-    }
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2757,24 +2874,49 @@ var render = function render() {
   }, [_vm._v("Características")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-8"
   }, [_vm.menu == 1 ? [_c("operaciones", {
-    on: {
-      continuar: _vm.continuar
-    }
-  })] : _vm._e(), _vm._v(" "), _vm.menu == 2 ? [_c("ubicaciones", {
-    on: {
-      continuar: _vm.continuar
-    }
-  })] : _vm._e(), _vm._v(" "), _vm.menu == 3 ? [_c("caracteristicas", {
     attrs: {
-      cantidad_rooms: _vm.cantidad_rooms,
-      cantidad_bathrooms: _vm.cantidad_bathrooms,
-      cantidad_garage: _vm.cantidad_garage
+      estado_propiedad: _vm.estado_propiedad,
+      caracteristicas: _vm.caracteristicas
     },
     on: {
       continuar: _vm.continuar,
+      updateEstadoPropiedad: _vm.updateEstadoPropiedad,
+      updateCaracteristica: _vm.caracteristicas
+    }
+  })] : _vm._e(), _vm._v(" "), _vm.menu == 2 ? [_c("ubicaciones", {
+    attrs: {
+      ubicacionesData: _vm.ubicacionesData,
+      direccion: _vm.ubicacionesData.direccion,
+      selectedDepartment: _vm.ubicacionesData.selectedDepartment,
+      selectedProvince: _vm.ubicacionesData.selectedProvince,
+      selectedDistrict: _vm.ubicacionesData.selectedDistrict,
+      departments: _vm.ubicacionesData.departments,
+      provinces: _vm.ubicacionesData.provinces,
+      districts: _vm.ubicacionesData.districts
+    },
+    on: {
+      continuar: _vm.continuar,
+      updateUbicacionesData: _vm.actualizarDatosUbicaciones
+    }
+  })] : _vm._e(), _vm._v(" "), _vm.menu == 3 ? [_c("caracteristicas", {
+    attrs: {
+      cantidad_rooms: _vm.formulario.cantidad_rooms,
+      cantidad_bathrooms: _vm.formulario.cantidad_bathrooms,
+      cantidad_garage: _vm.formulario.cantidad_garage,
+      titulo: _vm.formulario.titulo,
+      monto: _vm.formulario.monto,
+      descripcion: _vm.formulario.descripcion,
+      M2: _vm.formulario.M2
+    },
+    on: {
+      continuar: _vm.formulario.continuar,
       updateCantidadRooms: _vm.updateCantidadRooms,
       updateCantidadBathrooms: _vm.updateCantidadBathrooms,
-      updateCantidadGarage: _vm.updateCantidadGarage
+      updateCantidadGarage: _vm.updateCantidadGarage,
+      updateTitulo: _vm.updateTitulo,
+      updateDescripcion: _vm.updateDescripcion,
+      updateMonto: _vm.updateMonto,
+      updateM2: _vm.updateM2
     }
   })] : _vm._e()], 2)])])]);
 };

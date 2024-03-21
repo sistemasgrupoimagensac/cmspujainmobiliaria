@@ -19,6 +19,6 @@ class OperacionesController extends Controller
         $departments = Deparment::
         orderBy('id','desc')
         ->get();
-        return view('user.principal');
+        return view('user.principal',compact('distrito'));
     }
 }

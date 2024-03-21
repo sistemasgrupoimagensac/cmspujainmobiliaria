@@ -4,7 +4,7 @@
 
     <div class="row pb-3">
         <label for="calle">Calle y Número de Casa</label>
-        <input type="text" class="form-control" name="direction" id="direction">
+        <input type="text" class="form-control" name="direction" id="direction" v-model="direccion" @input="updateDireccion">
     </div>
 
 
@@ -40,7 +40,7 @@
         </div>
         <div class="col-4 d-flex justify-content-between">
             <button class="btn btn-primary">Guardar y Salir</button>
-            <a class="btn btn-primary" href="#" @click="$emit('continuar', 3)">Continuar</a>
+            <a class="btn btn-primary" href="#" @click="$emit('continuar', 3)" @change="updateUbicacionesData">Continuar</a>
             
         </div>
     </div>
@@ -51,49 +51,77 @@
 <script>
     import axios from 'axios';
     export default {
-        data() {
-            return {
-                selectedDepartment: '',
-                selectedProvince: '',
-                selectedDistrict: '',
-                departments: [],  
-                provinces: [],  
-                districts: []
-            }
-        },
-        methods:{
-            getDepartments() {
-                axios.get('/get-department')
-                    .then(response => {
-                        this.departments = response.data;
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener los departamentos:', error);
-                    });
-            },
-            getProvinces() {
-                axios.get(`/api/departments/${this.selectedDepartment}/provinces`)
-                    .then(response => {
-                        this.provinces = response.data;
-                        this.districts = [];
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener las provincias:', error);
-                    });
-            },
-            getDistricts() {
-                axios.get(`/api/provinces/${this.selectedProvince}/districts`)
-                    .then(response => {
-                        this.districts = response.data;
-                        // $('.selectores').select2();
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener los distritos:', error);
-                    });
-            }
-        },
-        mounted() {
-            this.getDepartments();
+    data() {
+        return {
+            direccion: '',
+            selectedDepartment: '',
+            selectedProvince: '',
+            selectedDistrict: '',
+            departments: [],  
+            provinces: [],  
+            districts: [],
+            // Agrega una bandera para indicar si los datos ya se han cargado
+            datosCargados: false
         }
+    },
+    props: ['ubicacionesData'],
+    methods:{
+        getDepartments() {
+            axios.get('/get-department')
+                .then(response => {
+                    this.departments = response.data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los departamentos:', error);
+                });
+        },
+        getProvinces() {
+            axios.get(`/api/departments/${this.selectedDepartment}/provinces`)
+                .then(response => {
+                    this.provinces = response.data;
+                    this.districts = [];
+                })
+                .catch(error => {
+                    console.error('Error al obtener las provincias:', error);
+                });
+        },
+        getDistricts() {
+            axios.get(`/api/provinces/${this.selectedProvince}/districts`)
+                .then(response => {
+                    this.districts = response.data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los distritos:', error);
+                });
+        },
+        updateDireccion(){
+            this.$emit('updateDireccion', this.direccion);
+        },
+        // Método para obtener los datos iniciales
+        obtenerDatosIniciales() {
+            // Lógica para obtener los datos iniciales de ubicación
+            this.getDepartments();
+            // Marca la bandera como verdadera para indicar que los datos ya se han cargado
+            this.datosCargados = true;
+        },
+        updateUbicacionesData() {
+        this.$emit('updateUbicacionesData', {
+            direccion: this.direccion,
+            selectedDepartment: this.selectedDepartment,
+            selectedProvince: this.selectedProvince,
+            selectedDistrict: this.selectedDistrict,
+            departments: this.departments,
+            provinces: this.provinces,
+            districts: this.districts
+        });
+}
+        // Resto de los métodos...
+    },
+    mounted() {
+        // Solo obtén los datos iniciales si aún no se han cargado
+        if (!this.datosCargados) {
+            this.obtenerDatosIniciales();
+        }
+    }
     }
 </script>

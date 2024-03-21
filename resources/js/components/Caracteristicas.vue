@@ -38,8 +38,8 @@
                 <div class="col-3">
                     
                     <div class="input-group mb-3">
-                        <span class="input-group-text">m2</span>
-                        <input type="text" class="form-control">
+                        <span class="input-group-text" >m2</span>
+                        <input type="text" class="form-control" v-model="M2" @input="updateM2">
                     </div>
                 </div>
                 
@@ -47,30 +47,21 @@
             <div class="row justify-content-start"> 
                 <div class="col-3">                      
                     <div class="input-group mb-3">
-                        <span class="input-group-text">S/</span>
-                        <input type="text" class="form-control">
+                        <span class="input-group-text" >S/</span>
+                        <input type="text" class="form-control" v-model="monto" @input="updateMonto">
                     </div>
-                </div>  
-                <div class="col-3">      
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">USD</span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>       
-                
+                </div>                  
             </div>
-            
         </div>
         <h3>Descripción</h3>
         <div class="mb-3 col-8">
             <span class="text">Título</span>
-            <input type="text" class="form-control" placeholder="">
+            <input type="text" class="form-control" v-model="titulo" placeholder="" @input="updateTitulo">
         </div>
         <div class="col-8 form-floating">
             <span class="text">Descripción</span>
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-            <label for="floatingTextarea"></label>
-            </div>
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" v-model="descripcion" @input="updateDescripcion"></textarea>
+        </div>
         <div class="row justify-content-between mt-5">
             <div class="col-6">
         
@@ -89,10 +80,14 @@
             return {
                 cantidad_rooms: 0,
                 cantidad_bathrooms: 0,
-                cantidad_garage: 0
+                cantidad_garage: 0,
+                titulo:'',
+                descripcion:'',
+                monto:0,
+                M2:0
             }
         },
-        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage'],
+        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage','titulo', 'descripcion','monto','m2'],
         methods:{
             aumentarCantidadRooms() {
                 this.$emit('updateCantidadRooms', this.cantidad_rooms ++);
@@ -111,15 +106,26 @@
                 }
             },
             aumentarCantidadBathrooms(){
-                this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms++); 
+                this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms ++); 
             },
             disminuirCantidadBathrooms(){
                 if (this.cantidad_bathrooms > 0) {
-                    this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms--); 
+                    this.$emit('updateCantidadBathrooms',this.cantidad_bathrooms --); 
                 }
-            }
-            
+            },
+            updateTitulo() {
+                this.$emit('updateTitulo', this.titulo);
+            },
 
+            updateDescripcion() {
+                this.$emit('updateDescripcion', this.descripcion);
+            },
+            updateMonto(){
+                this.$emit('updateMonto', this.monto);
+            },
+            updateM2(){
+                this.$emit('updateM2',this.M2);
+            }
         }
     }
 </script>

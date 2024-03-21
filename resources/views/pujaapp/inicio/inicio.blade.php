@@ -54,7 +54,7 @@
                     <a class="nav-link" href="{{ route('remate') }}">Remate</a>
                 </li>
                 <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
+                    <a class="nav-link boton" href="{{route('publicar')}}">Publica Aquí</a>
                 </li>
             </ul>
           </div>

@@ -84,12 +84,11 @@ Route::post('/me_interesa',[AppController::class,'meInteresa'])->name('meInteres
 
 Route::get('/favoritos',[FavoritosController::class,'index'])->name('favoritos');
 
-Route::get('/operaciones',[OperacionesController::class,'index'])->name('operaciones');
+Route::get('/publicar',[OperacionesController::class,'index'])->name('publicar');
 
 Route::get('/get-department',[UbicacionesController::class,'getDepartments'])->name('obtener-departamento');
 Route::get('/api/departments/{department}/provinces', [UbicacionesController::class, 'getProvincesByDepartment']);
 
-// Ruta para obtener los distritos por provincia
 Route::get('/api/provinces/{province}/districts', [UbicacionesController::class, 'getDistrictsByProvince']);
 
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');
