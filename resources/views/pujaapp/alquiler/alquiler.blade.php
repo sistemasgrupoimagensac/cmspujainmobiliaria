@@ -56,7 +56,7 @@
                         <a class="nav-link" href="{{ route('remate') }}">Remate</a>
                     </li>
                     <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
+                        <a class="nav-link boton" href="{{ route('publicar') }}">Publica Aquí</a>
                     </li>
                 </ul>
               </div>
@@ -302,14 +302,6 @@
             @endforeach             --}}
         </div>
         
-    </div>
-</section>
-
-
-
-<section>
-    <div class="container-fluid m-0 text-center">
-        <button class="btn btn-primary boton"> Explorar más propiedades</button>
     </div>
 </section>
 <section style="margin-top: 20rem;">

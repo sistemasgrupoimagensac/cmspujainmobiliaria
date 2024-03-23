@@ -11,4 +11,17 @@ class District extends Model
     public function products(){
         return $this->hasMany(Product::class);
     }
+    public function user()
+    {
+        return $this->hasMany(User::class,'id');
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class,'department_id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'province_id');
+    }
 }

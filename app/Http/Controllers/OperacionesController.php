@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Deparment;
+use App\Department;
 use App\District;
 use App\Province;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class OperacionesController extends Controller
         $provinces =  Province::
         orderBy('id','desc')
         ->get();
-        $departments = Deparment::
+        $departments = Department::
         orderBy('id','desc')
         ->get();
         return view('user.principal',compact('distrito'));

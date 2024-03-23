@@ -9,6 +9,7 @@ use App\Product;
 use App\StatusProperty;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -80,6 +81,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->category_id = $request->category_id;
+        $product->user_id = Auth::user()->id;
         $product->status_property_id = $request->status_property_id;
         $product->district_id = $request->district_id;
         $product->rooms = $request->rooms;

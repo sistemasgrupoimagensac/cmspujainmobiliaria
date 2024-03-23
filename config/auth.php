@@ -46,10 +46,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        'puja' => [
-            'driver' => 'session',
-            'provider' => 'users_puja',
-        ],
+        // 'puja' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users_puja',
+        // ],
     ],
 
     /*
@@ -74,10 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'users_puja' => [
-            'driver' => 'eloquent',
-            'model' => App\UserPuja::class,
-        ],
+        // 'users_puja' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\UserPuja::class,
+        // ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

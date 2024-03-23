@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminMiddleware
+class Usuario
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,6 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->isAdmin()) {
-            return $next($request);
-        }
-        
-        return redirect()->route('showLoginFormAdmin');
+        return $next($request);
     }
 }

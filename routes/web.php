@@ -23,6 +23,8 @@ use App\Http\Controllers\PujaInmobiliaria\RemateController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPuja\MisAvisosController;
+use App\Http\Controllers\UserPuja\PublicaAquiController;
 use App\Http\Controllers\UserPujaController;
 
 // Route::get('/', function () {
@@ -34,7 +36,7 @@ Route::get('admin',[LoginController::class,'showLoginFormAdmin'])->name('showLog
 Route::post('/sign-in-admin',[LoginController::class,'signInAdmin'])->name('sign-in-admin');
 Route::post('/logout-admin', [LoginController::class,'logout'])->name('logout-admin');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','Admin']], function () {
     Route::get('/maintenance', 'HomeController@index')->name('home');
     Route::get('/maintenance', function () { return view('admin/app'); })->name('maintenance');
     Route::get('/user', [UserController::class,'index'])->name('mis-administradores');
@@ -90,5 +92,8 @@ Route::get('/get-department',[UbicacionesController::class,'getDepartments'])->n
 Route::get('/api/departments/{department}/provinces', [UbicacionesController::class, 'getProvincesByDepartment']);
 
 Route::get('/api/provinces/{province}/districts', [UbicacionesController::class, 'getDistrictsByProvince']);
+Route::get('/publica-aqui',[PublicaAquiController::class,'index'])->name('publica-aqui');
+Route::get('/mis-avisos',[MisAvisosController::class,'index'])->name('mis-avisos');
+Route::get('/interesados',[MisAvisosController::class,'index'])->name('interesados');
 
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');

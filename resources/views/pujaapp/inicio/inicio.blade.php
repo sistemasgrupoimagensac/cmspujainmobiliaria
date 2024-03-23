@@ -16,55 +16,96 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
-        <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>
-        {{-- <div class="dropdown position-absolute top-4 end-0 pe-5">
-            @if(Auth::guard('puja')->check())
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hola {{ Auth::guard('puja')->user()->name}}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                    <li> 
-                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Cerrar sesión
-                        </a>
-                    </li>
-                    <form id="logout-form" action="{{ route('logout-user') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </ul>
-            @else
-                <a class="btn btn-primary" href="{{ route('showLoginFormUser') }}">Iniciar Sesion</a>
-            @endif
-        </div> --}}
-        
-        <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>        
+            <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
        
-          <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
-            <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
-            <ul class="navbar-nav">
-                <li class="nav-item active p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('app') }}">Compra</a>
-                </li>
-                <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
-                </li>
-                <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('remate') }}">Remate</a>
-                </li>
-                <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link boton" href="{{route('publicar')}}">Publica Aquí</a>
-                </li>
-            </ul>
-          </div>
+            <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
+                <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
+                <ul class="navbar-nav dropdown">
+                    <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownCompra" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Compra</a>
+                        <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownCompra">
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                <li><a class="dropdown-item" href="#">Casa</a></li>
+                                <li><a class="dropdown-item" href="#">Departamento</a></li>
+                                <li><a class="dropdown-item" href="#">Oficina</a></li>
+                                <li><a class="dropdown-item" href="#">Terreno</a></li>
+                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                            </ul>
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">1 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">2 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">3 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">Más de 4 Dormitorio</a></li>
+                            </ul>
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Características</a></li>
+                                <li><a class="dropdown-item" href="#">Baños</a></li>
+                                <li><a class="dropdown-item" href="#">Cochera</a></li>
+                                <li><a class="dropdown-item" href="#">Jardín</a></li>
+                                <li><a class="dropdown-item" href="#">A estrenar</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownAlquiler" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Alquiler</a>
+                        <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownAlquiler">
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                <li><a class="dropdown-item" href="#">Casa</a></li>
+                                <li><a class="dropdown-item" href="#">Departamento</a></li>
+                                <li><a class="dropdown-item" href="#">Oficina</a></li>
+                                <li><a class="dropdown-item" href="#">Terreno</a></li>
+                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                            </ul>
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">1 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">2 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">3 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="#">Más de 4 Dormitorio</a></li>
+                            </ul>
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Características</a></li>
+                                <li><a class="dropdown-item" href="#">Baños</a></li>
+                                <li><a class="dropdown-item" href="#">Cochera</a></li>
+                                <li><a class="dropdown-item" href="#">Jardín</a></li>
+                                <li><a class="dropdown-item" href="#">A estrenar</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownRemate" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Remate</a>
+                        <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownRemate">
+                            <ul class="">
+                                <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Casa</a></li>
+                                <li><a class="dropdown-item" href="#">Departamento</a></li>
+                                <li><a class="dropdown-item" href="#">Oficina</a></li>
+                                <li><a class="dropdown-item" href="#">Terreno</a></li>
+                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                        <a class="nav-link boton" href="{{route('publicar')}}">Publica Aquí</a>
+                    </li>
+                </ul>
+            </div>
           <div class="row justify-content-center align-items-center rounded-pill border border-1 p-2 m-0 position-absolute end-0 d-none d-lg-flex">
             <div class="row justify-content-center d-flex col-6 dropdown m-0 text-center">
                 <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/img/vector/menuburguer.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="burgerMenu">
-                    @if (Auth::guard('puja')->check())
+                    @if (Auth::check())
                         <li>
                             <a class="dropdown-item" href="{{ route('favoritos') }}" onclick="event.preventDefault(); document.getElementById('favoritos-form').submit();">Favoritos</a>
                             <form id="favoritos-form" action="{{ route('favoritos') }}" method="get" style="display: none;">
@@ -96,77 +137,155 @@
 </header>
 <section>
     <div class="container-fluid banner">
-    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-                <img src="img/slide1.png" class="d-block w-100 img-banner" alt="...">
+            <div class="carousel-item active" data-bs-interval="4000">
+                <img src="img/slide5.png" class="d-block w-100 img-banner" alt="...">
                 <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
+                        <h1>REMATES<br>
+                        INMOBILIARIOS!</h1>
+                        <p>Tu inmueble ideal con precios <br>accesibles</p>
                         <div class="input-group bg-white rounded-pill align-items-center p-2">
                             <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades">
                             <span class="search-icon me-3">
                                 <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                                 </button>
-                                <div class="dropdown-menu dropdownmenu" aria-labelledby="burgerMenu" style="transform: translate(307px, 56px) !important;">
+                                <div class="dropdown-menu dropdownmenu align-items-center" aria-labelledby="burgerMenu">
                                     <ul class="p-3" aria-labelledby="burgerMenu">
-                                        <h2 style="  text-decoration: underline 3px #FB7125">Tipo de propiedad</h2>
-                                        <li><a class="dropdown-item">Casa</a></li>
-                                        <li><a class="dropdown-item">Departamento</a></li>
-                                        <li><a class="dropdown-item">Oficina</a></li>
-                                        <li><a class="dropdown-item">Terreno</a></li>
-                                        <li><a class="dropdown-item">Local Comercial</a></li>
-
+                                        <select class="select-form rounded-pill" name="" id="">
+                                            <option value=""><strong>Todos</strong></option>
+                                            <option value="3">Departamento</option>
+                                            <option value="2">Oficina</option>
+                                            <option value="1">Casa</option>
+                                            <option value="4">Lote</option>
+                                        </select>
                                     </ul>
-                                    <ul class="p-3" aria-labelledby="burgerMenu">
-                                        <h2 style="  text-decoration: underline 3px #FB7125">Dormitorio</h2>
-                                        <li><a class="dropdown-item">1 Dormitorio</a></li>
-                                        <li><a class="dropdown-item">2 Dormitorio</a></li>
-                                        <li><a class="dropdown-item">3 Dormitorio</a></li>
-                                        <li><a class="dropdown-item">4 Dormitorio</a></li>
-                                        <li><a class="dropdown-item">Más de 4 dormitorio</a></li>
-                                    </ul>
-                                    <ul class="p-3" aria-labelledby="burgerMenu">
-                                        <h2 style="  text-decoration: underline 3px #FB7125">Características</h2>
-                                        <li><a class="dropdown-item">Baños</a></li>
-                                        <li><a class="dropdown-item">Cochera</a></li>
-                                        <li><a class="dropdown-item">Jardín</a></li>
-                                        <li><a class="dropdown-item">A estrenar</a></li>
+                                    <ul class="" aria-labelledby="burgerMenu">
+                                        <div class="input-group bg-white rounded-pill align-items-center">
+                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" placeholder="Buscar propiedades">
+                                            <span class="search-icon p-2"><img src="img/vector/search.svg" alt=""></span>
+                                        </div>
                                     </ul>
                                 </div>
-                                
                             </span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
+                            <span class="search-icon">
+                                <img src="img/vector/search.svg" alt="">
+                            </span>
                         </div>
                 </div>
             </div>
-            <div class="carousel-item" data-bs-interval="10000">
-                <img src="img/slide2.png" class="d-block w-100 img-banner" alt="...">
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="img/slide6.png" class="d-block w-100 img-banner" alt="...">
                 <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
+                    <h1>REMATES<br>
+                        INMOBILIARIOS!</h1>
+                        <p>Tu inmueble ideal con precios <br>accesibles</p>
                         <div class="input-group bg-white rounded-pill align-items-center p-2">
                             <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades">
-                            <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
+                            <span class="search-icon me-3">
+                                <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
+                                </button>
+                                <div class="dropdown-menu dropdownmenu align-items-center" aria-labelledby="burgerMenu">
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <select class="select-form rounded-pill" name="" id="">
+                                            <option value=""><strong>Todos</strong></option>
+                                            <option value="3">Departamento</option>
+                                            <option value="2">Oficina</option>
+                                            <option value="1">Casa</option>
+                                            <option value="4">Lote</option>
+                                        </select>
+                                    </ul>
+                                    <ul class="" aria-labelledby="burgerMenu">
+                                        <div class="input-group bg-white rounded-pill align-items-center">
+                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" placeholder="Buscar propiedades">
+                                            <span class="search-icon p-2"><img src="img/vector/search.svg" alt=""></span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </span>
+                            <span class="search-icon">
+                                <img src="img/vector/search.svg" alt="">
+                            </span>
                         </div>
                 </div>
             </div>
-            <div class="carousel-item" data-bs-interval="10000">
-                <img src="img/slide3.png" class="d-block w-100 img-banner" alt="...">
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="img/slide7.png" class="d-block w-100 img-banner" alt="...">
                 <div class="carousel-caption text-start">
-                    <h2>Tu Hogar Ideal, Encuentra las mejores<br>
-                        propiedades al Mejor Precio</h2>
+                    <h1>REMATES<br>
+                        INMOBILIARIOS!</h1>
+                        <p>Tu inmueble ideal con precios <br>accesibles</p>
                         <div class="input-group bg-white rounded-pill align-items-center p-2">
                             <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades">
-                            <span class="search-icon me-3"><img src="img/vector/filter.svg" alt=""></span>
-                            <span class="search-icon"><img src="img/vector/search.svg" alt=""></span>
+                            <span class="search-icon me-3">
+                                <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
+                                </button>
+                                <div class="dropdown-menu dropdownmenu align-items-center" aria-labelledby="burgerMenu">
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <select class="select-form rounded-pill" name="" id="">
+                                            <option value=""><strong>Todos</strong></option>
+                                            <option value="3">Departamento</option>
+                                            <option value="2">Oficina</option>
+                                            <option value="1">Casa</option>
+                                            <option value="4">Lote</option>
+                                        </select>
+                                    </ul>
+                                    <ul class="" aria-labelledby="burgerMenu">
+                                        <div class="input-group bg-white rounded-pill align-items-center">
+                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" placeholder="Buscar propiedades">
+                                            <span class="search-icon p-2"><img src="img/vector/search.svg" alt=""></span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </span>
+                            <span class="search-icon">
+                                <img src="img/vector/search.svg" alt="">
+                            </span>
+                        </div>
+                </div>
+            </div> 
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="img/slide8.png" class="d-block w-100 img-banner" alt="...">
+                <div class="carousel-caption text-start">
+                    <h1>REMATES<br>
+                        INMOBILIARIOS!</h1>
+                        <p>Tu inmueble ideal con precios <br>accesibles</p>
+                        <div class="input-group bg-white rounded-pill align-items-center p-2">
+                            <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades">
+                            <span class="search-icon me-3">
+                                <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
+                                </button>
+                                <div class="dropdown-menu dropdownmenu align-items-center" aria-labelledby="burgerMenu">
+                                    <ul class="p-3" aria-labelledby="burgerMenu">
+                                        <select class="select-form rounded-pill" name="" id="">
+                                            <option value=""><strong>Todos</strong></option>
+                                            <option value="3">Departamento</option>
+                                            <option value="2">Oficina</option>
+                                            <option value="1">Casa</option>
+                                            <option value="4">Lote</option>
+                                        </select>
+                                    </ul>
+                                    <ul class="" aria-labelledby="burgerMenu">
+                                        <div class="input-group bg-white rounded-pill align-items-center">
+                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" placeholder="Buscar propiedades">
+                                            <span class="search-icon p-2"><img src="img/vector/search.svg" alt=""></span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </span>
+                            <span class="search-icon">
+                                <img src="img/vector/search.svg" alt="">
+                            </span>
                         </div>
                 </div>
             </div>
@@ -199,7 +318,7 @@
                             @endif
                         @endforeach
                     </div>
-                    @if(Auth::guard('puja')->check())
+                    @if(Auth::check())
                     <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
                         @if($item->interesado)
                             @if($item->interesado->status == 0)
@@ -255,11 +374,6 @@
             @endforeach            
         </div>
         
-    </div>
-</section>
-<section>
-    <div class="container-fluid m-0 text-center">
-        <button class="btn btn-primary boton"> Explorar más propiedades</button>
     </div>
 </section>
 <section class="section-banner">

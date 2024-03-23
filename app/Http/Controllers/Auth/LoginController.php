@@ -53,7 +53,11 @@ class LoginController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('/maintenance');
+            if(Auth::user()->id_rol == 1){
+                return redirect()->intended('/maintenance');
+            }else{
+                return redirect()->intended('/');
+            }
         } else {
             return redirect()->back()->withErrors([
                 'email' => 'Las credenciales proporcionadas son incorrectas.',
@@ -67,5 +71,6 @@ class LoginController extends Controller
         // Redirige al usuario a la página de inicio de sesión
         return redirect('/admin');
     }
+
     
 }

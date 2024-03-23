@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $table="users";
     protected $fillable = [
-        'name', 'email', 'password',
+        'id_rol','district_id','name','type_document','document', 'email','birthdate','direction','phone','password',
     ];
 
     /**
@@ -37,4 +37,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function rol(){
+        return $this->belongsTo(Rol::class,'id_rol');
+    }
+    public function meInteresa(){
+        return $this->hasMany(MeInteresa::class);
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class,'district_id');
+    }
 }

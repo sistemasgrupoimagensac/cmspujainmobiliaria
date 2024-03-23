@@ -15,6 +15,16 @@ nav{
     .section-banner{
         margin-top: 2rem;
     }
+    .dropdown-item{
+        display: block;
+        padding: 1rem;
+        transform: translate( 6px ) !important;
+    }
+    .dropdownmenunav.show{
+        display: block;
+        padding: 1rem;
+        transform: translate( 6px ) !important;
+    }
 }
 @media screen and (min-width: 576px)  {
     .section-banner{
@@ -33,7 +43,11 @@ nav{
 @media screen and (min-width: 992px) {
     .carousel-caption{
         top:40% !important;
-        right: 40% !important;
+        right: 54% !important;
+    }
+    .carousel-caption h1{
+        font-weight: bold !important;
+        font-family: 'Kanit', sans-serif !important;
     }
     .footer-div{
         padding: 8rem;
@@ -103,5 +117,11 @@ ul{
 }
 .dropdownmenu.show{
     display: flex;
-    transform: translate(307px, 56px) !important;
+    padding: 1rem;
+    /* transform: translate(307px, 56px) !important; */
+}
+.dropdownmenunav.show{
+    display: flex;
+    padding: 1rem;
+    transform: translate( 6px ) !important;
 }

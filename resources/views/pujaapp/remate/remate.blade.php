@@ -18,27 +18,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
-            <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>
-            {{-- <div class="dropdown position-absolute top-4 end-0 pe-5">
-                @if(Auth::guard('puja')->check())
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Hola {{ Auth::guard('puja')->user()->name}}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li> 
-                            <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar sesión
-                            </a>
-                        </li>
-                        <form id="logout-form" action="{{ route('logout-user') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </ul>
-                @else
-                    <a class="btn btn-primary" href="{{ route('showLoginFormUser') }}">Iniciar Sesion</a>
-                @endif
-            </div> --}}
-            
+            <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a> 
             <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,7 +36,7 @@
                         <a class="nav-link" href="{{ route('remate') }}">Remate</a>
                     </li>
                     <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link boton" href="contactanos.html">Publica Aquí</a>
+                        <a class="nav-link boton" href="{{ route('publicar') }}">Publica Aquí</a>
                     </li>
                 </ul>
               </div>
@@ -272,11 +252,6 @@
             @endforeach           
         </div>
         
-    </div>
-</section>
-<section>
-    <div class="container-fluid m-0 text-center">
-        <button class="btn btn-primary boton"> Explorar más propiedades</button>
     </div>
 </section>
 <section style="margin-top: 20rem;">

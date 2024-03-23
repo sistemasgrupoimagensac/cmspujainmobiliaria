@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('status_property_id');
             $table->unsignedBigInteger('district_id')->nullable(); 
+            $table->unsignedBigInteger('user_id');
             $table->string('name',191);
             $table->integer('rooms');
             $table->integer('garage');
@@ -35,6 +36,8 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('status_property_id')->references('id')->on('status_property');
             $table->foreign('district_id')->references('id')->on('districts');
+
+            $table->foreign('user_id')->references('id')->on('users');
             
         });
     }

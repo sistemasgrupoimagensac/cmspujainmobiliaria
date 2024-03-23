@@ -20,9 +20,9 @@ class AppController extends Controller
 
         $solicitantesprocesados = $products->map(function($product){
             $product->interesado = null;
-            if(Auth::guard('puja')->check()){
+            if(Auth::check()){
                 $like= MeInteresa::where(['product_id'=> $product->id,
-                'user_puja_id'=>Auth::guard('puja')->user()->id])->first();
+                'user_id'=>Auth::user()->id])->first();
                 if ($like) {
                     $product->interesado = $like;
                 }
@@ -40,7 +40,7 @@ class AppController extends Controller
     public function meInteresa(Request $request)
     {   
         $like= MeInteresa::where(['product_id'=> $request->product_id,
-        'user_puja_id'=>Auth::guard('puja')->user()->id,])->first();
+        'user_puja_id'=>Auth::user()->id,])->first();
         if($like!=null){
                $like->status = $like->status == 1 ? 0 : 1;
                $like->save();
@@ -49,7 +49,7 @@ class AppController extends Controller
             $like = new MeInteresa();
             $like->product_id = $request->product_id;
             $like->status = 1;
-            $like->user_puja_id = Auth::guard('puja')->user()->id;
+            $like->user_puja_id = Auth::user()->id;
             $like->save();
         }
         $response=[
@@ -60,18 +60,15 @@ class AppController extends Controller
     public function dislike(Request $request){
         $like = MeInteresa::where([
             'product_id' => $request->product_id,
-            'user_puja_id' => Auth::guard('puja')->user()->id,
+            'user_puja_id' => Auth::user()->id,
         ])->first();
-    
         if ($like != null) {
             $like->status = 0; // Cambiar el status a 0
             $like->save();
         }
-    
         $response = [
             'like_actual' => $like
         ];
-    
         return response()->json($response);
     }
     public function detalle(Request $request,$product_id){
@@ -82,10 +79,10 @@ class AppController extends Controller
         $distritos= District::orderBy('id','desc')->get();
         $detalle = Product::where('id',$product_id)->first();
 
-        if(Auth::guard('puja')->check()){
+        if(Auth::check()){
             $like= MeInteresa::where(
                 ['product_id'=> $detalle->id,
-                'user_puja_id'=>Auth::guard('puja')->user()->id]
+                'user_puja_id'=>Auth::user()->id]
                 )->first();
                 $detalle->interesado=$like;
         }

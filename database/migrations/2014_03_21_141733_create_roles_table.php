@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeInteresaTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateMeInteresaTable extends Migration
      */
     public function up()
     {
-        Schema::create('me_interesa', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->boolean('status')->default(1);
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('rol', 30)->unique();
+            $table->boolean('status')->dafault(1);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateMeInteresaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('me_interesa');
+        Schema::dropIfExists('roles');
     }
 }
