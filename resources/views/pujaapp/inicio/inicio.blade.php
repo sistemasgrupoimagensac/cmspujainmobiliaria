@@ -29,26 +29,26 @@
                         <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownCompra">
                             <ul class="">
                                 <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
-                                <li><a class="dropdown-item" href="#">Casa</a></li>
-                                <li><a class="dropdown-item" href="#">Departamento</a></li>
-                                <li><a class="dropdown-item" href="#">Oficina</a></li>
-                                <li><a class="dropdown-item" href="#">Terreno</a></li>
-                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?category_id=1">Casa</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?category_id=2">Departamento</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?category_id=3">Oficina</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?category_id=4">Terreno</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?category_id=5">Local Comercial</a></li>
                             </ul>
                             <ul class="">
-                                <li><a class="dropdown-item" href="#">Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">1 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">2 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">3 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">4 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">Más de 4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}">Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?rooms=1">1 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?rooms=2">2 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?rooms=3">3 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?rooms=4">4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?rooms=5">Más de 4 Dormitorio</a></li>
                             </ul>
                             <ul class="">
                                 <li><a class="dropdown-item" href="#">Características</a></li>
-                                <li><a class="dropdown-item" href="#">Baños</a></li>
-                                <li><a class="dropdown-item" href="#">Cochera</a></li>
-                                <li><a class="dropdown-item" href="#">Jardín</a></li>
-                                <li><a class="dropdown-item" href="#">A estrenar</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?bathrooms">Baños</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?garage">Cochera</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?">Jardín</a></li>
+                                <li><a class="dropdown-item" href="{{ route('app') }}?">A estrenar</a></li>
                             </ul>
                         </div>
                     </li>
@@ -57,26 +57,26 @@
                         <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownAlquiler">
                             <ul class="">
                                 <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
-                                <li><a class="dropdown-item" href="#">Casa</a></li>
-                                <li><a class="dropdown-item" href="#">Departamento</a></li>
-                                <li><a class="dropdown-item" href="#">Oficina</a></li>
-                                <li><a class="dropdown-item" href="#">Terreno</a></li>
-                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=1">Casa</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=2">Departamento</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=3">Oficina</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=4">Terreno</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=5">Local Comercial</a></li>
                             </ul>
                             <ul class="">
-                                <li><a class="dropdown-item" href="#">Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">1 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">2 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">3 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">4 Dormitorio</a></li>
-                                <li><a class="dropdown-item" href="#">Más de 4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}">Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=1">1 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=2">2 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=3">3 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=4">4 Dormitorio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=5">Más de 4 Dormitorio</a></li>
                             </ul>
                             <ul class="">
                                 <li><a class="dropdown-item" href="#">Características</a></li>
-                                <li><a class="dropdown-item" href="#">Baños</a></li>
-                                <li><a class="dropdown-item" href="#">Cochera</a></li>
-                                <li><a class="dropdown-item" href="#">Jardín</a></li>
-                                <li><a class="dropdown-item" href="#">A estrenar</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?bathrooms">Baños</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?garage">Cochera</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?">Jardín</a></li>
+                                <li><a class="dropdown-item" href="{{ route('alquiler') }}?">A estrenar</a></li>
                             </ul>
                         </div>
                     </li>
@@ -86,11 +86,11 @@
                             <ul class="">
                                 <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Casa</a></li>
-                                <li><a class="dropdown-item" href="#">Departamento</a></li>
-                                <li><a class="dropdown-item" href="#">Oficina</a></li>
-                                <li><a class="dropdown-item" href="#">Terreno</a></li>
-                                <li><a class="dropdown-item" href="#">Local Comercial</a></li>
+                                <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=1">Casa</a></li>
+                                <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=2">Departamento</a></li>
+                                <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=3">Oficina</a></li>
+                                <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=4">Terreno</a></li>
+                                <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=5">Local Comercial</a></li>
                             </ul>
                         </div>
                     </li>
@@ -152,14 +152,14 @@
                         INMOBILIARIOS!</h1>
                         <p>Tu inmueble ideal con precios <br>accesibles</p>
                         <div class="input-group bg-white rounded-pill align-items-center p-2">
-                            <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades">
+                            <input type="text" class="form-control rounded-pill border-0 buscar-propiedades" placeholder="Buscar propiedades" name="buscar-propiedades">
                             <span class="search-icon me-3">
                                 <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="img/vector/filter.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                                 </button>
                                 <div class="dropdown-menu dropdownmenu align-items-center" aria-labelledby="burgerMenu">
                                     <ul class="p-3" aria-labelledby="burgerMenu">
-                                        <select class="select-form rounded-pill" name="" id="">
+                                        <select class="select-form rounded-pill" name="tipo_categoria" id="">
                                             <option value=""><strong>Todos</strong></option>
                                             <option value="3">Departamento</option>
                                             <option value="2">Oficina</option>
@@ -169,15 +169,15 @@
                                     </ul>
                                     <ul class="" aria-labelledby="burgerMenu">
                                         <div class="input-group bg-white rounded-pill align-items-center">
-                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" placeholder="Buscar propiedades">
-                                            <span class="search-icon p-2"><img src="img/vector/search.svg" alt=""></span>
+                                            <input type="text" class="form-control rounded-pill border-1 buscar-propiedades" name="buscar_tipo_propiedades" placeholder="Buscar propiedades">
+                                            <a type="submit" class="search-icon p-2"><img src="img/vector/search.svg" alt=""></a>
                                         </div>
                                     </ul>
                                 </div>
                             </span>
-                            <span class="search-icon">
+                            <a type="submit" class="search-icon">
                                 <img src="img/vector/search.svg" alt="">
-                            </span>
+                            </a>
                         </div>
                 </div>
             </div>

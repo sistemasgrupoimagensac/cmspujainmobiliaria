@@ -23,6 +23,7 @@ use App\Http\Controllers\PujaInmobiliaria\RemateController;
 use App\Http\Controllers\StatusPropertyController;
 use App\Http\Controllers\UbicacionesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPuja\InteresadosController;
 use App\Http\Controllers\UserPuja\MisAvisosController;
 use App\Http\Controllers\UserPuja\PublicaAquiController;
 use App\Http\Controllers\UserPujaController;
@@ -88,12 +89,13 @@ Route::get('/favoritos',[FavoritosController::class,'index'])->name('favoritos')
 
 Route::get('/publicar',[OperacionesController::class,'index'])->name('publicar');
 
-Route::get('/get-department',[UbicacionesController::class,'getDepartments'])->name('obtener-departamento');
-Route::get('/api/departments/{department}/provinces', [UbicacionesController::class, 'getProvincesByDepartment']);
+Route::get('/api/departments',[UbicacionesController::class,'getDepartments'])->name('obtener-departamento');
+Route::get('/api/provinces', [UbicacionesController::class, 'getProvincesByDepartment'])->name('obtener-provincia');;
+Route::get('/api/districts', [UbicacionesController::class, 'obtenerDistrito'])->name('obtener-distrito');
 
-Route::get('/api/provinces/{province}/districts', [UbicacionesController::class, 'getDistrictsByProvince']);
+
 Route::get('/publica-aqui',[PublicaAquiController::class,'index'])->name('publica-aqui');
 Route::get('/mis-avisos',[MisAvisosController::class,'index'])->name('mis-avisos');
-Route::get('/interesados',[MisAvisosController::class,'index'])->name('interesados');
+Route::get('/interesados',[InteresadosController::class,'index'])->name('interesados');
 
 // Route::put('/image/disable', [ProductController::class,'disableImage'])->name('inhabilitar.imagen');

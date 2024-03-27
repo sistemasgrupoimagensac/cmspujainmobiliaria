@@ -150,3 +150,20 @@ ul{
 .item a{
     text-decoration: none;
 }
+.buscar-propiedades::placeholder {
+    color: #FB7125;
+}
+.dropdown-menu ul{
+    list-style: none;
+    padding: 0;
+}
+.dropdownmenu.show{
+    display: flex;
+    padding: 1rem;
+    /* transform: translate(307px, 56px) !important; */
+}
+.dropdownmenunav.show{
+    display: flex;
+    padding: 1rem;
+    transform: translate( 6px ) !important;
+}

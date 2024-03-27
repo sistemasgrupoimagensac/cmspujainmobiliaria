@@ -58,8 +58,8 @@ class ProductController extends Controller
 
         return view('admin.products.view',compact('products','districts','status_property','categories','criterio','search','districtId','statusPropertyId','categoryId'));
     }
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'price'   => 'required|numeric',

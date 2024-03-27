@@ -11,15 +11,31 @@ use Illuminate\Support\Facades\Auth;
 class AlquilerController extends Controller
 {
     public function index(Request $request){
+        
         $products = Product::orderBy('id','desc')
         ->where(function ($query) use ($request){
             if($request->category_id){
                 $query->where('category_id',$request->category_id);  
             }
         })
+        ->where(function($query)use($request){
+            if($request->status_property){
+                $query->where('status_property_id',$request->status_property_id);
+            }
+        })
+      
+        ->where(function($query)use($request){
+            if($request->rooms >=5){
+                $query->where('rooms','>=',5);
+   
+            }else{
+                $query->where('rooms','<',5);
+            }
+        })
         ->where('status_property_id',1)
         ->where('status',1)
         ->get();
+     
         $solicitantesprocesados = $products->map(function($product){
             $product->interesado = null;
             if(Auth::check()){

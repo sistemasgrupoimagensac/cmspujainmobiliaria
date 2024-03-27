@@ -22,13 +22,13 @@
     
             <ul class="navbar-nav w-100 justify-content-evenly">
                 <li>
-                    <a href=""><img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt=""></a>
+                    <a href=" {{ route('publica-aqui') }} "><img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt=""></a>
                 </li>
                 <li class="nav-item active p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('app') }}">Mis Avisos</a>
+                    <a class="nav-link" href="{{ route('mis-avisos') }}">Mis Avisos</a>
                 </li>
-                <li class="nav-item p-lg-4 p-md-0 p-sm-0 active">
-                    <a class="nav-link" href="{{ route('alquiler') }}">Interesados</a>
+                <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                    <a class="nav-link" href="{{ route('interesados') }}">Mis Interesados</a>
                 </li>
                 <li class="nav-item p-lg-4 p-md-0 p-sm-0">
                     <a class="nav-link" href="{{ route('remate') }}">Mi Actividad</a>
@@ -38,10 +38,7 @@
                 </li>
             </ul>
           </div>
-            <style>
-            .active{
-                border-bottom: #FB7125 solid 1px;
-            }
+          <style>
             .sidebar-1 {
                 background: #F5F5F5; 
                 color: black;
@@ -67,7 +64,6 @@
                         
                 }
                 .contenido-form{
-                    margin: 0px;
                     border-radius: 20px;
                     border: none; /* Remove the black border */
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Shadow effect */
@@ -87,7 +83,7 @@
                     background-position: center;
                     background-size: cover;
                 }
-            </style>
+        </style>
     </nav>
     <div class="container">
         <div class="row  mt-5 ps-1 pe-1">

@@ -18,40 +18,108 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white position-relative" id="header">
-            <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a> 
-            <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand d-lg-none d-sm-block d-md-block" href="#">  <img src="img/logo.png" class="ms-4" alt=""></a>        
+                <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
            
-              <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
-                <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
-                <ul class="navbar-nav">
-                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link" href="{{ route('app') }}">Compra</a>
-                    </li>
-                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link" href="{{ route('alquiler') }}">Alquiler</a>
-                    </li>
-                    <li class="nav-item active p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link" href="{{ route('remate') }}">Remate</a>
-                    </li>
-                    <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link boton" href="{{ route('publicar') }}">Publica Aquí</a>
-                    </li>
-                </ul>
-              </div>
+                <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
+                    <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
+                    <ul class="navbar-nav dropdown">
+                        <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownCompra" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Compra</a>
+                            <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownCompra">
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?category_id=1">Casa</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?category_id=2">Departamento</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?category_id=3">Oficina</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?category_id=4">Terreno</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?category_id=5">Local Comercial</a></li>
+                                </ul>
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="{{ route('app') }}">Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?rooms=1">1 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?rooms=2">2 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?rooms=3">3 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?rooms=4">4 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?rooms=5">Más de 4 Dormitorio</a></li>
+                                </ul>
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="#">Características</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?bathrooms">Baños</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?garage">Cochera</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?">Jardín</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('app') }}?">A estrenar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownAlquiler" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Alquiler</a>
+                            <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownAlquiler">
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=1">Casa</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=2">Departamento</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=3">Oficina</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=4">Terreno</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?category_id=5">Local Comercial</a></li>
+                                </ul>
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}">Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=1">1 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=2">2 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=3">3 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=4">4 Dormitorio</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?rooms=5">Más de 4 Dormitorio</a></li>
+                                </ul>
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="#">Características</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?bathrooms">Baños</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?garage">Cochera</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?">Jardín</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('alquiler') }}?">A estrenar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown p-lg-4 p-md-0 p-sm-0">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownRemate" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Remate</a>
+                            <div class="dropdown-menu dropdownmenunav align-items-center p-3" aria-labelledby="navbarDropdownRemate">
+                                <ul class="">
+                                    <li><a class="dropdown-item" href="#">Tipo de propiedad</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=1">Casa</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=2">Departamento</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=3">Oficina</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=4">Terreno</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('remate') }}?category_id=5">Local Comercial</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item p-lg-4 p-md-0 p-sm-0">
+                            <a class="nav-link boton" href="{{route('publicar')}}">Publica Aquí</a>
+                        </li>
+                    </ul>
+                </div>
               <div class="row justify-content-center align-items-center rounded-pill border border-1 p-2 m-0 position-absolute end-0 d-none d-lg-flex">
                 <div class="row justify-content-center d-flex col-6 dropdown m-0 text-center">
                     <button class="btn dropdown-toggle" type="button" id="burgerMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="/img/vector/menuburguer.svg" alt="Burger Icon" style="width: 30px; height: 30px;">
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="burgerMenu">
-                        @if (Auth::guard('puja')->check())
-                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
+                        @if (Auth::check())
+                            <li>
+                                <a class="dropdown-item" href="{{ route('favoritos') }}" onclick="event.preventDefault(); document.getElementById('favoritos-form').submit();">Favoritos</a>
+                                <form id="favoritos-form" action="{{ route('favoritos') }}" method="get" style="display: none;">
+                               
+                                </form>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                        
                         @else
                          <li><a class="dropdown-item" href="{{ route('showLoginFormUser') }}" onclick="event.preventDefault(); document.getElementById('perfil-form').submit();">Iniciar Sesión</a>
@@ -195,7 +263,7 @@
                             @endif
                         @endforeach
                     </div>
-                    @if(Auth::guard('puja')->check())
+                    @if(Auth::check())
                     <div class="position-absolute top-0 end-0 likeButton" data-id-product="{{ $item->id }}" style="z-index: 20">
                         @if($item->interesado)
                             @if($item->interesado->status == 0)

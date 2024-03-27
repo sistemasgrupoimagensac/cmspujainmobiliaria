@@ -14,38 +14,39 @@
                 <div class="col-8">
                     <template v-if="menu==1">
                         <operaciones
-                        @continuar="continuar"
-                        
-                        :estado_propiedad = "estado_propiedad"
-                        :caracteristicas = "caracteristicas"
-                        @updateEstadoPropiedad = "updateEstadoPropiedad"
-                        @updateCaracteristica = "caracteristicas"
+                            @continuar="continuar"
+                            :estado_propiedad="operacionesData.estado_propiedad"
+                            :caracteristicas="operacionesData.caracteristicas"
+                            @updateCaracteristicas="updateCaracteristicas"
+                            @updateEstadoPropiedad="updateEstadoPropiedad"
                         />
                     </template>
                     <template v-if="menu==2">
                         <ubicaciones
-                        v-bind:ubicacionesData="ubicacionesData"
-                        :direccion="ubicacionesData.direccion"
-                        :selectedDepartment="ubicacionesData.selectedDepartment"
-                        :selectedProvince="ubicacionesData.selectedProvince"
+                        :direccion="ubicacionesData.direccion" 
                         :selectedDistrict="ubicacionesData.selectedDistrict"
-                        :departments="ubicacionesData.departments"
-                        :provinces="ubicacionesData.provinces"
+                        :selectedProvince="ubicacionesData.selectedProvince"
+                        :selectedDepartment="ubicacionesData.selectedDepartment"
                         :districts="ubicacionesData.districts"
+                        :provinces="ubicacionesData.provinces"
+                        :departments="ubicacionesData.departments"
+                        @updateDireccion="updateDireccion"
+                        @updateSelectedDistrict="updateSelectedDistrict"
+                        @updateSelectedProvince="updateSelectedProvince"
+                        @updateSelectedDeparment="updateSelectedDeparment"
                         @continuar="continuar"
-                        @updateUbicacionesData="actualizarDatosUbicaciones"
                         />
                     </template>
                     <template v-if="menu==3">
                         <caracteristicas
-                        @continuar = "formulario.continuar"
-                        :cantidad_rooms = "formulario.cantidad_rooms"
-                        :cantidad_bathrooms = "formulario.cantidad_bathrooms"
-                        :cantidad_garage = "formulario.cantidad_garage"
-                        :titulo = "formulario.titulo"
-                        :monto = "formulario.monto"
-                        :descripcion = "formulario.descripcion"
-                        :M2 = "formulario.M2"
+                        @continuar = "continuar"
+                        :cantidad_rooms = "caracteristicasData.cantidad_rooms"
+                        :cantidad_bathrooms = "caracteristicasData.cantidad_bathrooms"
+                        :cantidad_garage = "caracteristicasData.cantidad_garage"
+                        :titulo = "caracteristicasData.titulo"
+                        :monto = "caracteristicasData.monto"
+                        :descripcion = "caracteristicasData.descripcion"
+                        :M2 = "caracteristicasData.M2"
                         @updateCantidadRooms="updateCantidadRooms"
                         @updateCantidadBathrooms="updateCantidadBathrooms"
                         @updateCantidadGarage="updateCantidadGarage"
@@ -53,6 +54,8 @@
                         @updateDescripcion="updateDescripcion"
                         @updateMonto="updateMonto"
                         @updateM2="updateM2"
+                        @file-selected="handleFileSelected"
+                        
                         />
                     </template>
                 </div>
@@ -73,7 +76,20 @@
         data(){
             return {
                 menu:1,
-                formulario:{
+                operacionesData:{
+                    estado_propiedad: 1,
+                    caracteristicas: 1,
+                },
+                ubicacionesData: {
+                    direccion: '',
+                    selectedDistrict: 0,
+                    selectedProvince: 0,
+                    selectedDepartment: 0,
+                    districts:[],
+                    provinces:[],
+                    departments:[],
+                },
+                caracteristicasData:{
                     cantidad_rooms: 0,
                     cantidad_bathrooms: 0,
                     cantidad_garage: 0,
@@ -82,55 +98,109 @@
                     monto:0,
                     M2:0
                 },
-                ubicacionesData: {
-                    direccion: '',
-                    selectedDepartment: '',
-                    selectedProvince: '',
-                    selectedDistrict: '',
-                    departments: [],  
-                    provinces: [],  
-                    districts: []
-                }
             }
         },
         methods: {
+                continuar(menu) {
+                    this.menu = menu
+                },
             //operacion
-            continuar(menu) {
-                this.menu = menu
-            },
+                updateEstadoPropiedad(estadoPropiedad) {
+                    this.operacionesData.estado_propiedad = estadoPropiedad;
+                },
+                updateCaracteristicas(caracteristicas){
+                    this.operacionesData.caracteristicas = caracteristicas;
+                },
             //ubicacion
-            actualizarDatosUbicaciones(data) {
-                this.ubicacionesData = data;
-            },
+                updateDireccion(direccion) {
+                    this.ubicacionesData.direccion = direccion;
+                },
+                updateSelectedDistrict(selectedDistrict) {
+                    this.ubicacionesData.selectedDistrict = selectedDistrict;
+                },
+                updateSelectedProvince(selectedProvince) {
+                    this.ubicacionesData.selectedProvince = selectedProvince;
+                },
+                updateSelectedDeparment(selectedDepartment) {
+                    this.ubicacionesData.selectedDepartment = selectedDepartment;
+                },
             //caracteristicas
-            updateCantidadRooms(cantidadRooms) {
-                this.formulario.cantidad_rooms = cantidadRooms;
+                updateCantidadRooms(cantidadRooms) {
+                    this.caracteristicasData.cantidad_rooms = cantidadRooms;
+                },
+                updateCantidadBathrooms(cantidadBathrooms) {
+                    this.caracteristicasData.cantidad_bathrooms = cantidadBathrooms;
+                },
+                updateCantidadGarage(cantidadGarage) {
+                    this.caracteristicasData.cantidad_garage = cantidadGarage;
+                },
+                updateTitulo(titulo) {
+                    this.caracteristicasData.titulo = titulo;
+                },
+                updateDescripcion(descripcion) {
+                    this.caracteristicasData.descripcion = descripcion;
+                },
+                updateMonto(monto){
+                    this.caracteristicasData.monto = monto;
+                },
+                updateM2(M2){
+                    this.caracteristicasData.M2 = M2;
+                },
+            //
+            getDistricts(){
+                axios.get(`/api/districts`)
+                .then(response => {
+                    this.ubicacionesData.districts = response.data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los distritos:', error);
+                });
             },
-            updateCantidadBathrooms(cantidadBathrooms) {
-                this.formulario.cantidad_bathrooms = cantidadBathrooms;
+            getProvinces(){
+                axios.get(`/api/provinces`)
+                .then(response => {
+                    this.ubicacionesData.provinces = response.data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los distritos:', error);
+                });
             },
-            updateCantidadGarage(cantidadGarage) {
-                this.formulario.cantidad_garage = cantidadGarage;
+            getDepartments(){
+                axios.get(`/api/departments`)
+                .then(response => {
+                    this.ubicacionesData.departments = response.data;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los distritos:', error);
+                });
             },
-            updateTitulo(titulo) {
-                this.formulario.titulo = titulo;
-            },
-            updateDescripcion(descripcion) {
-                this.formulario.descripcion = descripcion;
-            },
-            updateMonto(monto){
-                this.formulario.monto = monto;
-            },
-            updateM2(M2){
-                this.formulario.M2 = M2;
-            },
-            updateEstadoPropiedad (estado_propiedad){
-                this.estado_propiedad = estado_propiedad;
-            },
-            updateCaracteristica(caracteristicas){
-                this.caracteristicas = caracteristicas;
-            },
-           
+            handleFileSelected(file) {
+            // Crear un objeto FormData para enviar el archivo al servidor
+            let formData = new FormData();
+            formData.append('file', file); // Añadir el archivo al FormData
+
+            // Realizar una solicitud POST a la API para guardar el archivo
+            axios.post('/api/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido adecuado para archivos
+                }
+            }).then(response => {
+                // Manejar la respuesta de la API, por ejemplo, obtener la URL del archivo guardado
+                const imageUrl = response.data.imageUrl;
+
+                // Actualizar el estado del componente con la URL del archivo guardado
+                this.caracteristicasData.imageUrl = imageUrl;
+            }).catch(error => {
+                // Manejar cualquier error que ocurra durante la carga del archivo
+                console.error('Error al cargar el archivo:', error);
+            });
         }
-    }
+        },
+        mounted() {
+            this.getDistricts();
+            this.getProvinces();
+            this.getDepartments();
+        },
+  
+}
 </script>

@@ -17,7 +17,7 @@
                         <div class="col-4 d-flex amount-box">
                         <button class="btn menos" @click="disminuirCantidadBathrooms"><img src="" class="img-fluid"  alt=""></button>
                         <input type="" class="form-control" name="bathrooms" id="bathrooms" v-model="cantidad_bathrooms">
-                        <button class="btn mas" @click="aumentarCantidadBathrooms"><img src="img/vector/mas" class="img-fluid" alt=""></button>
+                        <button class="btn mas" @click="aumentarCantidadBathrooms"><img src="" class="img-fluid" alt=""></button>
                         </div>
                     </div>
             </div>
@@ -27,7 +27,7 @@
                     <div class="col-4 d-flex amount-box">
                     <button class="btn menos img-fluid" @click="disminuirCantidadGarage"><img src="" class="img-fluid"  alt=""></button>
                     <input type="" class="form-control" name="garage" id="garage" v-model="cantidad_garage">
-                    <button class="btn mas img-fluid" @click="aumentarCantidadGarage"><img src="img/vector/mas" class="img-fluid" alt=""></button>
+                    <button class="btn mas img-fluid" @click="aumentarCantidadGarage"><img src="" class="img-fluid" alt=""></button>
                     </div>
                 </div>
                 <div class="col-6">
@@ -36,7 +36,6 @@
             </div>
             <div class="row justify-content-start">                              
                 <div class="col-3">
-                    
                     <div class="input-group mb-3">
                         <span class="input-group-text" >m2</span>
                         <input type="text" class="form-control" v-model="M2" @input="updateM2">
@@ -51,6 +50,13 @@
                         <input type="text" class="form-control" v-model="monto" @input="updateMonto">
                     </div>
                 </div>                  
+            </div>
+        </div>
+        <h3>Imagen</h3>
+        <div class="mb-3 col-8">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Seleccionar imagen</label>
+                <input @change="handleFileChange" class="form-control" type="file" id="formFile" accept="image/jpeg, image/png">
             </div>
         </div>
         <h3>Descripción</h3>
@@ -68,7 +74,6 @@
             </div>
             <div class="col-4 d-flex justify-content-between">
                 <button class="btn btn-primary">Guardar y Salir</button>
-                <button class="btn btn-primary">Continuar</button>
             </div>
         </div>
     </div>
@@ -78,16 +83,10 @@
     export default {
         data() {
             return {
-                cantidad_rooms: 0,
-                cantidad_bathrooms: 0,
-                cantidad_garage: 0,
-                titulo:'',
-                descripcion:'',
-                monto:0,
-                M2:0
+        
             }
         },
-        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage','titulo', 'descripcion','monto','m2'],
+        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage','titulo', 'descripcion','monto','M2'],
         methods:{
             aumentarCantidadRooms() {
                 this.$emit('updateCantidadRooms', this.cantidad_rooms ++);
@@ -125,6 +124,26 @@
             },
             updateM2(){
                 this.$emit('updateM2',this.M2);
+            },
+
+            guardarCaracteristicas(datos) {
+                // Realiza una solicitud POST a tu ruta de Laravel con los datos
+                axios.post('/product/create', datos)
+                    .then(response => {
+                    // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
+                    console.log(response.data);
+                    })
+                    .catch(error => {
+                    // Maneja los errores de la solicitud, por ejemplo, muestra un mensaje de error
+                    console.error('Error al guardar características:', error);
+                });
+            },
+            handleFileChange(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Emite un evento al componente padre con el archivo seleccionado
+                    this.$emit('file-selected', file);
+                }
             }
         }
     }

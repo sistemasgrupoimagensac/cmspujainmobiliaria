@@ -26,13 +26,13 @@
     
             <ul class="navbar-nav w-100 justify-content-evenly">
                 <li>
-                    <a href=""><img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt=""></a>
+                    <a href=" {{ route('publica-aqui') }} "><img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt=""></a>
                 </li>
                 <li class="nav-item active p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('app') }}">Mis Avisos</a>
+                    <a class="nav-link" href="{{ route('mis-avisos') }}">Mis Avisos</a>
                 </li>
                 <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                    <a class="nav-link" href="{{ route('alquiler') }}">Mis Interesados</a>
+                    <a class="nav-link" href="{{ route('interesados') }}">Mis Interesados</a>
                 </li>
                 <li class="nav-item p-lg-4 p-md-0 p-sm-0">
                     <a class="nav-link" href="{{ route('remate') }}">Mi Actividad</a>
@@ -96,9 +96,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.selectores').select2();
-    });
+
 </script>
 
 </body>

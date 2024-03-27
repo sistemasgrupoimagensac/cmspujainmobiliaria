@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Deparment;
+use App\Department;
 use App\District;
 use App\Province;
 use Illuminate\Http\Request;
@@ -10,19 +10,19 @@ use Illuminate\Http\Request;
 class UbicacionesController extends Controller
 {
     public function getDepartments(){
-        $departments=Deparment::orderBy('id','desc')
+        $departments=Department::orderBy('id','desc')
         ->select('id', 'department', 'status')->get();
         return response()->json($departments);
     }
-    public function getProvincesByDepartment($department)
+    public function getProvincesByDepartment()
     {
-        $provinces = Province::where('department_id', $department)->get();
+        $provinces = Province::get();
         return response()->json($provinces);
     }
 
-    public function getDistrictsByProvince($province)
+    public function obtenerDistrito()
     {
-        $districts = District::where('province_id', $province)->get();
+        $districts = District::get();
         return response()->json($districts);
     }
 }

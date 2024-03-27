@@ -22,9 +22,9 @@ class RemateController extends Controller
         ->get();
         $solicitantesprocesados = $products->map(function($product){
             $product->interesado = null;
-            if(Auth::guard('puja')->check()){
+            if(Auth::check()){
                 $like= MeInteresa::where(['product_id'=> $product->id,
-                'user_puja_id'=>Auth::guard('puja')->user()->id])->first();
+                'user_puja_id'=>Auth::user()->id])->first();
                 if ($like) {
                     $product->interesado = $like;
                 }

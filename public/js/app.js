@@ -1910,17 +1910,9 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      cantidad_rooms: 0,
-      cantidad_bathrooms: 0,
-      cantidad_garage: 0,
-      titulo: '',
-      descripcion: '',
-      monto: 0,
-      M2: 0
-    };
+    return {};
   },
-  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage', 'titulo', 'descripcion', 'monto', 'm2'],
+  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage', 'titulo', 'descripcion', 'monto', 'M2'],
   methods: {
     aumentarCantidadRooms: function aumentarCantidadRooms() {
       this.$emit('updateCantidadRooms', this.cantidad_rooms++);
@@ -1957,6 +1949,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateM2: function updateM2() {
       this.$emit('updateM2', this.M2);
+    },
+    guardarCaracteristicas: function guardarCaracteristicas(datos) {
+      // Realiza una solicitud POST a tu ruta de Laravel con los datos
+      axios.post('/product/create', datos).then(function (response) {
+        // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
+        console.log(response.data);
+      })["catch"](function (error) {
+        // Maneja los errores de la solicitud, por ejemplo, muestra un mensaje de error
+        console.error('Error al guardar características:', error);
+      });
+    },
+    handleFileChange: function handleFileChange(event) {
+      var file = event.target.files[0];
+      if (file) {
+        // Emite un evento al componente padre con el archivo seleccionado
+        this.$emit('file-selected', file);
+      }
     }
   }
 });
@@ -1972,15 +1981,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Caracteristicas_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Caracteristicas.vue */ "./resources/js/components/Caracteristicas.vue");
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['caracteristicas'],
+  props: ['caracteristicas', 'estado_propiedad'],
   data: function data() {
     return {
-      caracteristicas: '',
-      estado_propiedad: ''
+      estadoLocal: this.estado_propiedad,
+      caracteristicasLocal: this.caracteristicas
     };
+  },
+  methods: {
+    updateEstadoPropiedad: function updateEstadoPropiedad(value) {
+      this.estadoLocal = value;
+      this.$emit('updateEstadoPropiedad', value);
+    },
+    updateCaracteristicas: function updateCaracteristicas() {
+      this.$emit('updateCaracteristicas', this.caracteristicasLocal);
+    }
   }
 });
 
@@ -1995,76 +2011,27 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['direccion', 'selectedDistrict', 'districts', 'selectedProvince', 'provinces', 'selectedDepartment', 'departments'],
   data: function data() {
     return {
-      direccion: '',
-      selectedDepartment: '',
-      selectedProvince: '',
-      selectedDistrict: '',
-      departments: [],
-      provinces: [],
-      districts: [],
-      // Agrega una bandera para indicar si los datos ya se han cargado
-      datosCargados: false
+      seleccionarDistritoLocal: this.selectedDistrict,
+      seleccionarProvinciaLocal: this.selectedProvince,
+      seleccionarDeparmentoLocal: this.selectedDepartment
     };
   },
-  props: ['ubicacionesData'],
   methods: {
-    getDepartments: function getDepartments() {
-      var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get-department').then(function (response) {
-        _this.departments = response.data;
-      })["catch"](function (error) {
-        console.error('Error al obtener los departamentos:', error);
-      });
-    },
-    getProvinces: function getProvinces() {
-      var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/departments/".concat(this.selectedDepartment, "/provinces")).then(function (response) {
-        _this2.provinces = response.data;
-        _this2.districts = [];
-      })["catch"](function (error) {
-        console.error('Error al obtener las provincias:', error);
-      });
-    },
-    getDistricts: function getDistricts() {
-      var _this3 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/provinces/".concat(this.selectedProvince, "/districts")).then(function (response) {
-        _this3.districts = response.data;
-      })["catch"](function (error) {
-        console.error('Error al obtener los distritos:', error);
-      });
-    },
     updateDireccion: function updateDireccion() {
       this.$emit('updateDireccion', this.direccion);
     },
-    // Método para obtener los datos iniciales
-    obtenerDatosIniciales: function obtenerDatosIniciales() {
-      // Lógica para obtener los datos iniciales de ubicación
-      this.getDepartments();
-      // Marca la bandera como verdadera para indicar que los datos ya se han cargado
-      this.datosCargados = true;
+    updateSelectedDistrict: function updateSelectedDistrict() {
+      this.$emit('updateSelectedDistrict', this.seleccionarDistritoLocal);
     },
-    updateUbicacionesData: function updateUbicacionesData() {
-      this.$emit('updateUbicacionesData', {
-        direccion: this.direccion,
-        selectedDepartment: this.selectedDepartment,
-        selectedProvince: this.selectedProvince,
-        selectedDistrict: this.selectedDistrict,
-        departments: this.departments,
-        provinces: this.provinces,
-        districts: this.districts
-      });
-    } // Resto de los métodos...
-  },
-  mounted: function mounted() {
-    // Solo obtén los datos iniciales si aún no se han cargado
-    if (!this.datosCargados) {
-      this.obtenerDatosIniciales();
+    updateSelectedProvince: function updateSelectedProvince() {
+      this.$emit('updateSelectedProvince', this.seleccionarProvinciaLocal);
+    },
+    updateSelectedDeparment: function updateSelectedDeparment() {
+      this.$emit('updateSelectedDeparment', this.seleccionarDeparmentoLocal);
     }
   }
 });
@@ -2095,7 +2062,20 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       menu: 1,
-      formulario: {
+      operacionesData: {
+        estado_propiedad: 1,
+        caracteristicas: 1
+      },
+      ubicacionesData: {
+        direccion: '',
+        selectedDistrict: 0,
+        selectedProvince: 0,
+        selectedDepartment: 0,
+        districts: [],
+        provinces: [],
+        departments: []
+      },
+      caracteristicasData: {
         cantidad_rooms: 0,
         cantidad_bathrooms: 0,
         cantidad_garage: 0,
@@ -2103,55 +2083,107 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: '',
         monto: 0,
         M2: 0
-      },
-      ubicacionesData: {
-        direccion: '',
-        selectedDepartment: '',
-        selectedProvince: '',
-        selectedDistrict: '',
-        departments: [],
-        provinces: [],
-        districts: []
       }
     };
   },
   methods: {
-    //operacion
     continuar: function continuar(menu) {
       this.menu = menu;
     },
+    //operacion
+    updateEstadoPropiedad: function updateEstadoPropiedad(estadoPropiedad) {
+      this.operacionesData.estado_propiedad = estadoPropiedad;
+    },
+    updateCaracteristicas: function updateCaracteristicas(caracteristicas) {
+      this.operacionesData.caracteristicas = caracteristicas;
+    },
     //ubicacion
-    actualizarDatosUbicaciones: function actualizarDatosUbicaciones(data) {
-      this.ubicacionesData = data;
+    updateDireccion: function updateDireccion(direccion) {
+      this.ubicacionesData.direccion = direccion;
+    },
+    updateSelectedDistrict: function updateSelectedDistrict(selectedDistrict) {
+      this.ubicacionesData.selectedDistrict = selectedDistrict;
+    },
+    updateSelectedProvince: function updateSelectedProvince(selectedProvince) {
+      this.ubicacionesData.selectedProvince = selectedProvince;
+    },
+    updateSelectedDeparment: function updateSelectedDeparment(selectedDepartment) {
+      this.ubicacionesData.selectedDepartment = selectedDepartment;
     },
     //caracteristicas
     updateCantidadRooms: function updateCantidadRooms(cantidadRooms) {
-      this.formulario.cantidad_rooms = cantidadRooms;
+      this.caracteristicasData.cantidad_rooms = cantidadRooms;
     },
     updateCantidadBathrooms: function updateCantidadBathrooms(cantidadBathrooms) {
-      this.formulario.cantidad_bathrooms = cantidadBathrooms;
+      this.caracteristicasData.cantidad_bathrooms = cantidadBathrooms;
     },
     updateCantidadGarage: function updateCantidadGarage(cantidadGarage) {
-      this.formulario.cantidad_garage = cantidadGarage;
+      this.caracteristicasData.cantidad_garage = cantidadGarage;
     },
     updateTitulo: function updateTitulo(titulo) {
-      this.formulario.titulo = titulo;
+      this.caracteristicasData.titulo = titulo;
     },
     updateDescripcion: function updateDescripcion(descripcion) {
-      this.formulario.descripcion = descripcion;
+      this.caracteristicasData.descripcion = descripcion;
     },
     updateMonto: function updateMonto(monto) {
-      this.formulario.monto = monto;
+      this.caracteristicasData.monto = monto;
     },
     updateM2: function updateM2(M2) {
-      this.formulario.M2 = M2;
+      this.caracteristicasData.M2 = M2;
     },
-    updateEstadoPropiedad: function updateEstadoPropiedad(estado_propiedad) {
-      this.estado_propiedad = estado_propiedad;
+    //
+    getDistricts: function getDistricts() {
+      var _this = this;
+      axios.get("/api/districts").then(function (response) {
+        _this.ubicacionesData.districts = response.data;
+      })["catch"](function (error) {
+        console.error('Error al obtener los distritos:', error);
+      });
     },
-    updateCaracteristica: function updateCaracteristica(caracteristicas) {
-      this.caracteristicas = caracteristicas;
+    getProvinces: function getProvinces() {
+      var _this2 = this;
+      axios.get("/api/provinces").then(function (response) {
+        _this2.ubicacionesData.provinces = response.data;
+      })["catch"](function (error) {
+        console.error('Error al obtener los distritos:', error);
+      });
+    },
+    getDepartments: function getDepartments() {
+      var _this3 = this;
+      axios.get("/api/departments").then(function (response) {
+        _this3.ubicacionesData.departments = response.data;
+      })["catch"](function (error) {
+        console.error('Error al obtener los distritos:', error);
+      });
+    },
+    handleFileSelected: function handleFileSelected(file) {
+      var _this4 = this;
+      // Crear un objeto FormData para enviar el archivo al servidor
+      var formData = new FormData();
+      formData.append('file', file); // Añadir el archivo al FormData
+
+      // Realizar una solicitud POST a la API para guardar el archivo
+      axios.post('/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido adecuado para archivos
+        }
+      }).then(function (response) {
+        // Manejar la respuesta de la API, por ejemplo, obtener la URL del archivo guardado
+        var imageUrl = response.data.imageUrl;
+
+        // Actualizar el estado del componente con la URL del archivo guardado
+        _this4.caracteristicasData.imageUrl = imageUrl;
+      })["catch"](function (error) {
+        // Manejar cualquier error que ocurra durante la carga del archivo
+        console.error('Error al cargar el archivo:', error);
+      });
     }
+  },
+  mounted: function mounted() {
+    this.getDistricts();
+    this.getProvinces();
+    this.getDepartments();
   }
 });
 
@@ -2264,7 +2296,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "img/vector/mas",
+      src: "",
       alt: ""
     }
   })])])])]), _vm._v(" "), _c("div", {
@@ -2316,7 +2348,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-fluid",
     attrs: {
-      src: "img/vector/mas",
+      src: "",
       alt: ""
     }
   })])])]), _vm._v(" "), _c("div", {
@@ -2377,7 +2409,26 @@ var render = function render() {
         _vm.monto = $event.target.value;
       }, _vm.updateMonto]
     }
-  })])])])]), _vm._v(" "), _c("h3", [_vm._v("Descripción")]), _vm._v(" "), _c("div", {
+  })])])])]), _vm._v(" "), _c("h3", [_vm._v("Imagen")]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3 col-8"
+  }, [_c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "formFile"
+    }
+  }, [_vm._v("Seleccionar imagen")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      id: "formFile",
+      accept: "image/jpeg, image/png"
+    },
+    on: {
+      change: _vm.handleFileChange
+    }
+  })])]), _vm._v(" "), _c("h3", [_vm._v("Descripción")]), _vm._v(" "), _c("div", {
     staticClass: "mb-3 col-8"
   }, [_c("span", {
     staticClass: "text"
@@ -2440,9 +2491,7 @@ var staticRenderFns = [function () {
     staticClass: "col-4 d-flex justify-content-between"
   }, [_c("button", {
     staticClass: "btn btn-primary"
-  }, [_vm._v("Guardar y Salir")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("Continuar")])])]);
+  }, [_vm._v("Guardar y Salir")])])]);
 }];
 render._withStripped = true;
 
@@ -2474,26 +2523,20 @@ var render = function render() {
       "aria-label": "Basic radio toggle button group"
     }
   }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.estado_propiedad,
-      expression: "estado_propiedad"
-    }],
     staticClass: "btn-check",
     attrs: {
       type: "radio",
       name: "btnradio",
       id: "btnradio1",
-      autocomplete: "off",
-      checked: ""
+      value: "1",
+      autocomplete: "off"
     },
     domProps: {
-      checked: _vm._q(_vm.estado_propiedad, null)
+      checked: _vm.estadoLocal === 1
     },
     on: {
-      change: function change($event) {
-        _vm.estado_propiedad = null;
+      click: function click($event) {
+        return _vm.updateEstadoPropiedad(1);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -2502,25 +2545,20 @@ var render = function render() {
       "for": "btnradio1"
     }
   }, [_vm._v("Alquiler")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.estado_propiedad,
-      expression: "estado_propiedad"
-    }],
     staticClass: "btn-check",
     attrs: {
       type: "radio",
       name: "btnradio",
       id: "btnradio2",
+      value: "2",
       autocomplete: "off"
     },
     domProps: {
-      checked: _vm._q(_vm.estado_propiedad, null)
+      checked: _vm.estadoLocal === 2
     },
     on: {
-      change: function change($event) {
-        _vm.estado_propiedad = null;
+      click: function click($event) {
+        return _vm.updateEstadoPropiedad(2);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -2540,8 +2578,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.caracteristicas,
-      expression: "caracteristicas "
+      value: _vm.caracteristicasLocal,
+      expression: "caracteristicasLocal"
     }],
     staticClass: "form-select",
     attrs: {
@@ -2549,15 +2587,15 @@ var render = function render() {
       id: "tipo_inmueble"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.caracteristicas = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }
+        _vm.caracteristicasLocal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.updateCaracteristicas]
     }
   }, [_c("option", {
     attrs: {
@@ -2629,7 +2667,7 @@ var render = function render() {
     staticClass: "row pb-3"
   }, [_c("label", {
     attrs: {
-      "for": "calle"
+      "for": "direction"
     }
   }, [_vm._v("Calle y Número de Casa")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -2638,7 +2676,7 @@ var render = function render() {
       value: _vm.direccion,
       expression: "direccion"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control ps-3 pe-2",
     attrs: {
       type: "text",
       name: "direction",
@@ -2659,19 +2697,19 @@ var render = function render() {
     staticClass: "col-6"
   }, [_c("label", {
     attrs: {
-      "for": "tipo_inmueble"
+      "for": "deparment_id"
     }
   }, [_vm._v("Departamento")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.selectedDepartment,
-      expression: "selectedDepartment"
+      value: _vm.seleccionarDeparmentoLocal,
+      expression: "seleccionarDeparmentoLocal"
     }],
     staticClass: "form-select selectores",
     attrs: {
-      id: "department_id",
-      name: "department_id"
+      id: "deparment_id",
+      name: "deparment_id"
     },
     on: {
       change: [function ($event) {
@@ -2681,31 +2719,32 @@ var render = function render() {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.selectedDepartment = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, _vm.getProvinces]
+        _vm.seleccionarDeparmentoLocal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.updateSelectedDeparment]
     }
   }, [_c("option", {
     attrs: {
-      value: ""
+      value: "0"
     }
-  }, [_vm._v("Selecciona un departamento")]), _vm._v(" "), _vm._l(_vm.departments, function (department) {
+  }, [_vm._v("Selecciona un Departamento")]), _vm._v(" "), _vm._l(_vm.departments, function (department) {
     return _c("option", {
+      key: department.id,
       domProps: {
         value: department.id
       }
     }, [_vm._v(_vm._s(department.department))]);
-  })], 2)]), _vm._v(" "), _vm.provinces.length ? _c("div", {
+  })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("label", {
     attrs: {
-      "for": "subtipo"
+      "for": "province_id"
     }
   }, [_vm._v("Provincia")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.selectedProvince,
-      expression: "selectedProvince"
+      value: _vm.seleccionarProvinciaLocal,
+      expression: "seleccionarProvinciaLocal"
     }],
     staticClass: "form-select selectores",
     attrs: {
@@ -2720,31 +2759,32 @@ var render = function render() {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.selectedProvince = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, _vm.getDistricts]
+        _vm.seleccionarProvinciaLocal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.updateSelectedProvince]
     }
   }, [_c("option", {
     attrs: {
-      value: ""
+      value: "0"
     }
-  }, [_vm._v("Selecciona una provincia")]), _vm._v(" "), _vm._l(_vm.provinces, function (province) {
+  }, [_vm._v("Selecciona un Provincia")]), _vm._v(" "), _vm._l(_vm.provinces, function (province) {
     return _c("option", {
+      key: province.id,
       domProps: {
         value: province.id
       }
     }, [_vm._v(_vm._s(province.province))]);
-  })], 2)]) : _vm._e(), _vm._v(" "), _vm.districts.length ? _c("div", {
+  })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("label", {
     attrs: {
-      "for": "subtipo"
+      "for": "district_id"
     }
   }, [_vm._v("Distrito")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.selectedDistrict,
-      expression: "selectedDistrict"
+      value: _vm.seleccionarDistritoLocal,
+      expression: "seleccionarDistritoLocal"
     }],
     staticClass: "form-select selectores",
     attrs: {
@@ -2752,27 +2792,28 @@ var render = function render() {
       name: "district_id"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.selectedDistrict = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }
+        _vm.seleccionarDistritoLocal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.updateSelectedDistrict]
     }
   }, [_c("option", {
     attrs: {
-      value: ""
+      value: "0"
     }
   }, [_vm._v("Selecciona un distrito")]), _vm._v(" "), _vm._l(_vm.districts, function (district) {
     return _c("option", {
+      key: district.id,
       domProps: {
         value: district.id
       }
     }, [_vm._v(_vm._s(district.district))]);
-  })], 2)]) : _vm._e()]), _vm._v(" "), _c("h3", [_vm._v("Seleccione Mapa")]), _vm._v(" "), _c("iframe", {
+  })], 2)])]), _vm._v(" "), _c("h3", [_vm._v("Seleccione Mapa")]), _vm._v(" "), _c("iframe", {
     staticStyle: {
       border: "0"
     },
@@ -2800,8 +2841,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         return _vm.$emit("continuar", 3);
-      },
-      change: _vm.updateUbicacionesData
+      }
     }
   }, [_vm._v("Continuar")])])])]);
 };
@@ -2875,48 +2915,51 @@ var render = function render() {
     staticClass: "col-8"
   }, [_vm.menu == 1 ? [_c("operaciones", {
     attrs: {
-      estado_propiedad: _vm.estado_propiedad,
-      caracteristicas: _vm.caracteristicas
+      estado_propiedad: _vm.operacionesData.estado_propiedad,
+      caracteristicas: _vm.operacionesData.caracteristicas
     },
     on: {
       continuar: _vm.continuar,
-      updateEstadoPropiedad: _vm.updateEstadoPropiedad,
-      updateCaracteristica: _vm.caracteristicas
+      updateCaracteristicas: _vm.updateCaracteristicas,
+      updateEstadoPropiedad: _vm.updateEstadoPropiedad
     }
   })] : _vm._e(), _vm._v(" "), _vm.menu == 2 ? [_c("ubicaciones", {
     attrs: {
-      ubicacionesData: _vm.ubicacionesData,
       direccion: _vm.ubicacionesData.direccion,
-      selectedDepartment: _vm.ubicacionesData.selectedDepartment,
-      selectedProvince: _vm.ubicacionesData.selectedProvince,
       selectedDistrict: _vm.ubicacionesData.selectedDistrict,
-      departments: _vm.ubicacionesData.departments,
+      selectedProvince: _vm.ubicacionesData.selectedProvince,
+      selectedDepartment: _vm.ubicacionesData.selectedDepartment,
+      districts: _vm.ubicacionesData.districts,
       provinces: _vm.ubicacionesData.provinces,
-      districts: _vm.ubicacionesData.districts
+      departments: _vm.ubicacionesData.departments
     },
     on: {
-      continuar: _vm.continuar,
-      updateUbicacionesData: _vm.actualizarDatosUbicaciones
+      updateDireccion: _vm.updateDireccion,
+      updateSelectedDistrict: _vm.updateSelectedDistrict,
+      updateSelectedProvince: _vm.updateSelectedProvince,
+      updateSelectedDeparment: _vm.updateSelectedDeparment,
+      continuar: _vm.continuar
     }
   })] : _vm._e(), _vm._v(" "), _vm.menu == 3 ? [_c("caracteristicas", {
     attrs: {
-      cantidad_rooms: _vm.formulario.cantidad_rooms,
-      cantidad_bathrooms: _vm.formulario.cantidad_bathrooms,
-      cantidad_garage: _vm.formulario.cantidad_garage,
-      titulo: _vm.formulario.titulo,
-      monto: _vm.formulario.monto,
-      descripcion: _vm.formulario.descripcion,
-      M2: _vm.formulario.M2
+      cantidad_rooms: _vm.caracteristicasData.cantidad_rooms,
+      cantidad_bathrooms: _vm.caracteristicasData.cantidad_bathrooms,
+      cantidad_garage: _vm.caracteristicasData.cantidad_garage,
+      titulo: _vm.caracteristicasData.titulo,
+      monto: _vm.caracteristicasData.monto,
+      descripcion: _vm.caracteristicasData.descripcion,
+      M2: _vm.caracteristicasData.M2
     },
     on: {
-      continuar: _vm.formulario.continuar,
+      continuar: _vm.continuar,
       updateCantidadRooms: _vm.updateCantidadRooms,
       updateCantidadBathrooms: _vm.updateCantidadBathrooms,
       updateCantidadGarage: _vm.updateCantidadGarage,
       updateTitulo: _vm.updateTitulo,
       updateDescripcion: _vm.updateDescripcion,
       updateMonto: _vm.updateMonto,
-      updateM2: _vm.updateM2
+      updateM2: _vm.updateM2,
+      "file-selected": _vm.handleFileSelected
     }
   })] : _vm._e()], 2)])])]);
 };
