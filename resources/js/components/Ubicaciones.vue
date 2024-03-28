@@ -34,12 +34,12 @@
             <div class="col-6">
             </div>
             <div class="col-4 d-flex justify-content-between">
-                <button class="btn btn-primary">Guardar y Salir</button>
-                <a class="btn btn-primary" href="#" @click="$emit('continuar', 3)">Continuar</a>
+                <button class="btn btn-primary btnguardar">Guardar y Salir</button>
+                <a class="btn btn-primary btncontinuar" href="#" @click="$emit('continuar', 3)">Continuar</a>
             </div>
         </div>
     </div>
-  </template>
+</template>
   
   <script>  
   export default {

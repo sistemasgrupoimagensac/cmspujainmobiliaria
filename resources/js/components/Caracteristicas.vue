@@ -8,7 +8,7 @@
                         <h5 class="d-inline">Habitaciones (Opcional)</h5>
                         <div class="col-4 d-flex amount-box">
                         <button class="btn menos img-fluid" @click="disminuirCantidadRooms"></button>
-                        <input type="" class="form-control" name="cantidad_rooms" id="cantidad_rooms" v-model="cantidad_rooms">
+                        <input type="" class="form-control text-center" name="cantidad_rooms" id="cantidad_rooms" v-model="cantidad_rooms">
                         <button class="btn mas img-fluid" @click="aumentarCantidadRooms"></button>
                         </div>
                     </div>
@@ -16,7 +16,7 @@
                         <h5 class="d-inline">Baños (Opcional)</h5>
                         <div class="col-4 d-flex amount-box">
                         <button class="btn menos" @click="disminuirCantidadBathrooms"><img src="" class="img-fluid"  alt=""></button>
-                        <input type="" class="form-control" name="bathrooms" id="bathrooms" v-model="cantidad_bathrooms">
+                        <input type="" class="form-control text-center" name="bathrooms" id="bathrooms" v-model="cantidad_bathrooms">
                         <button class="btn mas" @click="aumentarCantidadBathrooms"><img src="" class="img-fluid" alt=""></button>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     <h5 class="d-inline">Garage (Opcional)</h5>
                     <div class="col-4 d-flex amount-box">
                     <button class="btn menos img-fluid" @click="disminuirCantidadGarage"><img src="" class="img-fluid"  alt=""></button>
-                    <input type="" class="form-control" name="garage" id="garage" v-model="cantidad_garage">
+                    <input type="" class="form-control text-center" name="garage" id="garage" v-model="cantidad_garage">
                     <button class="btn mas img-fluid" @click="aumentarCantidadGarage"><img src="" class="img-fluid" alt=""></button>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
         
             </div>
             <div class="col-4 d-flex justify-content-between">
-                <button class="btn btn-primary">Guardar y Salir</button>
+                <button class="btn btn-primary btnguardar" @click="guardar">Guardar y Salir</button>
             </div>
         </div>
     </div>
@@ -86,7 +86,7 @@
         
             }
         },
-        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage','titulo', 'descripcion','monto','M2'],
+        props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage','titulo', 'descripcion','monto','M2','urlImage'],
         methods:{
             aumentarCantidadRooms() {
                 this.$emit('updateCantidadRooms', this.cantidad_rooms ++);
@@ -126,24 +126,16 @@
                 this.$emit('updateM2',this.M2);
             },
 
-            guardarCaracteristicas(datos) {
-                // Realiza una solicitud POST a tu ruta de Laravel con los datos
-                axios.post('/product/create', datos)
-                    .then(response => {
-                    // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
-                    console.log(response.data);
-                    })
-                    .catch(error => {
-                    // Maneja los errores de la solicitud, por ejemplo, muestra un mensaje de error
-                    console.error('Error al guardar características:', error);
-                });
-            },
             handleFileChange(event) {
                 const file = event.target.files[0];
                 if (file) {
-                    // Emite un evento al componente padre con el archivo seleccionado
                     this.$emit('file-selected', file);
                 }
+            },
+            
+            guardar() {
+             
+                this.$emit('guardar-en-mysql');
             }
         }
     }

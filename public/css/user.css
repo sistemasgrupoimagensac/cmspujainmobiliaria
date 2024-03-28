@@ -1,0 +1,77 @@
+.sidebar-1 {
+    background: #F5F5F5; 
+    color: black;
+    padding: 2rem;
+    border-radius: 20px !important;
+}
+.active{
+    border-bottom: 3px solid #FB7125 !important;
+}
+.active1 {
+    border-left: 3px solid #FB7125 !important;
+}
+.active2 {
+    border-left: 6px solid #F5F5F5 !important;
+}
+.active1 a{
+    padding-left: 3px !important;
+}
+.btn-outline-warning{
+    color: black !important;
+    border: black 1px solid;
+}
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active{
+        background: #FB7125 !important;
+        border: #FB7125 1px solid;
+        
+}
+.contenido-form{
+    border-radius: 20px;
+    border: none; /* Remove the black border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Shadow effect */
+    
+    padding: 20px; /* Adjust padding as needed */
+}
+.amount-box{
+    gap: .3rem;
+}
+.menos{
+    background-image: url('/img/vector/menos.svg');
+    background-position: center;
+    background-size: cover;
+}
+.mas{
+    background-image: url('/img/vector/mas.svg');
+    background-position: center;
+    background-size: cover;
+}
+.btnguardar{
+    padding: .5;
+    border-radius: 45px;
+    border: #FB7125 solid 1px;
+    color: #FB7125;
+    background-color: white;
+}
+.btnguardar:hover{
+    padding: .5;
+    border-radius: 45px;
+
+    border: white solid 1px;
+    color: white;
+    background-color: #FB7125;
+}
+.btncontinuar{
+    padding: .5;
+    border-radius: 45px;
+    border: white solid 1px;
+    background-color: #FB7125;
+    color: white;
+}
+.btncontinuar:hover{
+    padding: .5;
+    border-radius: 45px;
+    border: #FB7125 solid 1px;
+    background-color: white;
+    color: #FB7125;
+    
+}

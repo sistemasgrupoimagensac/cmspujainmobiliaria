@@ -26,6 +26,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPuja\InteresadosController;
 use App\Http\Controllers\UserPuja\MisAvisosController;
 use App\Http\Controllers\UserPuja\PublicaAquiController;
+use App\Http\Controllers\UserPuja\PublicarController;
 use App\Http\Controllers\UserPujaController;
 
 // Route::get('/', function () {
@@ -87,7 +88,7 @@ Route::post('/me_interesa',[AppController::class,'meInteresa'])->name('meInteres
 
 Route::get('/favoritos',[FavoritosController::class,'index'])->name('favoritos');
 
-Route::get('/publicar',[OperacionesController::class,'index'])->name('publicar');
+Route::get('/publicar',[PublicarController::class,'index'])->name('publicar');
 
 Route::get('/api/departments',[UbicacionesController::class,'getDepartments'])->name('obtener-departamento');
 Route::get('/api/provinces', [UbicacionesController::class, 'getProvincesByDepartment'])->name('obtener-provincia');;

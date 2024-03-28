@@ -15,47 +15,51 @@
                     <template v-if="menu==1">
                         <operaciones
                             @continuar="continuar"
-                            :estado_propiedad="operacionesData.estado_propiedad"
-                            :caracteristicas="operacionesData.caracteristicas"
+                            :estado_propiedad="estado_propiedad"
+                            :caracteristicas="caracteristicas"
                             @updateCaracteristicas="updateCaracteristicas"
                             @updateEstadoPropiedad="updateEstadoPropiedad"
                         />
                     </template>
                     <template v-if="menu==2">
                         <ubicaciones
-                        :direccion="ubicacionesData.direccion" 
-                        :selectedDistrict="ubicacionesData.selectedDistrict"
-                        :selectedProvince="ubicacionesData.selectedProvince"
-                        :selectedDepartment="ubicacionesData.selectedDepartment"
-                        :districts="ubicacionesData.districts"
-                        :provinces="ubicacionesData.provinces"
-                        :departments="ubicacionesData.departments"
-                        @updateDireccion="updateDireccion"
-                        @updateSelectedDistrict="updateSelectedDistrict"
-                        @updateSelectedProvince="updateSelectedProvince"
-                        @updateSelectedDeparment="updateSelectedDeparment"
-                        @continuar="continuar"
+                            :direccion="direccion" 
+                            :selectedDistrict="selectedDistrict"
+                            :selectedProvince="selectedProvince"
+                            :selectedDepartment="selectedDepartment"
+                            :districts="districts"
+                            :provinces="provinces"
+                            :departments="departments"
+                            @updateDireccion="updateDireccion"
+                            @updateSelectedDistrict="updateSelectedDistrict"
+                            @updateSelectedProvince="updateSelectedProvince"
+                            @updateSelectedDeparment="updateSelectedDeparment"
+                            @continuar="continuar"
                         />
                     </template>
                     <template v-if="menu==3">
                         <caracteristicas
-                        @continuar = "continuar"
-                        :cantidad_rooms = "caracteristicasData.cantidad_rooms"
-                        :cantidad_bathrooms = "caracteristicasData.cantidad_bathrooms"
-                        :cantidad_garage = "caracteristicasData.cantidad_garage"
-                        :titulo = "caracteristicasData.titulo"
-                        :monto = "caracteristicasData.monto"
-                        :descripcion = "caracteristicasData.descripcion"
-                        :M2 = "caracteristicasData.M2"
-                        @updateCantidadRooms="updateCantidadRooms"
-                        @updateCantidadBathrooms="updateCantidadBathrooms"
-                        @updateCantidadGarage="updateCantidadGarage"
-                        @updateTitulo="updateTitulo"
-                        @updateDescripcion="updateDescripcion"
-                        @updateMonto="updateMonto"
-                        @updateM2="updateM2"
-                        @file-selected="handleFileSelected"
-                        
+                            @continuar = "continuar"
+                            :cantidad_rooms = "cantidad_rooms"
+                            :cantidad_bathrooms = "cantidad_bathrooms"
+                            :cantidad_garage = "cantidad_garage"
+                            :titulo = "titulo"
+                            :monto = "monto"
+                            :descripcion = "descripcion"
+                            :M2 = "M2"
+                            @updateCantidadRooms="updateCantidadRooms"
+                            @updateCantidadBathrooms="updateCantidadBathrooms"
+                            @updateCantidadGarage="updateCantidadGarage"
+                            @updateTitulo="updateTitulo"
+                            @updateDescripcion="updateDescripcion"
+                            @updateMonto="updateMonto"
+                            @updateM2="updateM2"
+
+                            :urlImage="selectedImage" 
+                            @file-selected="handleFileSelected"
+
+                            @guardar-en-mysql="guardarDataMySQL"
+
                         />
                     </template>
                 </div>
@@ -76,11 +80,10 @@
         data(){
             return {
                 menu:1,
-                operacionesData:{
+          
                     estado_propiedad: 1,
                     caracteristicas: 1,
-                },
-                ubicacionesData: {
+                    
                     direccion: '',
                     selectedDistrict: 0,
                     selectedProvince: 0,
@@ -88,16 +91,17 @@
                     districts:[],
                     provinces:[],
                     departments:[],
-                },
-                caracteristicasData:{
-                    cantidad_rooms: 0,
-                    cantidad_bathrooms: 0,
-                    cantidad_garage: 0,
+           
+              
+                    cantidad_rooms: 1,
+                    cantidad_bathrooms: 1,
+                    cantidad_garage: 1,
                     titulo: '',
                     descripcion: '',
                     monto:0,
-                    M2:0
-                },
+                    M2:0,
+                    selectedImage: null
+            
             }
         },
         methods: {
@@ -106,51 +110,53 @@
                 },
             //operacion
                 updateEstadoPropiedad(estadoPropiedad) {
-                    this.operacionesData.estado_propiedad = estadoPropiedad;
+                    this.estado_propiedad = estadoPropiedad;
                 },
                 updateCaracteristicas(caracteristicas){
-                    this.operacionesData.caracteristicas = caracteristicas;
+                    this.caracteristicas = caracteristicas;
                 },
             //ubicacion
                 updateDireccion(direccion) {
-                    this.ubicacionesData.direccion = direccion;
+                    this.direccion = direccion;
                 },
                 updateSelectedDistrict(selectedDistrict) {
-                    this.ubicacionesData.selectedDistrict = selectedDistrict;
+                    this.selectedDistrict = selectedDistrict;
                 },
                 updateSelectedProvince(selectedProvince) {
-                    this.ubicacionesData.selectedProvince = selectedProvince;
+                    this.selectedProvince = selectedProvince;
                 },
                 updateSelectedDeparment(selectedDepartment) {
-                    this.ubicacionesData.selectedDepartment = selectedDepartment;
+                    this.selectedDepartment = selectedDepartment;
                 },
             //caracteristicas
                 updateCantidadRooms(cantidadRooms) {
-                    this.caracteristicasData.cantidad_rooms = cantidadRooms;
+                    this.cantidad_rooms = cantidadRooms;
                 },
                 updateCantidadBathrooms(cantidadBathrooms) {
-                    this.caracteristicasData.cantidad_bathrooms = cantidadBathrooms;
+                    this.cantidad_bathrooms = cantidadBathrooms;
                 },
                 updateCantidadGarage(cantidadGarage) {
-                    this.caracteristicasData.cantidad_garage = cantidadGarage;
+                    this.cantidad_garage = cantidadGarage;
                 },
                 updateTitulo(titulo) {
-                    this.caracteristicasData.titulo = titulo;
+                    this.titulo = titulo;
                 },
                 updateDescripcion(descripcion) {
-                    this.caracteristicasData.descripcion = descripcion;
+                    this.descripcion = descripcion;
                 },
                 updateMonto(monto){
-                    this.caracteristicasData.monto = monto;
+                    this.monto = monto;
                 },
                 updateM2(M2){
-                    this.caracteristicasData.M2 = M2;
+                    this.M2 = M2;
                 },
-            //
+                handleFileChange(event) {
+                    this.selectedImage.file = event.target.files[0];
+                },
             getDistricts(){
                 axios.get(`/api/districts`)
                 .then(response => {
-                    this.ubicacionesData.districts = response.data;
+                    this.districts = response.data;
                 })
                 .catch(error => {
                     console.error('Error al obtener los distritos:', error);
@@ -159,7 +165,7 @@
             getProvinces(){
                 axios.get(`/api/provinces`)
                 .then(response => {
-                    this.ubicacionesData.provinces = response.data;
+                    this.provinces = response.data;
                 })
                 .catch(error => {
                     console.error('Error al obtener los distritos:', error);
@@ -168,39 +174,43 @@
             getDepartments(){
                 axios.get(`/api/departments`)
                 .then(response => {
-                    this.ubicacionesData.departments = response.data;
+                    this.departments = response.data;
                 })
                 .catch(error => {
                     console.error('Error al obtener los distritos:', error);
                 });
             },
             handleFileSelected(file) {
-            // Crear un objeto FormData para enviar el archivo al servidor
-            let formData = new FormData();
-            formData.append('file', file); // Añadir el archivo al FormData
-
-            // Realizar una solicitud POST a la API para guardar el archivo
-            axios.post('/api/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido adecuado para archivos
+                this.selectedImage = file;
+            },
+            guardarDataMySQL(){
+                let datosParaEnviar = {
+                    status_property_id : this.estado_propiedad,
+                    category_id : this.caracteristicas,
+                    district_id : this.selectedDistrict,
+                    name : this.titulo,
+                    rooms : this.cantidad_rooms,
+                    garage : this.cantidad_garage,
+                    square_meters : this.M2,
+                    bathrooms : this.cantidad_bathrooms,
+                    price : this.monto,
+                    description : this.descripcion,
+                    status : 1,
+                    imagen: this.selectedImage
+                };
+                axios.post('/product/create', datosParaEnviar)
+                    .then(response => {
+                        console.log('Datos guardados en MySQL:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error al guardar los datos en MySQL:', error);
+                    });
                 }
-            }).then(response => {
-                // Manejar la respuesta de la API, por ejemplo, obtener la URL del archivo guardado
-                const imageUrl = response.data.imageUrl;
-
-                // Actualizar el estado del componente con la URL del archivo guardado
-                this.caracteristicasData.imageUrl = imageUrl;
-            }).catch(error => {
-                // Manejar cualquier error que ocurra durante la carga del archivo
-                console.error('Error al cargar el archivo:', error);
-            });
-        }
         },
         mounted() {
             this.getDistricts();
             this.getProvinces();
             this.getDepartments();
         },
-  
 }
 </script>

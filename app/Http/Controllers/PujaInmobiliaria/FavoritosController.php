@@ -16,7 +16,7 @@ class FavoritosController extends Controller
         $distritos = District::orderBy('id','desc')->get();
 
         $favoritos = MeInteresa::where('status',1)
-        ->where('user_puja_id',Auth::guard('puja')->user()->id)
+        ->where('user_id',Auth::user()->id)
         ->paginate(20);
         return view('pujaapp.favoritos.favoritos',compact('favoritos','distritos'));
     }

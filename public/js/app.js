@@ -1912,7 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage', 'titulo', 'descripcion', 'monto', 'M2'],
+  props: ['cantidad_rooms', 'cantidad_bathrooms', 'cantidad_garage', 'titulo', 'descripcion', 'monto', 'M2', 'urlImage'],
   methods: {
     aumentarCantidadRooms: function aumentarCantidadRooms() {
       this.$emit('updateCantidadRooms', this.cantidad_rooms++);
@@ -1950,22 +1950,14 @@ __webpack_require__.r(__webpack_exports__);
     updateM2: function updateM2() {
       this.$emit('updateM2', this.M2);
     },
-    guardarCaracteristicas: function guardarCaracteristicas(datos) {
-      // Realiza una solicitud POST a tu ruta de Laravel con los datos
-      axios.post('/product/create', datos).then(function (response) {
-        // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
-        console.log(response.data);
-      })["catch"](function (error) {
-        // Maneja los errores de la solicitud, por ejemplo, muestra un mensaje de error
-        console.error('Error al guardar características:', error);
-      });
-    },
     handleFileChange: function handleFileChange(event) {
       var file = event.target.files[0];
       if (file) {
-        // Emite un evento al componente padre con el archivo seleccionado
         this.$emit('file-selected', file);
       }
+    },
+    guardar: function guardar() {
+      this.$emit('guardar-en-mysql');
     }
   }
 });
@@ -2062,28 +2054,23 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       menu: 1,
-      operacionesData: {
-        estado_propiedad: 1,
-        caracteristicas: 1
-      },
-      ubicacionesData: {
-        direccion: '',
-        selectedDistrict: 0,
-        selectedProvince: 0,
-        selectedDepartment: 0,
-        districts: [],
-        provinces: [],
-        departments: []
-      },
-      caracteristicasData: {
-        cantidad_rooms: 0,
-        cantidad_bathrooms: 0,
-        cantidad_garage: 0,
-        titulo: '',
-        descripcion: '',
-        monto: 0,
-        M2: 0
-      }
+      estado_propiedad: 1,
+      caracteristicas: 1,
+      direccion: '',
+      selectedDistrict: 0,
+      selectedProvince: 0,
+      selectedDepartment: 0,
+      districts: [],
+      provinces: [],
+      departments: [],
+      cantidad_rooms: 1,
+      cantidad_bathrooms: 1,
+      cantidad_garage: 1,
+      titulo: '',
+      descripcion: '',
+      monto: 0,
+      M2: 0,
+      selectedImage: null
     };
   },
   methods: {
@@ -2092,51 +2079,53 @@ __webpack_require__.r(__webpack_exports__);
     },
     //operacion
     updateEstadoPropiedad: function updateEstadoPropiedad(estadoPropiedad) {
-      this.operacionesData.estado_propiedad = estadoPropiedad;
+      this.estado_propiedad = estadoPropiedad;
     },
     updateCaracteristicas: function updateCaracteristicas(caracteristicas) {
-      this.operacionesData.caracteristicas = caracteristicas;
+      this.caracteristicas = caracteristicas;
     },
     //ubicacion
     updateDireccion: function updateDireccion(direccion) {
-      this.ubicacionesData.direccion = direccion;
+      this.direccion = direccion;
     },
     updateSelectedDistrict: function updateSelectedDistrict(selectedDistrict) {
-      this.ubicacionesData.selectedDistrict = selectedDistrict;
+      this.selectedDistrict = selectedDistrict;
     },
     updateSelectedProvince: function updateSelectedProvince(selectedProvince) {
-      this.ubicacionesData.selectedProvince = selectedProvince;
+      this.selectedProvince = selectedProvince;
     },
     updateSelectedDeparment: function updateSelectedDeparment(selectedDepartment) {
-      this.ubicacionesData.selectedDepartment = selectedDepartment;
+      this.selectedDepartment = selectedDepartment;
     },
     //caracteristicas
     updateCantidadRooms: function updateCantidadRooms(cantidadRooms) {
-      this.caracteristicasData.cantidad_rooms = cantidadRooms;
+      this.cantidad_rooms = cantidadRooms;
     },
     updateCantidadBathrooms: function updateCantidadBathrooms(cantidadBathrooms) {
-      this.caracteristicasData.cantidad_bathrooms = cantidadBathrooms;
+      this.cantidad_bathrooms = cantidadBathrooms;
     },
     updateCantidadGarage: function updateCantidadGarage(cantidadGarage) {
-      this.caracteristicasData.cantidad_garage = cantidadGarage;
+      this.cantidad_garage = cantidadGarage;
     },
     updateTitulo: function updateTitulo(titulo) {
-      this.caracteristicasData.titulo = titulo;
+      this.titulo = titulo;
     },
     updateDescripcion: function updateDescripcion(descripcion) {
-      this.caracteristicasData.descripcion = descripcion;
+      this.descripcion = descripcion;
     },
     updateMonto: function updateMonto(monto) {
-      this.caracteristicasData.monto = monto;
+      this.monto = monto;
     },
     updateM2: function updateM2(M2) {
-      this.caracteristicasData.M2 = M2;
+      this.M2 = M2;
     },
-    //
+    handleFileChange: function handleFileChange(event) {
+      this.selectedImage.file = event.target.files[0];
+    },
     getDistricts: function getDistricts() {
       var _this = this;
       axios.get("/api/districts").then(function (response) {
-        _this.ubicacionesData.districts = response.data;
+        _this.districts = response.data;
       })["catch"](function (error) {
         console.error('Error al obtener los distritos:', error);
       });
@@ -2144,7 +2133,7 @@ __webpack_require__.r(__webpack_exports__);
     getProvinces: function getProvinces() {
       var _this2 = this;
       axios.get("/api/provinces").then(function (response) {
-        _this2.ubicacionesData.provinces = response.data;
+        _this2.provinces = response.data;
       })["catch"](function (error) {
         console.error('Error al obtener los distritos:', error);
       });
@@ -2152,31 +2141,33 @@ __webpack_require__.r(__webpack_exports__);
     getDepartments: function getDepartments() {
       var _this3 = this;
       axios.get("/api/departments").then(function (response) {
-        _this3.ubicacionesData.departments = response.data;
+        _this3.departments = response.data;
       })["catch"](function (error) {
         console.error('Error al obtener los distritos:', error);
       });
     },
     handleFileSelected: function handleFileSelected(file) {
-      var _this4 = this;
-      // Crear un objeto FormData para enviar el archivo al servidor
-      var formData = new FormData();
-      formData.append('file', file); // Añadir el archivo al FormData
-
-      // Realizar una solicitud POST a la API para guardar el archivo
-      axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido adecuado para archivos
-        }
-      }).then(function (response) {
-        // Manejar la respuesta de la API, por ejemplo, obtener la URL del archivo guardado
-        var imageUrl = response.data.imageUrl;
-
-        // Actualizar el estado del componente con la URL del archivo guardado
-        _this4.caracteristicasData.imageUrl = imageUrl;
+      this.selectedImage = file;
+    },
+    guardarDataMySQL: function guardarDataMySQL() {
+      var datosParaEnviar = {
+        status_property_id: this.estado_propiedad,
+        category_id: this.caracteristicas,
+        district_id: this.selectedDistrict,
+        name: this.titulo,
+        rooms: this.cantidad_rooms,
+        garage: this.cantidad_garage,
+        square_meters: this.M2,
+        bathrooms: this.cantidad_bathrooms,
+        price: this.monto,
+        description: this.descripcion,
+        status: 1,
+        imagen: this.selectedImage
+      };
+      axios.post('/product/create', datosParaEnviar).then(function (response) {
+        console.log('Datos guardados en MySQL:', response.data);
       })["catch"](function (error) {
-        // Manejar cualquier error que ocurra durante la carga del archivo
-        console.error('Error al cargar el archivo:', error);
+        console.error('Error al guardar los datos en MySQL:', error);
       });
     }
   },
@@ -2229,7 +2220,7 @@ var render = function render() {
       value: _vm.cantidad_rooms,
       expression: "cantidad_rooms"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control text-center",
     attrs: {
       type: "",
       name: "cantidad_rooms",
@@ -2273,7 +2264,7 @@ var render = function render() {
       value: _vm.cantidad_bathrooms,
       expression: "cantidad_bathrooms"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control text-center",
     attrs: {
       type: "",
       name: "bathrooms",
@@ -2325,7 +2316,7 @@ var render = function render() {
       value: _vm.cantidad_garage,
       expression: "cantidad_garage"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control text-center",
     attrs: {
       type: "",
       name: "garage",
@@ -2478,21 +2469,20 @@ var render = function render() {
         _vm.descripcion = $event.target.value;
       }, _vm.updateDescripcion]
     }
-  })]), _vm._v(" "), _vm._m(0)]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-between mt-5"
   }, [_c("div", {
     staticClass: "col-6"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-4 d-flex justify-content-between"
   }, [_c("button", {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("Guardar y Salir")])])]);
-}];
+    staticClass: "btn btn-primary btnguardar",
+    on: {
+      click: _vm.guardar
+    }
+  }, [_vm._v("Guardar y Salir")])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2626,9 +2616,9 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("button", {
-    staticClass: "btn btn-primary"
+    staticClass: "btn btn-primary btnguardar"
   }, [_vm._v("Guardar y Salir")]), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-primary",
+    staticClass: "btn btn-primary btncontinuar",
     attrs: {
       href: "#"
     },
@@ -2832,9 +2822,9 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "col-4 d-flex justify-content-between"
   }, [_c("button", {
-    staticClass: "btn btn-primary"
+    staticClass: "btn btn-primary btnguardar"
   }, [_vm._v("Guardar y Salir")]), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-primary",
+    staticClass: "btn btn-primary btncontinuar",
     attrs: {
       href: "#"
     },
@@ -2915,8 +2905,8 @@ var render = function render() {
     staticClass: "col-8"
   }, [_vm.menu == 1 ? [_c("operaciones", {
     attrs: {
-      estado_propiedad: _vm.operacionesData.estado_propiedad,
-      caracteristicas: _vm.operacionesData.caracteristicas
+      estado_propiedad: _vm.estado_propiedad,
+      caracteristicas: _vm.caracteristicas
     },
     on: {
       continuar: _vm.continuar,
@@ -2925,13 +2915,13 @@ var render = function render() {
     }
   })] : _vm._e(), _vm._v(" "), _vm.menu == 2 ? [_c("ubicaciones", {
     attrs: {
-      direccion: _vm.ubicacionesData.direccion,
-      selectedDistrict: _vm.ubicacionesData.selectedDistrict,
-      selectedProvince: _vm.ubicacionesData.selectedProvince,
-      selectedDepartment: _vm.ubicacionesData.selectedDepartment,
-      districts: _vm.ubicacionesData.districts,
-      provinces: _vm.ubicacionesData.provinces,
-      departments: _vm.ubicacionesData.departments
+      direccion: _vm.direccion,
+      selectedDistrict: _vm.selectedDistrict,
+      selectedProvince: _vm.selectedProvince,
+      selectedDepartment: _vm.selectedDepartment,
+      districts: _vm.districts,
+      provinces: _vm.provinces,
+      departments: _vm.departments
     },
     on: {
       updateDireccion: _vm.updateDireccion,
@@ -2942,13 +2932,14 @@ var render = function render() {
     }
   })] : _vm._e(), _vm._v(" "), _vm.menu == 3 ? [_c("caracteristicas", {
     attrs: {
-      cantidad_rooms: _vm.caracteristicasData.cantidad_rooms,
-      cantidad_bathrooms: _vm.caracteristicasData.cantidad_bathrooms,
-      cantidad_garage: _vm.caracteristicasData.cantidad_garage,
-      titulo: _vm.caracteristicasData.titulo,
-      monto: _vm.caracteristicasData.monto,
-      descripcion: _vm.caracteristicasData.descripcion,
-      M2: _vm.caracteristicasData.M2
+      cantidad_rooms: _vm.cantidad_rooms,
+      cantidad_bathrooms: _vm.cantidad_bathrooms,
+      cantidad_garage: _vm.cantidad_garage,
+      titulo: _vm.titulo,
+      monto: _vm.monto,
+      descripcion: _vm.descripcion,
+      M2: _vm.M2,
+      urlImage: _vm.selectedImage
     },
     on: {
       continuar: _vm.continuar,
@@ -2959,7 +2950,8 @@ var render = function render() {
       updateDescripcion: _vm.updateDescripcion,
       updateMonto: _vm.updateMonto,
       updateM2: _vm.updateM2,
-      "file-selected": _vm.handleFileSelected
+      "file-selected": _vm.handleFileSelected,
+      "guardar-en-mysql": _vm.guardarDataMySQL
     }
   })] : _vm._e()], 2)])])]);
 };

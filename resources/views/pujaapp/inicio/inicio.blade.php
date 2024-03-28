@@ -20,7 +20,6 @@
             <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-       
             <div class="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
                 <img src="img/logo.png" class="ms-4 d-none d-sm-none d-md-none d-md-block d-lg-block" alt="">
                 <ul class="navbar-nav dropdown">
@@ -95,7 +94,7 @@
                         </div>
                     </li>
                     <li class="nav-item p-lg-4 p-md-0 p-sm-0">
-                        <a class="nav-link boton" href="{{route('publicar')}}">Publica Aquí</a>
+                        <a class="nav-link boton" href="{{route('publica-aqui')}}">Publica Aquí</a>
                     </li>
                 </ul>
             </div>
@@ -492,13 +491,6 @@
             console.error('Error al dar like:', error);
         });
     }
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var myCarousel = new bootstrap.Carousel(document.querySelector('#carouselExampleDark'), {
-            interval: 5000 // El intervalo en milisegundos (por ejemplo, 5000 para 5 segundos)
-        });
-    });
 </script>
 </body>
 </html>

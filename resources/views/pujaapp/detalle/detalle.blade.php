@@ -152,7 +152,7 @@
   
     <div class="container pb-5 contenido">
         <div class="cajamegusta likeButton" data-co-producto="{{ $detalle->id }}">
-            @if(Auth::guard('puja')->check())
+            @if(Auth::check())
                 @if(optional($detalle->interesado)->status == 1)
                     <img src="../img/vector/corazonlleno.svg" alt="Me gusta" class="heartImage">
                 @else

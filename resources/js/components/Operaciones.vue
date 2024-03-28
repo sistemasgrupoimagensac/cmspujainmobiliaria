@@ -25,8 +25,8 @@
       <div class="row mt-5">
         <div class="col-6"></div>
         <div class="col-6">
-          <button class="btn btn-primary">Guardar y Salir</button>
-          <a class="btn btn-primary" href="#" @click="$emit('continuar', 2)">Continuar</a>
+          <button class="btn btn-primary btnguardar">Guardar y Salir</button>
+          <a class="btn btn-primary btncontinuar" href="#" @click="$emit('continuar', 2)">Continuar</a>
         </div>
     </div>
   </div>

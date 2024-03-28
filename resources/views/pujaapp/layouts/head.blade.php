@@ -8,5 +8,8 @@
     <link rel="shortcut icon" href="./img/iconologo.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('./css/inicio.css') }}">
     <link rel="stylesheet" href="{{ asset('./css/footer.css') }}">
+    <!--css ow carrousel-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <title>Puja inmobiliaria</title>
 </head>
